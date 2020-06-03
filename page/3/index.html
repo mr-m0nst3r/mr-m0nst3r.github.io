@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"m0nst3r.me","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="m0nst3r&#39;s blog">
+<meta property="og:url" content="https://m0nst3r.me/page/3/index.html">
+<meta property="og:site_name" content="m0nst3r&#39;s blog">
+<meta property="og:description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="m0nst3r">
+<meta property="article:tag" content="Web安全">
+<meta property="article:tag" content="渗透测试">
+<meta property="article:tag" content="网络安全">
+<meta property="article:tag" content="代码审计">
+<meta property="article:tag" content="逆向">
+<meta property="article:tag" content="编程">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://m0nst3r.me/page/3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+
+  <title>m0nst3r's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">m0nst3r's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello, Bugs</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/sqli/SQL%20Insert%20into%20%E6%B3%A8%E5%85%A5.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/sqli/SQL%20Insert%20into%20%E6%B3%A8%E5%85%A5.html" class="post-title-link" itemprop="url">SQL Insert into 注入</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-10-20 11:12:00" itemprop="dateCreated datePublished" datetime="2018-10-20T11:12:00+08:00">2018-10-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/sqli/" itemprop="url" rel="index"><span itemprop="name">sqli</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/sqli/SQL%20Insert%20into%20%E6%B3%A8%E5%85%A5.html" class="post-meta-item leancloud_visitors" data-flag-title="SQL Insert into 注入" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/sqli/SQL%20Insert%20into%20%E6%B3%A8%E5%85%A5.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="sqli/SQL Insert into 注入.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>使用sqlmap会使测试数据库中插入大量测试语句，而且产生大量日志，下面的方法利用mysql在<code>scalar subquiry</code>将<code>insert into</code>类型的注入转换为<code>Time-based blind</code>注入。</p>
+<p>先看执行效果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select (select <span class="keyword">case</span> when 1=1 <span class="keyword">then</span> sleep(1) <span class="keyword">else</span> <span class="string">'hello'</span> end from ((select 1 as a) union (select 2 as a)) <span class="built_in">test</span>);</span></span><br><span class="line">ERROR 1242 (21000): Subquery returns more than 1 row</span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> select (select <span class="keyword">case</span> when 1=2 <span class="keyword">then</span> sleep(1) <span class="keyword">else</span> <span class="string">'hello'</span> end from ((select 1 as a) union (select 2 as a)) <span class="built_in">test</span>);</span></span><br><span class="line">ERROR 1242 (21000): Subquery returns more than 1 row</span><br></pre></td></tr></table></figure>
+<p>先看语句：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> (</span><br><span class="line">	<span class="keyword">select</span> <span class="keyword">case</span></span><br><span class="line">		<span class="keyword">when</span> <span class="number">1</span>=<span class="number">1</span></span><br><span class="line">		<span class="keyword">then</span> <span class="keyword">sleep</span>(<span class="number">3</span>)</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		<span class="string">'hello'</span></span><br><span class="line">		<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">from</span></span><br><span class="line">		(</span><br><span class="line">			(<span class="keyword">select</span> <span class="number">1</span> <span class="keyword">as</span> a)</span><br><span class="line">			<span class="keyword">union</span></span><br><span class="line">			(<span class="keyword">select</span> <span class="number">2</span> <span class="keyword">as</span> a)</span><br><span class="line">		)</span><br><span class="line"><span class="keyword">test</span>);</span><br></pre></td></tr></table></figure>
+
+<p>经过实验可得，如果<code>from</code>后面，<code>union</code>前后的两个<code>select</code>子查询使用相同的值，则会返回一列，故不会出错，从而导致<code>insert into</code>语句成功执行；当两个值不相同时，无论判断成功与否，都会导致<code>insert into</code>语句执行失败，从而转化为时间盲注。</p>
+<p>参考：<br><a href="http://www.mathyvanhoef.com/2011/10/exploiting-insert-into-sql-injections.html" target="_blank" rel="noopener">http://www.mathyvanhoef.com/2011/10/exploiting-insert-into-sql-injections.html</a><br><a href="https://dev.mysql.com/doc/refman/5.6/en/scalar-subqueries.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.6/en/scalar-subqueries.html</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/web-sec/PHP-Wrappers.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/web-sec/PHP-Wrappers.html" class="post-title-link" itemprop="url">PHP Wrappers</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-10-14 13:02:00" itemprop="dateCreated datePublished" datetime="2018-10-14T13:02:00+08:00">2018-10-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/web-sec/" itemprop="url" rel="index"><span itemprop="name">web-sec</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/web-sec/PHP-Wrappers.html" class="post-meta-item leancloud_visitors" data-flag-title="PHP Wrappers" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/web-sec/PHP-Wrappers.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="web-sec/PHP-Wrappers.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><ul>
+<li>file:// — 访问本地文件系统</li>
+<li>http:// — 访问 HTTP(s) 网址</li>
+<li>ftp:// — 访问 FTP(s) URLs</li>
+<li><strong>php:// — 访问各个输入/输出流（I/O streams）</strong></li>
+<li>zlib:// — 压缩流</li>
+<li>data:// — 数据（RFC 2397）</li>
+<li>glob:// — 查找匹配的文件路径模式</li>
+<li>phar:// — PHP 归档</li>
+<li>ssh2:// — Secure Shell 2</li>
+<li>rar:// — RAR</li>
+<li>ogg:// — 音频流</li>
+<li>expect:// — 处理交互式的流</li>
+</ul>
+<h2 id="php"><a href="#php" class="headerlink" title="php://"></a>php://</h2><p>直接访问PHP进程的输入或者输出流：</p>
+<ul>
+<li><code>php://stdin</code>：只读</li>
+<li><code>php://stdout</code>：只写</li>
+<li><code>php://stderr</code>：只写</li>
+</ul>
+<h2 id="php-input"><a href="#php-input" class="headerlink" title="php://input"></a>php://input</h2><p><code>php://input</code>是可以访问请求的原始数据的只读流。</p>
+<p><code>POST</code>请求的情况下，最好使用<code>php://input</code>来替代<code>$_HTTP_RAW_POST_DATA</code>，因为它不依赖于特定的<code>php.ini</code>指令。</p>
+<p><code>enctype=&quot;multipart/form-data&quot;</code>的时候<code>php://input</code>是无效的。</p>
+<h2 id="php-output"><a href="#php-output" class="headerlink" title="php://output"></a>php://output</h2><p><code>php://output</code>是一个只写的数据流，允许你以<code>print</code>和<code>echo</code>一样的方式写入到输出缓冲区。</p>
+<h2 id="php-fd"><a href="#php-fd" class="headerlink" title="php://fd"></a>php://fd</h2><p><code>php://fd</code>允许直接访问指定的文件描述符，如<code>php://fd/3</code>引用了文件描述符3。</p>
+<h2 id="php-memory和php-temp"><a href="#php-memory和php-temp" class="headerlink" title="php://memory和php://temp"></a>php://memory和php://temp</h2><p><code>php://memory</code>总是把数据存储在内存中</p>
+<p><code>php://temp</code>会在内存量达到预定义的限制之后（默认2M）存入临时文件中。临时文件位置的决定和<code>sys_get_temp_dir()</code>的方式一致。</p>
+<h2 id="php-filter"><a href="#php-filter" class="headerlink" title="php://filter"></a>php://filter</h2><p><code>php://filter</code>是一种元封装器，设计用于数据流打开时的筛选过滤应用。这对于一体式的文件函数非常有用，类似<code>readfile()</code>、<code>file()</code>和<code>file_get_contents()</code>，在数据流内容读取之前没有机会应用其他过滤器。</p>
+<p><code>php://filter</code>目标使用一下的参数作为它路径的一部分。</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>resource=&lt;要过滤的数据流&gt;</td>
+<td>这个参数是必须的。它指定了你要筛选过滤的数据流。</td>
+</tr>
+<tr>
+<td>read=&lt;读链的筛选列表&gt;</td>
+<td>可选参数。可以设定一个或多个过滤器名称，以管道符<code>/</code>分隔。</td>
+</tr>
+<tr>
+<td>write=&lt;写链的筛选列表&gt;</td>
+<td>可选参数。可以设定一个或多个过滤器名称，以管道符<code>/</code>分隔。</td>
+</tr>
+<tr>
+<td>&lt;; 两个链的筛选列表&gt;</td>
+<td>任何没有以<code>read=</code>或<code>write=</code>作为前缀的筛选器列表会视情况应用于读链或写链。</td>
+</tr>
+</tbody></table>
+<p><strong>封装协议摘要（针对<code>php://filter</code>，参考被筛选的封装器</strong></p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>支持</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>受限于<code>allow_url_fopen</code></td>
+<td>No</td>
+</tr>
+<tr>
+<td>受限于<code>allow_url_include</code></td>
+<td>仅<code>php://input</code>、<code>php://stdin</code>、<code>php://memory</code>、<code>php://temp</code></td>
+</tr>
+<tr>
+<td>允许读取</td>
+<td>仅<code>php://stdin</code>、<code>php://input</code>、<code>php://fd</code>、<code>php://memory</code>、<code>php://temp</code></td>
+</tr>
+<tr>
+<td>允许写入</td>
+<td>仅<code>php://stdout</code>、<code>php://stderr</code>、<code>php://output</code>、<code>php://fd</code>、<code>php://memory</code>、<code>php://temp</code></td>
+</tr>
+<tr>
+<td>允许追加</td>
+<td>同写入</td>
+</tr>
+<tr>
+<td>允许同时读写</td>
+<td>仅<code>php://fd</code>、<code>php://memory</code>、<code>php://temp</code></td>
+</tr>
+<tr>
+<td>支持<code>stat()</code></td>
+<td>仅<code>php://memory</code>、<code>php://temp</code></td>
+</tr>
+<tr>
+<td>支持<code>unlink()</code></td>
+<td>No</td>
+</tr>
+<tr>
+<td>支持<code>rename()</code></td>
+<td>No</td>
+</tr>
+<tr>
+<td>支持<code>mkdir()</code></td>
+<td>No</td>
+</tr>
+<tr>
+<td>支持<code>rmdir()</code></td>
+<td>No</td>
+</tr>
+<tr>
+<td>仅支持<code>stream_select()</code></td>
+<td><code>php://stdin</code>、<code>php://stdout</code>、<code>php://stderr</code>、<code>php://fd</code>、<code>php://temp</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/*	等同于</span></span><br><span class="line"><span class="comment">	readfile("http://www.a.com");</span></span><br><span class="line"><span class="comment">	实际上没有指定过滤器</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">readfile(<span class="string">"php://filter/resource=http://www.a.com"</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	采用给一个或</span></span><br><span class="line"><span class="comment">		以管道符 | 分隔的</span></span><br><span class="line"><span class="comment">	多个过滤器</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">/*以大写字母输入*/</span></span><br><span class="line">readfile(<span class="string">"php://filter/read=string.toupper/resource=http://www.a.com"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*转换成大写，再使用ROT13加密之后*/</span></span><br><span class="line">readfile(<span class="string">"php://filter/read=string.toupper|string.rot13/resource=http://www.a.com"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*关于管道顺序，总是从做往右做处理*/</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	base64_encode(test.txt) =&gt; test2.txt</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"string -&gt; toupper -&gt; base64-encode: "</span>;</span><br><span class="line">    <span class="keyword">echo</span> readfile(<span class="string">"php://filter/read=string.toupper|convert.base64-encode/resource=test.txt"</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"reversed process: "</span>;</span><br><span class="line">    <span class="keyword">echo</span> readfile(<span class="string">"php://filter/read=convert.base64-decode|string.tolower/resource=test2.txt"</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	通过 rot13 过滤器筛选出字符 "Hello World"</span></span><br><span class="line"><span class="comment">	然后写入当前目录下的 test.txt</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">file_put_contents(<span class="string">"php://filter/write=string.rot13/resource=test.txt"</span>, <span class="string">"Hello World"</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="可用过滤器列表"><a href="#可用过滤器列表" class="headerlink" title="可用过滤器列表"></a>可用过滤器列表</h3><blockquote>
+<p>It is worth noting a slight asymmetry between stream_filter_append() and stream_filter_prepend(). Every PHP stream contains a small read buffer where it stores blocks of data retrieved from the filesystem or other resource in order to process data in the most efficient manner. As soon as data is pulled from the resource into the stream’s internal buffer, it is immediately processed through any attached filters whether the PHP application is actually ready for the data or not. If data is sitting in the read buffer when a filter is appended, this data will be immediately processed through that filter making the fact that it was sitting in the buffer seem transparent. However, if data is sitting in the read buffer when a filter is prepended, this data will NOT be processed through that filter. It will instead wait until the next block of data is retrieved from the resource.</p>
+</blockquote>
+<h4 id="字符串过滤器"><a href="#字符串过滤器" class="headerlink" title="字符串过滤器"></a>字符串过滤器</h4><ul>
+<li><code>string.rot13</code>：使用rot13对流数据进行加密，相当于<code>str_rot13()</code>函数。</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$fp = fopen(<span class="string">'php://output'</span>, <span class="string">'w'</span>);</span><br><span class="line">stream_filter_append($fp, <span class="string">'string.rot13'</span>);</span><br><span class="line">fwrite($fp, <span class="string">"This is a test"</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>string.toupper</code>：大写</li>
+<li><code>string.tolower</code>：小写</li>
+<li><code>string.strip_tags</code>：参考<code>strip_tags()</code>函数</li>
+</ul>
+<h4 id="转换过滤器"><a href="#转换过滤器" class="headerlink" title="转换过滤器"></a>转换过滤器</h4><p>具体用法参考对应函数名。</p>
+<ul>
+<li><code>convert.base64-encode</code></li>
+<li><code>convert.base64-decode</code></li>
+<li><code>convert.quoted-printable-encode</code></li>
+<li><code>convert.quoted-printable-decode</code></li>
+<li><code>convert.iconv.*</code></li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$fp = fopen(<span class="string">'php://output'</span>, <span class="string">'w'</span>);</span><br><span class="line">stream_filter_append($fp, <span class="string">'convert.iconv.utf-16le.utf-8'</span>);</span><br><span class="line">fwrite($fp, <span class="string">"T\0h\0i\0s\0 \0i\0s\0 \0a\0 \0t\0e\0s\0t\0.\0\n\0"</span>);</span><br><span class="line">fclose($fp);</span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">Outputs: This is a test.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="压缩过滤器"><a href="#压缩过滤器" class="headerlink" title="压缩过滤器"></a>压缩过滤器</h4><p>压缩过滤器不产生命令行工具如<code>gzip</code>的头和尾信息。知识压缩和解压数据流中的有效载荷部分。</p>
+<ul>
+<li><code>zlib.deflate</code>和<code>zlib.inflate</code></li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$params = <span class="keyword">array</span>(<span class="string">'level'</span> =&gt; <span class="number">6</span>, <span class="string">'window'</span> =&gt; <span class="number">15</span>, <span class="string">'memory'</span> =&gt; <span class="number">9</span>);</span><br><span class="line"></span><br><span class="line">$original_text = <span class="string">"This is a test.\nThis is only a test.\nThis is not an important string.\n"</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"The original text is "</span> . strlen($original_text) . <span class="string">" characters long.\n"</span>;</span><br><span class="line"></span><br><span class="line">$fp = fopen(<span class="string">'test.deflated'</span>, <span class="string">'w'</span>);</span><br><span class="line">stream_filter_append($fp, <span class="string">'zlib.deflate'</span>, STREAM_FILTER_WRITE, $params);</span><br><span class="line">fwrite($fp, $original_text);</span><br><span class="line">fclose($fp);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"The compress file is "</span> . filesize(<span class="string">'test.deflated'</span>) . <span class="string">" bytes long.\n"</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"The original text was:\n"</span>;</span><br><span class="line">readfile(<span class="string">'php://filter/zlib.inflate/resource=test.deflated'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Generates output:</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">The original text is 70 characters long.</span></span><br><span class="line"><span class="comment">The compressed file is 56 bytes long.</span></span><br><span class="line"><span class="comment">The original text was:</span></span><br><span class="line"><span class="comment">This is a test.</span></span><br><span class="line"><span class="comment">This is only a test.</span></span><br><span class="line"><span class="comment">This is not an important string.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	To read a gzip encoded stream from http</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">$opts = [</span><br><span class="line">    <span class="string">"http"</span> =&gt; [</span><br><span class="line">        <span class="string">"method"</span> =&gt; <span class="string">"GET"</span>,</span><br><span class="line">        <span class="string">"header"</span> =&gt; [<span class="string">"Accept-Encoding: gzip"</span>],</span><br><span class="line">    ]</span><br><span class="line">];</span><br><span class="line">$ctx = stream_context_create($opts);</span><br><span class="line"></span><br><span class="line">$f = fopen(<span class="string">'http://php.net'</span>, <span class="string">'r'</span>, <span class="keyword">false</span>, $ctx);</span><br><span class="line"><span class="comment">//check stream_get_meta_data($f)["wrapper_data"] has "Content-Encoding: gzip"</span></span><br><span class="line">stream_filter_append($f, <span class="string">"zlib.inflate"</span>, STREAM_FILTER_READ, [<span class="string">"window"</span> =&gt; <span class="number">30</span>]);</span><br><span class="line"><span class="keyword">echo</span> stream_get_contents($f); <span class="comment">// any stream processing</span></span><br><span class="line">fclose($f);</span><br><span class="line"> <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>bzip2.compress</code>和<code>bzip2.decompress</code></li>
+</ul>
+<h4 id="加密过滤器"><a href="#加密过滤器" class="headerlink" title="加密过滤器"></a>加密过滤器</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">//用 3DES 将文件加密输出</span></span><br><span class="line">$passphrase = <span class="string">'My secret'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Turn a human readable passphrase</span></span><br><span class="line"><span class="comment"> * into a reproducable iv/key pair</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$iv = substr(md5(<span class="string">'iv'</span>.$passphrase, <span class="keyword">true</span>), <span class="number">0</span>, <span class="number">8</span>);</span><br><span class="line">$key = substr(md5(<span class="string">'pass1'</span>.$passphrase, <span class="keyword">true</span>) .</span><br><span class="line">               md5(<span class="string">'pass2'</span>.$passphrase, <span class="keyword">true</span>), <span class="number">0</span>, <span class="number">24</span>);</span><br><span class="line">$opts = <span class="keyword">array</span>(<span class="string">'iv'</span>=&gt;$iv, <span class="string">'key'</span>=&gt;$key);</span><br><span class="line"></span><br><span class="line">$fp = fopen(<span class="string">'secert-file.enc'</span>, <span class="string">'wb'</span>);</span><br><span class="line">stream_filter_append($fp, <span class="string">'mcrypt.tripledes'</span>, STREAM_FILTER_WRITE, $opts);</span><br><span class="line">fwrite($fp, <span class="string">'Secret secret secret data'</span>);</span><br><span class="line">fclose($fp);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//读取加密的文件</span></span><br><span class="line">$passphrase = <span class="string">'My secret'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Turn a human readable passphrase</span></span><br><span class="line"><span class="comment"> * into a reproducable iv/key pair</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$iv = substr(md5(<span class="string">'iv'</span>.$passphrase, <span class="keyword">true</span>), <span class="number">0</span>, <span class="number">8</span>);</span><br><span class="line">$key = substr(md5(<span class="string">'pass1'</span>.$passphrase, <span class="keyword">true</span>) .</span><br><span class="line">               md5(<span class="string">'pass2'</span>.$passphrase, <span class="keyword">true</span>), <span class="number">0</span>, <span class="number">24</span>);</span><br><span class="line">$opts = <span class="keyword">array</span>(<span class="string">'iv'</span>=&gt;$iv, <span class="string">'key'</span>=&gt;$key);</span><br><span class="line"></span><br><span class="line">$fp = fopen(<span class="string">'secert-file.enc'</span>, <span class="string">'rb'</span>);</span><br><span class="line">stream_filter_append($fp, <span class="string">'mdecrypt.tripledes'</span>, STREAM_FILTER_WRITE, $opts);</span><br><span class="line">$data = rtrim(stream_get_contents($fp));</span><br><span class="line">fclose($fp);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> $data;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B0%8F%E6%8A%80%E5%B7%A7.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B0%8F%E6%8A%80%E5%B7%A7.html" class="post-title-link" itemprop="url">渗透测试小技巧</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-07-30 11:12:00" itemprop="dateCreated datePublished" datetime="2018-07-30T11:12:00+08:00">2018-07-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/pentest/" itemprop="url" rel="index"><span itemprop="name">pentest</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B0%8F%E6%8A%80%E5%B7%A7.html" class="post-meta-item leancloud_visitors" data-flag-title="渗透测试小技巧" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B0%8F%E6%8A%80%E5%B7%A7.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="pentest/渗透测试小技巧.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<h2 id="非交互式添加用户并创建密码"><a href="#非交互式添加用户并创建密码" class="headerlink" title="非交互式添加用户并创建密码"></a>非交互式添加用户并创建密码</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> useradd <span class="built_in">test</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"test:123"</span> | sudo chpasswd</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> useradd test2</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"123"</span> | passwd --stdin test2</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> passwd -d test2 <span class="comment">#（设置密码之后）删除密码，即可以空密码登录</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="获取Windows机器上保存的WIFI密码"><a href="#获取Windows机器上保存的WIFI密码" class="headerlink" title="获取Windows机器上保存的WIFI密码"></a>获取Windows机器上保存的WIFI密码</h2><h3 id="Powershell"><a href="#Powershell" class="headerlink" title="Powershell"></a>Powershell</h3><p><code>(netsh wlan show profiles) | Select-String &quot;\:(.+)$&quot; | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} | %{(netsh wlan show profile name=&quot;$name&quot; key=clear)}  | Select-String &quot;Key Content\W+\:(.+)$&quot; | %{$pass=$_.Matches.Groups[1].Value.Trim(); $_} | %{[PSCustomObject]@{ PROFILE_NAME=$name;PASSWORD=$pass }} | Format-Table -AutoSize</code></p>
+<h3 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h3><p><code>netsh wlan show profiles &quot;NETWORK-SSID&quot; key=clear</code></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/pentest/PowerShell%20%E7%AC%94%E8%AE%B0%20[%E4%B8%8D%E6%96%AD%E6%9B%B4%E6%96%B0].html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/pentest/PowerShell%20%E7%AC%94%E8%AE%B0%20%5B%E4%B8%8D%E6%96%AD%E6%9B%B4%E6%96%B0%5D.html" class="post-title-link" itemprop="url">PowerShell 笔记 [不断更新]</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-06-23 11:12:00" itemprop="dateCreated datePublished" datetime="2018-06-23T11:12:00+08:00">2018-06-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/pentest/" itemprop="url" rel="index"><span itemprop="name">pentest</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/pentest/PowerShell%20%E7%AC%94%E8%AE%B0%20%5B%E4%B8%8D%E6%96%AD%E6%9B%B4%E6%96%B0%5D.html" class="post-meta-item leancloud_visitors" data-flag-title="PowerShell 笔记 [不断更新]" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/pentest/PowerShell%20%E7%AC%94%E8%AE%B0%20%5B%E4%B8%8D%E6%96%AD%E6%9B%B4%E6%96%B0%5D.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="pentest/PowerShell 笔记 [不断更新].html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="日常用到的powershell命令及脚本"><a href="#日常用到的powershell命令及脚本" class="headerlink" title="日常用到的powershell命令及脚本"></a>日常用到的powershell命令及脚本</h1><h2 id="更改文件夹的“修改时间”"><a href="#更改文件夹的“修改时间”" class="headerlink" title="更改文件夹的“修改时间”"></a>更改文件夹的“修改时间”</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$a</span> = <span class="built_in">Get-Date</span> <span class="string">"02/09/2013 4:59 PM"</span></span><br><span class="line"><span class="variable">$d</span> = [<span class="type">system.io.directoryinfo</span>]<span class="string">"C:\Users\user\Documents\CV"</span></span><br><span class="line"><span class="variable">$d</span>.LastWriteTime = <span class="variable">$a</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="更改文件夹下所有文件“修改时间”"><a href="#更改文件夹下所有文件“修改时间”" class="headerlink" title="更改文件夹下所有文件“修改时间”"></a>更改文件夹下所有文件“修改时间”</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$a</span> = <span class="built_in">Get-Date</span> <span class="string">"2/13/2007 8:00 AM"</span></span><br><span class="line"><span class="variable">$b</span> = <span class="built_in">Get-ChildItem</span> <span class="string">"C:\Scripts"</span></span><br><span class="line"><span class="keyword">foreach</span> (<span class="variable">$i</span> <span class="keyword">in</span> <span class="variable">$b</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="variable">$i</span>.LastWriteTime = <span class="variable">$a</span></span><br><span class="line">    <span class="variable">$a</span> = <span class="variable">$a</span>.AddMinutes(<span class="number">1</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/web-sec/CTF/SUCTF%20Anonymous%20WriteUp.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/web-sec/CTF/SUCTF%20Anonymous%20WriteUp.html" class="post-title-link" itemprop="url">SUCTF Anonymous WriteUp</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-26 11:12:00" itemprop="dateCreated datePublished" datetime="2018-05-26T11:12:00+08:00">2018-05-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/web-sec/" itemprop="url" rel="index"><span itemprop="name">web-sec</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/web-sec/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/web-sec/CTF/SUCTF%20Anonymous%20WriteUp.html" class="post-meta-item leancloud_visitors" data-flag-title="SUCTF Anonymous WriteUp" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/web-sec/CTF/SUCTF%20Anonymous%20WriteUp.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="web-sec/CTF/SUCTF Anonymous WriteUp.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="source-code"><a href="#source-code" class="headerlink" title="source code"></a>source code</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">$MY = create_function(<span class="string">""</span>,<span class="string">"die(`cat flag.php`);"</span>);</span><br><span class="line">$hash = bin2hex(openssl_random_pseudo_bytes(<span class="number">32</span>));</span><br><span class="line"><span class="keyword">eval</span>(<span class="string">"function SUCTF_$hash()&#123;"</span></span><br><span class="line">    .<span class="string">"global \$MY;"</span></span><br><span class="line">    .<span class="string">"\$MY();"</span></span><br><span class="line">    .<span class="string">"&#125;"</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'func_name'</span>]))&#123;</span><br><span class="line">    $_GET[<span class="string">"func_name"</span>]();</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line">show_source(<span class="keyword">__FILE__</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>匿名函数并不是真的没有名字。。。<br><code>%00lambda_%d</code></p>
+<p><img src="/images/f1efe6696754ed6c6f1a78a6eaf970d0047b1a21.png" alt=""></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.jianshu.com/p/19e3ee990cb7" target="_blank" rel="noopener">https://www.jianshu.com/p/19e3ee990cb7</a><br><a href="https://github.com/orangetw/My-CTF-Web-Challenges" target="_blank" rel="noopener">https://github.com/orangetw/My-CTF-Web-Challenges</a><br><a href="http://php.net/manual/zh/book.phar.php" target="_blank" rel="noopener">http://php.net/manual/zh/book.phar.php</a><br><a href="http://blog.jobbole.com/91920/" target="_blank" rel="noopener">http://blog.jobbole.com/91920/</a><br><a href="https://yq.aliyun.com/ziliao/55320" target="_blank" rel="noopener">https://yq.aliyun.com/ziliao/55320</a><br><a href="https://www.zhihu.com/question/23786410" target="_blank" rel="noopener">https://www.zhihu.com/question/23786410</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/sqli/%E7%BC%96%E7%A0%81%E5%BC%95%E8%B5%B7%E7%9A%84SQL%E6%B3%A8%E5%85%A5%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/sqli/%E7%BC%96%E7%A0%81%E5%BC%95%E8%B5%B7%E7%9A%84SQL%E6%B3%A8%E5%85%A5%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93.html" class="post-title-link" itemprop="url">编码引起的SQL注入问题总结</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-17 11:12:00" itemprop="dateCreated datePublished" datetime="2018-05-17T11:12:00+08:00">2018-05-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/sqli/" itemprop="url" rel="index"><span itemprop="name">sqli</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/sqli/%E7%BC%96%E7%A0%81%E5%BC%95%E8%B5%B7%E7%9A%84SQL%E6%B3%A8%E5%85%A5%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93.html" class="post-meta-item leancloud_visitors" data-flag-title="编码引起的SQL注入问题总结" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/sqli/%E7%BC%96%E7%A0%81%E5%BC%95%E8%B5%B7%E7%9A%84SQL%E6%B3%A8%E5%85%A5%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="sqli/编码引起的SQL注入问题总结.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://security.stackexchange.com/questions/9908/multibyte-character-exploits-php-mysql" target="_blank" rel="noopener">https://security.stackexchange.com/questions/9908/multibyte-character-exploits-php-mysql</a><br><a href="https://www.erich-kachel.de/unicode-issues-on-php/" target="_blank" rel="noopener">https://www.erich-kachel.de/unicode-issues-on-php/</a><br><a href="https://vigilance.fr/vulnerability/MySQL-SQL-injection-via-multi-byte-characters-5885" target="_blank" rel="noopener">https://vigilance.fr/vulnerability/MySQL-SQL-injection-via-multi-byte-characters-5885</a><br><a href="http://shiflett.org/blog/2006/addslashes-versus-mysql-real-escape-string" target="_blank" rel="noopener">http://shiflett.org/blog/2006/addslashes-versus-mysql-real-escape-string</a><br><a href="https://stackoverflow.com/questions/5741187/sql-injection-that-gets-around-mysql-real-escape-string/12118602#12118602" target="_blank" rel="noopener">https://stackoverflow.com/questions/5741187/sql-injection-that-gets-around-mysql-real-escape-string/12118602#12118602</a></p>
+<p><a href="http://eleves.ec-lille.fr/~couprieg/post/Bypass-addslashes-with-UTF-8-characters" target="_blank" rel="noopener">http://eleves.ec-lille.fr/~couprieg/post/Bypass-addslashes-with-UTF-8-characters</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/web-sec/JWT%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E7%9A%84%E6%94%BB%E5%87%BB%E6%96%B9%E5%BC%8F.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/web-sec/JWT%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E7%9A%84%E6%94%BB%E5%87%BB%E6%96%B9%E5%BC%8F.html" class="post-title-link" itemprop="url">JWT身份认证的攻击方式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-09 11:12:00" itemprop="dateCreated datePublished" datetime="2018-05-09T11:12:00+08:00">2018-05-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/web-sec/" itemprop="url" rel="index"><span itemprop="name">web-sec</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/web-sec/JWT%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E7%9A%84%E6%94%BB%E5%87%BB%E6%96%B9%E5%BC%8F.html" class="post-meta-item leancloud_visitors" data-flag-title="JWT身份认证的攻击方式" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/web-sec/JWT%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E7%9A%84%E6%94%BB%E5%87%BB%E6%96%B9%E5%BC%8F.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="web-sec/JWT身份认证的攻击方式.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><code>JSON Web Tokens</code> 或者<code>JWTs</code>可以作为传统<code>session</code>和<code>cookies</code>一个替代方案。由于JWTs是无状态的，并且是签名的，所以针对JWTs有一些特有的安全问题。本文介绍了几种可以检测JWT实现是否安全的方法。</p>
+<h2 id="关于JWTs"><a href="#关于JWTs" class="headerlink" title="关于JWTs"></a>关于JWTs</h2><p>一个<code>JWT(Json Web Token)</code>串中包含了一个签名的数据结构，一般用作认证。JWT中包含一个密码签名，比如一个数据的HMAC签名。正是如此，只有服务器可以创建和更改令牌(Token)。</p>
+<h3 id="什么是JWT"><a href="#什么是JWT" class="headerlink" title="什么是JWT"></a>什么是JWT</h3><h3 id="分辨JWT"><a href="#分辨JWT" class="headerlink" title="分辨JWT"></a>分辨JWT</h3><h2 id="攻击JWTs"><a href="#攻击JWTs" class="headerlink" title="攻击JWTs"></a>攻击JWTs</h2><h3 id="检测JWT中的敏感信息"><a href="#检测JWT中的敏感信息" class="headerlink" title="检测JWT中的敏感信息"></a>检测JWT中的敏感信息</h3><h3 id="更改签名算法"><a href="#更改签名算法" class="headerlink" title="更改签名算法"></a>更改签名算法</h3><h4 id="将签名算法变为none"><a href="#将签名算法变为none" class="headerlink" title="将签名算法变为none"></a>将签名算法变为none</h4><h4 id="将签名算法从RS256更改为HS256"><a href="#将签名算法从RS256更改为HS256" class="headerlink" title="将签名算法从RS256更改为HS256"></a>将签名算法从RS256更改为HS256</h4><h3 id="破解密钥"><a href="#破解密钥" class="headerlink" title="破解密钥"></a>破解密钥</h3><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.sjoerdlangkemper.nl/2016/09/28/attacking-jwt-authentication/" target="_blank" rel="noopener">https://www.sjoerdlangkemper.nl/2016/09/28/attacking-jwt-authentication/</a><br><a href="https://medium.com/101-writeups/hacking-json-web-token-jwt-233fe6c862e6" target="_blank" rel="noopener">https://medium.com/101-writeups/hacking-json-web-token-jwt-233fe6c862e6</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B%E8%A7%84%E8%8C%83.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B%E8%A7%84%E8%8C%83.html" class="post-title-link" itemprop="url">渗透测试流程规范</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-09 11:12:00" itemprop="dateCreated datePublished" datetime="2018-05-09T11:12:00+08:00">2018-05-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/pentest/" itemprop="url" rel="index"><span itemprop="name">pentest</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B%E8%A7%84%E8%8C%83.html" class="post-meta-item leancloud_visitors" data-flag-title="渗透测试流程规范" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B%E8%A7%84%E8%8C%83.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="pentest/渗透测试流程规范.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<h1 id="渗透测试流程规范"><a href="#渗透测试流程规范" class="headerlink" title="渗透测试流程规范"></a>渗透测试流程规范</h1><p>为规范渗透测试当中的工作流程，方便团队协作与管理，特制定本规范。</p>
+<h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><p>信息收集的目的是为了全面的了解目标网站/系统，从而可以确定潜在攻击面以及攻击方法。</p>
+<p>信息收集工作内容包括但不限于：</p>
+<ol>
+<li>whois信息</li>
+<li>域名/IP地址</li>
+<li>目标域名/IP开放端口</li>
+<li>（若在测试范围）子域名/IP信息</li>
+<li>目标网站信息，如服务器操作系统，使用的变成语言，使用的Web服务器及版本，后端可能的数据库服务器</li>
+<li>目标网站/系统敏感目录文件</li>
+<li>目标网站/系统登录后台</li>
+</ol>
+<h2 id="前渗透"><a href="#前渗透" class="headerlink" title="前渗透"></a>前渗透</h2><p>前渗透主要工作是拿到目标网站/系统的数据或权限，并以此为突破口进行后续流程。</p>
+<p>前渗透的工作内容包括但不限于：</p>
+<ol>
+<li>敏感信息泄漏检测</li>
+<li>权限验证检测</li>
+<li>不安全的验证机制检测</li>
+<li>暴力破解检测</li>
+<li>SQL注入漏洞检测</li>
+<li>XSS漏洞检测</li>
+<li>命令注入检测</li>
+<li>文件上传漏洞检测</li>
+<li>文件包含漏洞检测</li>
+<li>服务器漏洞检测</li>
+<li>Web服务器及中间件漏洞检测</li>
+</ol>
+<h2 id="后渗透"><a href="#后渗透" class="headerlink" title="后渗透"></a>后渗透</h2><p>后渗透主要工作是对前渗透阶段拿到的网站/系统的数据或权限，对目标网站/系统所在的网络进行进一步渗透测试以及持久化。</p>
+<p>后渗透的工作内容包括但不限于：</p>
+<ol>
+<li>收集目标主机信息，包括：<ol>
+<li>当前系统用户及权限</li>
+<li>当前网络状态</li>
+<li>当前系统版本及补丁状态</li>
+<li>反病毒/防火墙信息</li>
+</ol>
+</li>
+<li>收集敏感文件信息</li>
+<li>收集目标主机所在内网信息，包括：<ol>
+<li>内网存活主机扫描</li>
+<li>内网端口扫描</li>
+<li>域环境信息</li>
+</ol>
+</li>
+<li>权限提升</li>
+<li>横向移动</li>
+<li>持久化</li>
+<li>内网系统漏洞检测及利用</li>
+</ol>
+<h2 id="测试报告"><a href="#测试报告" class="headerlink" title="测试报告"></a>测试报告</h2><p>测试报告是对一次渗透测试结果的分析及总结，其内容应包括但不限于：</p>
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><ol>
+<li>测试目的</li>
+<li>测试范围</li>
+<li>测试团队详细信息</li>
+<li>测试结果综述</li>
+</ol>
+<h3 id="详细测试流程"><a href="#详细测试流程" class="headerlink" title="详细测试流程"></a>详细测试流程</h3><ol>
+<li>测试工具列表</li>
+<li>测试步骤<ul>
+<li>每个漏洞一个标题/标号</li>
+<li>测试步骤应将所有发现的漏洞/风险体现，使得技术人员通过渗透测试报告进行漏洞复现。</li>
+</ul>
+</li>
+</ol>
+<h3 id="风险评级"><a href="#风险评级" class="headerlink" title="风险评级"></a>风险评级</h3><p>对目标网站/系统进行综合评价。</p>
+<h3 id="漏洞详情及修复建议"><a href="#漏洞详情及修复建议" class="headerlink" title="漏洞详情及修复建议"></a>漏洞详情及修复建议</h3><p>针对每个漏洞进行分析，包括：</p>
+<ol>
+<li>风险评级</li>
+<li>漏洞描述</li>
+<li>漏洞影响</li>
+<li>修复建议</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF.html" class="post-title-link" itemprop="url">渗透测试报告模板</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-09 11:12:00" itemprop="dateCreated datePublished" datetime="2018-05-09T11:12:00+08:00">2018-05-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/pentest/" itemprop="url" rel="index"><span itemprop="name">pentest</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF.html" class="post-meta-item leancloud_visitors" data-flag-title="渗透测试报告模板" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="pentest/渗透测试报告模板.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="测试目的"><a href="#测试目的" class="headerlink" title="测试目的"></a>测试目的</h3><p>通过模拟黑客的渗透测试，评估目标系统是否存在可以被攻击者真实利用的漏洞以及由此引起的风险大小，为制定相应的安全措施与解决方案提供实际的依据。</p>
+<p>分析客户WEB应用系统的安全现状，检测WEB应用系统的漏洞和安全问题，并验证其他已知的脆弱点。对系统的任何弱点、技术缺陷或漏洞的主动分析，并且以有利于攻击为目的而对漏洞加以利用。从而全面了解和掌握WEB应用系统的信息安全威胁和风险，为WEB应用系统开展安全调优及加固建设提供依据，并指导客户实施调优及加固工作，具体的目标包括：</p>
+<ol>
+<li>帮助客户理解应用系统当前的安全状况，发现在系统复杂结构中的最脆弱链路；</li>
+<li>通过改进建议，保证WEB应用系统和相关基础设施满足标准的安全性基线；</li>
+<li>降低WEB应用系统信息安全事件发生的可能性；</li>
+<li>保障WEB应用系统的安全、可靠、稳定运行。</li>
+</ol>
+<h3 id="测试范围"><a href="#测试范围" class="headerlink" title="测试范围"></a>测试范围</h3><table>
+<thead>
+<tr>
+<th>序号</th>
+<th align="center">系统名称</th>
+<th align="center">地址</th>
+<th align="center">权限</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td align="center">test</td>
+<td align="center"><a href="http://test.com" target="_blank" rel="noopener">http://test.com</a></td>
+<td align="center">普通用户</td>
+</tr>
+</tbody></table>
+<h3 id="测试团队详细信息"><a href="#测试团队详细信息" class="headerlink" title="测试团队详细信息"></a>测试团队详细信息</h3><table>
+<thead>
+<tr>
+<th>序号</th>
+<th align="center">姓名</th>
+<th align="center">联系方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td align="center">宋鑫磊</td>
+<td align="center">18888888888</td>
+</tr>
+</tbody></table>
+<h3 id="测试结果综述"><a href="#测试结果综述" class="headerlink" title="测试结果综述"></a>测试结果综述</h3><p>对整体渗透测试结果进行综合评价，包括：整体概述，漏洞分布及风险</p>
+<h2 id="详细测试流程"><a href="#详细测试流程" class="headerlink" title="详细测试流程"></a>详细测试流程</h2><p>描述漏洞复现流程</p>
+<h4 id="例如：若口令登录漏洞"><a href="#例如：若口令登录漏洞" class="headerlink" title="例如：若口令登录漏洞"></a>例如：若口令登录漏洞</h4><p>流程描述+截图</p>
+<h4 id="例如：文件上传漏洞"><a href="#例如：文件上传漏洞" class="headerlink" title="例如：文件上传漏洞"></a>例如：文件上传漏洞</h4><p>流程描述+截图</p>
+<h2 id="风险评级"><a href="#风险评级" class="headerlink" title="风险评级"></a>风险评级</h2><p>通过整体漏洞评价，对网站/系统的风险进行评级及影响评级，简要描述即可。</p>
+<h2 id="漏洞详情及修复建议"><a href="#漏洞详情及修复建议" class="headerlink" title="漏洞详情及修复建议"></a>漏洞详情及修复建议</h2><p>（整理漏洞以及给出评价/修复建议）</p>
+<h3 id="例如：若口令登录漏洞-1"><a href="#例如：若口令登录漏洞-1" class="headerlink" title="例如：若口令登录漏洞"></a>例如：若口令登录漏洞</h3><table>
+<thead>
+<tr>
+<th align="left">风险评级</th>
+<th align="left">High</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">漏洞描述</td>
+<td align="left">漏洞描述</td>
+</tr>
+<tr>
+<td align="left">漏洞影响</td>
+<td align="left">漏洞影响</td>
+</tr>
+<tr>
+<td align="left">修复建议</td>
+<td align="left">修复建议</td>
+</tr>
+</tbody></table>
+<h3 id="例如：文件上传漏洞-1"><a href="#例如：文件上传漏洞-1" class="headerlink" title="例如：文件上传漏洞"></a>例如：文件上传漏洞</h3><table>
+<thead>
+<tr>
+<th align="left">风险评级</th>
+<th align="left">High</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">漏洞描述</td>
+<td align="left">漏洞描述</td>
+</tr>
+<tr>
+<td align="left">漏洞影响</td>
+<td align="left">漏洞影响</td>
+</tr>
+<tr>
+<td align="left">修复建议</td>
+<td align="left">修复建议</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/pentest/%E5%88%A9%E7%94%A8INF%20Script%E4%B8%8B%E8%BD%BD%E6%89%A7%E8%A1%8C%E6%8A%80%E6%9C%AF%E6%9D%A5%E8%BF%9B%E8%A1%8C%E7%BB%95%E8%BF%87%EF%BC%8C%E5%85%8D%E6%9D%80%E5%92%8C%E6%8C%81%E4%B9%85%E5%8C%96(%E4%BA%8C).html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/pentest/%E5%88%A9%E7%94%A8INF%20Script%E4%B8%8B%E8%BD%BD%E6%89%A7%E8%A1%8C%E6%8A%80%E6%9C%AF%E6%9D%A5%E8%BF%9B%E8%A1%8C%E7%BB%95%E8%BF%87%EF%BC%8C%E5%85%8D%E6%9D%80%E5%92%8C%E6%8C%81%E4%B9%85%E5%8C%96(%E4%BA%8C).html" class="post-title-link" itemprop="url">利用INF Script下载执行技术来进行绕过，免杀和持久化(二)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-03 11:12:00" itemprop="dateCreated datePublished" datetime="2018-05-03T11:12:00+08:00">2018-05-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/pentest/" itemprop="url" rel="index"><span itemprop="name">pentest</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/pentest/%E5%88%A9%E7%94%A8INF%20Script%E4%B8%8B%E8%BD%BD%E6%89%A7%E8%A1%8C%E6%8A%80%E6%9C%AF%E6%9D%A5%E8%BF%9B%E8%A1%8C%E7%BB%95%E8%BF%87%EF%BC%8C%E5%85%8D%E6%9D%80%E5%92%8C%E6%8C%81%E4%B9%85%E5%8C%96(%E4%BA%8C).html" class="post-meta-item leancloud_visitors" data-flag-title="利用INF Script下载执行技术来进行绕过，免杀和持久化(二)" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/pentest/%E5%88%A9%E7%94%A8INF%20Script%E4%B8%8B%E8%BD%BD%E6%89%A7%E8%A1%8C%E6%8A%80%E6%9C%AF%E6%9D%A5%E8%BF%9B%E8%A1%8C%E7%BB%95%E8%BF%87%EF%BC%8C%E5%85%8D%E6%9D%80%E5%92%8C%E6%8C%81%E4%B9%85%E5%8C%96(%E4%BA%8C).html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="pentest/利用INF Script下载执行技术来进行绕过，免杀和持久化(二).html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>之前，已经介绍过了利用INF文件的下载执行远程SCT脚本来绕过的技术。总体来看，这些方法可以被用来绕过应用程序白名单策略（AWL）（比如Default AppLocker策略），阻止主机上安装的安全产品的拦截并且达到隐秘持久化的目的。另外，还提到了一些其他的下载并执行的技术，用来做环境探测，也提到了作为防御者应该考虑的一些方面。<br>如果你还没有阅读之前的一篇文章，我建议你先读一下，因为我们会在展示如下技术、方法前使用到前面文章中提到的技术：</p>
+<ul>
+<li>InfDefaultInstall</li>
+<li>IExpress</li>
+<li>IEadvpack.dll (LaunchINFSection)</li>
+<li>IE4uinit</li>
+</ul>
+<h2 id="复习下Setupapi-dll-InstallHinfSection-和-Advpack-dll-LaunchINFSection"><a href="#复习下Setupapi-dll-InstallHinfSection-和-Advpack-dll-LaunchINFSection" class="headerlink" title="复习下Setupapi.dll (InstallHinfSection) 和 Advpack.dll (LaunchINFSection)"></a>复习下Setupapi.dll (InstallHinfSection) 和 Advpack.dll (LaunchINFSection)</h2>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">m0nst3r</p>
+  <div class="site-description" itemprop="description">m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/mr-m0nst3r" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mr-m0nst3r" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cnmichael@icloud.com" title="E-Mail → mailto:cnmichael@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">m0nst3r</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1275579962&web_id=1275579962"></script>
+  </div>
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"ve2qELpki5UClXHUdASXs3Sq-gzGzoHsz","app_key":"ihHY6qzhvTyzPA48CYV6O13N","security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://m0nst3r.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+
+</body>
+</html>

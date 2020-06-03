@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"m0nst3r.me","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[TOC] 程序三个参数1234567#include &lt;stdio.h&gt;int main()&amp;#123;	printf(&quot;a&#x3D;%d; b&#x3D;%d; c&#x3D;%d&quot;, 1, 2, 3);	return 0;&amp;#125;  九个参数1234567#include &lt;stdio.h&gt;int main()&amp;#123;	printf(&amp;q">
+<meta property="og:type" content="article">
+<meta property="og:title" content="逆向工程——printf()">
+<meta property="og:url" content="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94printf().html">
+<meta property="og:site_name" content="m0nst3r&#39;s blog">
+<meta property="og:description" content="[TOC] 程序三个参数1234567#include &lt;stdio.h&gt;int main()&amp;#123;	printf(&quot;a&#x3D;%d; b&#x3D;%d; c&#x3D;%d&quot;, 1, 2, 3);	return 0;&amp;#125;  九个参数1234567#include &lt;stdio.h&gt;int main()&amp;#123;	printf(&amp;q">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://m0nst3r.me/images/ee176c1db39c51e60a8d0eea845ce5a1efb237fd.png">
+<meta property="article:published_time" content="2017-11-30T03:12:00.000Z">
+<meta property="article:modified_time" content="2020-06-03T10:46:42.206Z">
+<meta property="article:author" content="m0nst3r">
+<meta property="article:tag" content="Web安全">
+<meta property="article:tag" content="渗透测试">
+<meta property="article:tag" content="网络安全">
+<meta property="article:tag" content="代码审计">
+<meta property="article:tag" content="逆向">
+<meta property="article:tag" content="编程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://m0nst3r.me/images/ee176c1db39c51e60a8d0eea845ce5a1efb237fd.png">
+
+<link rel="canonical" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94printf().html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>逆向工程——printf() | m0nst3r's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">m0nst3r's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello, Bugs</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94printf().html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          逆向工程——printf()
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-11-30 11:12:00" itemprop="dateCreated datePublished" datetime="2017-11-30T11:12:00+08:00">2017-11-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94printf().html" class="post-meta-item leancloud_visitors" data-flag-title="逆向工程——printf()" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94printf().html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="re/逆向工程——printf().html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<h2 id="程序"><a href="#程序" class="headerlink" title="程序"></a>程序</h2><h3 id="三个参数"><a href="#三个参数" class="headerlink" title="三个参数"></a>三个参数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;a&#x3D;%d; b&#x3D;%d; c&#x3D;%d&quot;, 1, 2, 3);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="九个参数"><a href="#九个参数" class="headerlink" title="九个参数"></a>九个参数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;a&#x3D;%d; b&#x3D;%d; c&#x3D;%d; d&#x3D;%d; e&#x3D;%d; f&#x3D;%d; g&#x3D;%d; h&#x3D;%d\n&quot;, 1, 2, 3, 4, 5, 6, 7, 8);</span><br><span class="line">	return 0; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>我们用这个程序来演示它的参数传递过程。</p>
+<h3 id="x86"><a href="#x86" class="headerlink" title="x86"></a>x86</h3><h4 id="x86：传递3个参数"><a href="#x86：传递3个参数" class="headerlink" title="x86：传递3个参数"></a>x86：传递3个参数</h4><h5 id="MSVC"><a href="#MSVC" class="headerlink" title="MSVC"></a>MSVC</h5><p>使用 MSVC 2010 express 编译上述程序，可得到下列汇编指令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$SG3830 DB		&#39;a&#x3D;%d; b&#x3D;%d; c&#x3D;%d’, 00H</span><br><span class="line">...</span><br><span class="line">	push 3</span><br><span class="line">	push 2</span><br><span class="line">	push 1</span><br><span class="line">	push OFFSET $SG3830 </span><br><span class="line">	call _printf</span><br><span class="line">	add esp, 16		;00000010H</span><br></pre></td></tr></table></figure>
+<p>这与最初的 Hello World 程序相差不多。我们看到 printf()函数的<code>参数以逆序存入栈</code>里，第一个参数在最后入栈。<br>在 32 位环境下，<code>32 位地址指针和 int 类型数据都占据 32 位/4 字节空间</code>。所以，我们这里的四个参数 总共占用 4×4=16(字节)的存储空间。<br>在调用函数之后，<code>ADD ESP, X</code>指令修正ESP寄存器中的栈指针。通常情况下，我们可以<code>通过call 之后的这条指令判断参数的数量:变量总数=X÷4</code>。<br>这种判断方法仅适用于调用约定为cdecl的程序。</p>
+<p>如果某个程序连续地调用多个函数，且调用函数的指令之间不夹杂其他指令，那么编译器可能把释放参数存储空间的<code>ADD ESP,X</code>指令进行合并，一次性地释放所有空间。例如:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">push a1 </span><br><span class="line">push a2 </span><br><span class="line">call ... </span><br><span class="line">...</span><br><span class="line">push a1 </span><br><span class="line">call ... </span><br><span class="line">...</span><br><span class="line">push a1 </span><br><span class="line">push a2 </span><br><span class="line">push a3 </span><br><span class="line">call ... </span><br><span class="line">add esp, 24</span><br></pre></td></tr></table></figure>
+<h5 id="使用OllyDBG调试"><a href="#使用OllyDBG调试" class="headerlink" title="使用OllyDBG调试"></a>使用OllyDBG调试</h5><p>将MSVC编译成的文件放进OD，并通过设置断点的方式，我们可以来到main()函数处（此前需要跳过多处ntdll、crt等代码）。main()函数如图：<br><img src="/images/ee176c1db39c51e60a8d0eea845ce5a1efb237fd.png" alt="屏幕快照 2017-12-04 下午12.13.00.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">004115D0    55              push ebp</span><br><span class="line">004115D1    8BEC            mov ebp,esp</span><br><span class="line">004115D3    83EC 40         sub esp,0x40</span><br><span class="line">004115D6    53              push ebx</span><br><span class="line">004115D7    56              push esi</span><br><span class="line">004115D8    57              push edi</span><br><span class="line">004115D9    6A 03           push 0x3</span><br><span class="line">004115DB    6A 02           push 0x2</span><br><span class="line">004115DD    6A 01           push 0x1</span><br><span class="line">004115DF    68 305B4100     push ConsoleA.00415B30                   ; ASCII &quot;a&#x3D;%d, a&#x3D;%d, c&#x3D;%d&quot;</span><br><span class="line">004115E4    E8 83FCFFFF     call ConsoleA.0041126C</span><br><span class="line">004115E9    83C4 10         add esp,0x10</span><br><span class="line">004115EC    33C0            xor eax,eax                              ; ucrtbase.__argc</span><br><span class="line">004115EE    5F              pop edi                                  ; ConsoleA.00411A5E</span><br><span class="line">004115EF    5E              pop esi                                  ; ConsoleA.00411A5E</span><br><span class="line">004115F0    5B              pop ebx                                  ; ConsoleA.00411A5E</span><br><span class="line">004115F1    8BE5            mov esp,ebp</span><br><span class="line">004115F3    5D              pop ebp                                  ; ConsoleA.00411A5E</span><br></pre></td></tr></table></figure>
+<h3 id="x64"><a href="#x64" class="headerlink" title="x64"></a>x64</h3><h4 id="x64：传递3个参数"><a href="#x64：传递3个参数" class="headerlink" title="x64：传递3个参数"></a>x64：传递3个参数</h4><h5 id="使用radare2调试"><a href="#使用radare2调试" class="headerlink" title="使用radare2调试"></a>使用radare2调试</h5><p>使用gcc编译源代码，之后使用radare2进行调试，结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~&#x2F;re# r2 a.out </span><br><span class="line">[0x00000540]&gt; aaa</span><br><span class="line">[x] Analyze all flags starting with sym. and entry0 (aa)</span><br><span class="line">[x] Analyze len bytes of instructions for references (aar)</span><br><span class="line">[x] Analyze function calls (aac)</span><br><span class="line">[x] Use -AA or aaaa to perform additional experimental analysis.</span><br><span class="line">[x] Constructing a function name for fcn.* and sym.func.* functions (aan)</span><br><span class="line">[0x00000540]&gt; s main</span><br><span class="line">[0x0000064a]&gt; pdf</span><br><span class="line">            ;-- main:</span><br><span class="line">&#x2F; (fcn) sym.main 43</span><br><span class="line">|   sym.main ();</span><br><span class="line">|              ; DATA XREF from 0x0000055d (entry0)</span><br><span class="line">|           0x0000064a      55             push rbp</span><br><span class="line">|           0x0000064b      4889e5         mov rbp, rsp</span><br><span class="line">|           0x0000064e      b903000000     mov ecx, 3</span><br><span class="line">|           0x00000653      ba02000000     mov edx, 2</span><br><span class="line">|           0x00000658      be01000000     mov esi, 1</span><br><span class="line">|           0x0000065d      488d3da00000.  lea rdi, qword str.a__d__b__d__c__d_n ; 0x704 ; &quot;a&#x3D;%d, b&#x3D;%d, c&#x3D;%d\n&quot;</span><br><span class="line">|           0x00000664      b800000000     mov eax, 0</span><br><span class="line">|           0x00000669      e8b2feffff     call sym.imp.printf         ; int printf(const char *format)</span><br><span class="line">|           0x0000066e      b800000000     mov eax, 0</span><br><span class="line">|           0x00000673      5d             pop rbp</span><br><span class="line">\           0x00000674      c3             ret</span><br><span class="line">[0x0000064a]&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="x64：传递9个参数"><a href="#x64：传递9个参数" class="headerlink" title="x64：传递9个参数"></a>x64：传递9个参数</h4><p>GCC编译，使用radare2调试：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~&#x2F;re# .&#x2F;a.out </span><br><span class="line">a&#x3D;1; b&#x3D;2; c&#x3D;3; d&#x3D;4; e&#x3D;5; f&#x3D;6; g&#x3D;7; h&#x3D;8</span><br><span class="line">root@kali:~&#x2F;re# r2 .&#x2F;a.out </span><br><span class="line">[0x00000540]&gt; aaa</span><br><span class="line">[x] Analyze all flags starting with sym. and entry0 (aa)</span><br><span class="line">[x] Analyze len bytes of instructions for references (aar)</span><br><span class="line">[x] Analyze function calls (aac)</span><br><span class="line">[x] Use -AA or aaaa to perform additional experimental analysis.</span><br><span class="line">[x] Constructing a function name for fcn.* and sym.func.* functions (aan)</span><br><span class="line">[0x00000540]&gt; s main</span><br><span class="line">[0x0000064a]&gt; pdf</span><br><span class="line">            ;-- main:</span><br><span class="line">&#x2F; (fcn) sym.main 69</span><br><span class="line">|   sym.main ();</span><br><span class="line">|              ; DATA XREF from 0x0000055d (entry0)</span><br><span class="line">|           0x0000064a      55             push rbp</span><br><span class="line">|           0x0000064b      4889e5         mov rbp, rsp</span><br><span class="line">|           0x0000064e      4883ec08       sub rsp, 8</span><br><span class="line">|           0x00000652      6a08           push 8</span><br><span class="line">|           0x00000654      6a07           push 7</span><br><span class="line">|           0x00000656      6a06           push 6</span><br><span class="line">|           0x00000658      41b905000000   mov r9d, 5</span><br><span class="line">|           0x0000065e      41b804000000   mov r8d, 4</span><br><span class="line">|           0x00000664      b903000000     mov ecx, 3</span><br><span class="line">|           0x00000669      ba02000000     mov edx, 2</span><br><span class="line">|           0x0000066e      be01000000     mov esi, 1</span><br><span class="line">|           0x00000673      488d3d9e0000.  lea rdi, qword str.a__d__b__d__c__d__d__d__e__d__f__d__g__d__h__d_n ; 0x718 ; &quot;a&#x3D;%d; b&#x3D;%d; c&#x3D;%d; d&#x3D;%d; e&#x3D;%d; f&#x3D;%d; g&#x3D;%d; h&#x3D;%d\n&quot;</span><br><span class="line">|           0x0000067a      b800000000     mov eax, 0</span><br><span class="line">|           0x0000067f      e89cfeffff     call sym.imp.printf         ; int printf(const char *format)</span><br><span class="line">|           0x00000684      4883c420       add rsp, 0x20</span><br><span class="line">|           0x00000688      b800000000     mov eax, 0</span><br><span class="line">|           0x0000068d      c9             leave</span><br><span class="line">\           0x0000068e      c3             ret</span><br><span class="line">[0x0000064a]&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="其他系统"><a href="#其他系统" class="headerlink" title="其他系统"></a>其他系统</h3><p>关于ARM、MIPS系统对于printf()函数的处理，请各位同学参考《RE4B》一书。有能力的同学可自行编译分析。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>调用函数的时候，程序参数的传递过程大体如下：</p>
+<h3 id="x86-1"><a href="#x86-1" class="headerlink" title="x86"></a>x86</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">push 	3rd argument</span><br><span class="line">push 	2nd argument</span><br><span class="line">push 	1st argument</span><br><span class="line">call 	function</span><br><span class="line">; modify stack pointer if needed</span><br></pre></td></tr></table></figure>
+<h3 id="x64-msvc"><a href="#x64-msvc" class="headerlink" title="x64 - msvc"></a>x64 - msvc</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mov	rcx,	1st argument</span><br><span class="line">mov	rdx,	2nd argument</span><br><span class="line">mov	r8,	3rd argument</span><br><span class="line">mov	r9,	4th argument</span><br><span class="line">...</span><br><span class="line">push	5th, 6th argument, etc</span><br><span class="line">call	function</span><br><span class="line">; modify stack pointer if needed</span><br></pre></td></tr></table></figure>
+<h3 id="x64-gcc"><a href="#x64-gcc" class="headerlink" title="x64 - gcc"></a>x64 - gcc</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mov	rdi, 1st argument</span><br><span class="line">mov	rsi, 2nd argument</span><br><span class="line">mov	rdx, 3rd argument</span><br><span class="line">mov	rcx, 4th argument</span><br><span class="line">mov	r8, 5th argument</span><br><span class="line">mov	r9, 6th argument</span><br><span class="line">...</span><br><span class="line">push	7th, 8th argument, etc</span><br><span class="line">call function</span><br><span class="line">; modify stack pointer if needed</span><br></pre></td></tr></table></figure>
+<h3 id="ARM"><a href="#ARM" class="headerlink" title="ARM"></a>ARM</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mov	r0, 1st argument</span><br><span class="line">mov	r1, 2nd argument</span><br><span class="line">mov	r2, 3rd argument</span><br><span class="line">mov	r3, 4th argument</span><br><span class="line">; pass 5th, 6th argument, etc</span><br><span class="line">bl		function</span><br><span class="line">; modify stack pointer if needed, IN STACK</span><br></pre></td></tr></table></figure>
+<h3 id="ARM64"><a href="#ARM64" class="headerlink" title="ARM64"></a>ARM64</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mov	x0, 1st argument</span><br><span class="line">mov	x1, 2nd argument</span><br><span class="line">mov	x2, 3rd argument</span><br><span class="line">mov	x3, 4th argument</span><br><span class="line">mov	x4, 5th argument</span><br><span class="line">mov	x5, 6th argument</span><br><span class="line">mov	x6, 7th argument</span><br><span class="line">; pass 9th, 10th argument, etc, IN STACK</span><br><span class="line">bl		function</span><br><span class="line">; modify stack pointer if needed</span><br></pre></td></tr></table></figure>
+<h3 id="MIPS-O32调用约定"><a href="#MIPS-O32调用约定" class="headerlink" title="MIPS - O32调用约定"></a>MIPS - O32调用约定</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">li	$4, 1st  argument		;$a0</span><br><span class="line">li	$5, 2nd argument		;$a1</span><br><span class="line">li	$6, 3rd argument		;$a2</span><br><span class="line">li	$7, 4th argument		;$a3</span><br><span class="line">; pass 5th, 6th argument, etc, IN STACK</span><br><span class="line">lw	temp_reg, address of function</span><br><span class="line">jalr	temp_reg</span><br></pre></td></tr></table></figure>
+
+<h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><p>选择一个源代码，在gcc或msvc上编译，并用<code>ollydbg</code>或<code>radare2</code>或<code>gdb</code>或<code>IDA</code>进行分析。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%A0%88.html" rel="prev" title="逆向工程——栈">
+      <i class="fa fa-chevron-left"></i> 逆向工程——栈
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E5%8F%82%E6%95%B0%E8%8E%B7%E5%8F%96%E3%80%81%E8%BF%94%E5%9B%9E%E5%80%BC%E3%80%81%E6%8C%87%E9%92%88%E3%80%81GOTO%E8%AF%AD%E5%8F%A5.html" rel="next" title="逆向工程——参数获取、返回值、指针、GOTO语句">
+      逆向工程——参数获取、返回值、指针、GOTO语句 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#程序"><span class="nav-number">1.</span> <span class="nav-text">程序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三个参数"><span class="nav-number">1.1.</span> <span class="nav-text">三个参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#九个参数"><span class="nav-number">1.2.</span> <span class="nav-text">九个参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x86"><span class="nav-number">1.3.</span> <span class="nav-text">x86</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#x86：传递3个参数"><span class="nav-number">1.3.1.</span> <span class="nav-text">x86：传递3个参数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#MSVC"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">MSVC</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用OllyDBG调试"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">使用OllyDBG调试</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x64"><span class="nav-number">1.4.</span> <span class="nav-text">x64</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#x64：传递3个参数"><span class="nav-number">1.4.1.</span> <span class="nav-text">x64：传递3个参数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#使用radare2调试"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">使用radare2调试</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#x64：传递9个参数"><span class="nav-number">1.4.2.</span> <span class="nav-text">x64：传递9个参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他系统"><span class="nav-number">1.5.</span> <span class="nav-text">其他系统</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#x86-1"><span class="nav-number">2.1.</span> <span class="nav-text">x86</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x64-msvc"><span class="nav-number">2.2.</span> <span class="nav-text">x64 - msvc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x64-gcc"><span class="nav-number">2.3.</span> <span class="nav-text">x64 - gcc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARM"><span class="nav-number">2.4.</span> <span class="nav-text">ARM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARM64"><span class="nav-number">2.5.</span> <span class="nav-text">ARM64</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MIPS-O32调用约定"><span class="nav-number">2.6.</span> <span class="nav-text">MIPS - O32调用约定</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作业"><span class="nav-number">3.</span> <span class="nav-text">作业</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">m0nst3r</p>
+  <div class="site-description" itemprop="description">m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/mr-m0nst3r" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mr-m0nst3r" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cnmichael@icloud.com" title="E-Mail → mailto:cnmichael@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">m0nst3r</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1275579962&web_id=1275579962"></script>
+  </div>
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"ve2qELpki5UClXHUdASXs3Sq-gzGzoHsz","app_key":"ihHY6qzhvTyzPA48CYV6O13N","security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://m0nst3r.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94printf().html";
+    this.page.identifier = "re/逆向工程——printf().html";
+    this.page.title = "逆向工程——printf()";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://m0nst3r.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

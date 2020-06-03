@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"m0nst3r.me","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="参考文档：《简明 x86 汇编语言教程》作者：司徒彦南 什么是汇编汇编语言是一种最接近计算机核心的编码语言。不同于任何高级语言，汇编语言几乎可以完全和机器语言一一对应。汇编语言就是机器语言的一种可以被人读懂的形式，只不过它更容易记忆。 学习汇编语言，你需要1。 胆量。不要害怕去接触那些计算机内部工作机制。2。 知识。了解计算机常用的数制，特别是二进制、十六进制、八进制，以及计算机保存数据的方法。3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="逆向工程——汇编基础（一）">
+<meta property="og:url" content="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89.html">
+<meta property="og:site_name" content="m0nst3r&#39;s blog">
+<meta property="og:description" content="参考文档：《简明 x86 汇编语言教程》作者：司徒彦南 什么是汇编汇编语言是一种最接近计算机核心的编码语言。不同于任何高级语言，汇编语言几乎可以完全和机器语言一一对应。汇编语言就是机器语言的一种可以被人读懂的形式，只不过它更容易记忆。 学习汇编语言，你需要1。 胆量。不要害怕去接触那些计算机内部工作机制。2。 知识。了解计算机常用的数制，特别是二进制、十六进制、八进制，以及计算机保存数据的方法。3">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://m0nst3r.me/images/0680c5041bb56f5e04b6ae4a236b69a8b743239e.png">
+<meta property="og:image" content="https://m0nst3r.me/images/ba55d64305b1fd50da59b0a26241808a801d3ac9.png">
+<meta property="article:published_time" content="2017-11-12T03:12:00.000Z">
+<meta property="article:modified_time" content="2020-06-03T10:46:42.206Z">
+<meta property="article:author" content="m0nst3r">
+<meta property="article:tag" content="Web安全">
+<meta property="article:tag" content="渗透测试">
+<meta property="article:tag" content="网络安全">
+<meta property="article:tag" content="代码审计">
+<meta property="article:tag" content="逆向">
+<meta property="article:tag" content="编程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://m0nst3r.me/images/0680c5041bb56f5e04b6ae4a236b69a8b743239e.png">
+
+<link rel="canonical" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>逆向工程——汇编基础（一） | m0nst3r's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">m0nst3r's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello, Bugs</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          逆向工程——汇编基础（一）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-11-12 11:12:00" itemprop="dateCreated datePublished" datetime="2017-11-12T11:12:00+08:00">2017-11-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89.html" class="post-meta-item leancloud_visitors" data-flag-title="逆向工程——汇编基础（一）" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="re/逆向工程——汇编基础（一）.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>参考文档：《简明 x86 汇编语言教程》作者：司徒彦南</p>
+<h2 id="什么是汇编"><a href="#什么是汇编" class="headerlink" title="什么是汇编"></a>什么是汇编</h2><p>汇编语言是一种最接近计算机核心的编码语言。不同于任何高级语言，汇编语言几乎可以完全和机器语言一一对应。<br>汇编语言就是机器语言的一种可以被人读懂的形式，只不过它更容易记忆。</p>
+<h2 id="学习汇编语言，你需要"><a href="#学习汇编语言，你需要" class="headerlink" title="学习汇编语言，你需要"></a>学习汇编语言，你需要</h2><p>1。 胆量。不要害怕去接触那些计算机内部工作机制。<br>2。 知识。了解计算机常用的数制，特别是二进制、十六进制、八进制，以及计算机保存数据的方法。<br>3。 开放。接受汇编语言与高级语言的差异，而不是去指责它如何的不好读。<br>4。 经验。要求你拥有任意其他编程语言的一点点编程经验。<br>5。 头脑。脑子是个好东西。</p>
+<h2 id="认识处理器"><a href="#认识处理器" class="headerlink" title="认识处理器"></a>认识处理器</h2><p>汇编语言被编译成机器语言之后，将有处理器（CPU）来执行。</p>
+<h3 id="典型处理器的主要任务"><a href="#典型处理器的主要任务" class="headerlink" title="典型处理器的主要任务"></a>典型处理器的主要任务</h3><p>1。 从内存中获取机器语言指令，译码，执行。<br>2。 根据指令代码管理它自己的寄存器。<br>3。 根据指令或自己的需要修改内存的内容。<br>4。 响应其他硬件的中断请求。</p>
+<h3 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h3><p>寄存器位于CPU中，可以保存特定长度的数据。某些寄存器中保存的数据对于系统的运行有特殊的意义。<br>寄存器可以被装入数据，你可以在不同寄存器之间移动这些数据，或者做类似的事情，如四则运算、位运算等操作。</p>
+<h3 id="通用寄存器的表示方法"><a href="#通用寄存器的表示方法" class="headerlink" title="通用寄存器的表示方法"></a>通用寄存器的表示方法</h3><p>80386上的通用寄存器<br><img src="/images/0680c5041bb56f5e04b6ae4a236b69a8b743239e.png" alt="微信截图_20171112113939.png"><br>上图中，数字表示的是<code>位</code>。可以看出，<code>EAX</code>是一个32-bit寄存器。同时，它的低16-bit又可以通过<code>AX</code>这个名字来访问；AX又被分为高、低8-bit两部分，分别由<code>AH</code>和<code>AL</code>表示。</p>
+<h3 id="通用寄存器"><a href="#通用寄存器" class="headerlink" title="通用寄存器"></a>通用寄存器</h3><p>以下是通用寄存器的名称和习惯用法。</p>
+<h4 id="EAX"><a href="#EAX" class="headerlink" title="EAX"></a>EAX</h4><p><code>EAX</code>，32-bit，通用寄存器，相对于其他寄存器，在<code>进行运算</code>方面比较常用。在保护模式中，也可以作为内存偏移指针（此时，DS作为<code>段寄存器</code>或<code>选择器</code>）。<br>####EBX<br><code>EBX</code>，32-bit，通用寄存器。通常作为<code>内存偏移指针</code>使用（相对于EAX、ECX、EDX），<code>DS</code>是默认的<code>段寄存器</code>或<code>选择器</code>。在保护模式中，同样可以起这个作用。<br>####ECX<br><code>ECX</code>，32-bit，通用寄存器，通常用于<code>特定指令的计数</code>。在保护模式中，也可以作为内存偏移指针（此时，DS作为寄存器或段选择器）。<br>####EDX<br><code>EDX</code>，32-bit，通用寄存器。在某些运算中作为<code>EAX的溢出寄存器</code>（例如乘、除）。在保护模式中，也可以作为内存偏移指针（此时，DS作为寄存器或段选择器）。<br><strong>上述寄存器同EAX一样包括对应的16-bit 和8-bit分组</strong></p>
+<h4 id="ESI"><a href="#ESI" class="headerlink" title="ESI"></a>ESI</h4><p><code>ESI</code>，32-bit，通常在<code>内存操作指令</code>中作为<code>源地址指针</code>使用。当然，ESI可以被装入任意的数制，但通常没有人把它当做通用寄存器来用。DS作为寄存器或段选择器。</p>
+<h4 id="EDI"><a href="#EDI" class="headerlink" title="EDI"></a>EDI</h4><p><code>EDI</code>，32-bit，通常在<code>内存操作指令</code>中作为<code>目的地址指针</code>使用。</p>
+<h4 id="EBP"><a href="#EBP" class="headerlink" title="EBP"></a>EBP</h4><p><code>EBP</code>，32-bit，也是作为<code>指针</code>的寄存器。通常，它被高级语言编译器用以建造<code>堆栈帧</code>来保存函数或过程的<code>局部变量</code>。<code>SS</code>是它的默认段寄存器或选择器。<br><strong>注意，这三个寄存器<code>没有</code>对应的<code>8-bit分组</code>。但可以通过<code>SI</code>、<code>DI</code>，<code>BP</code>分别访问他们的<code>低16位</code>。</strong></p>
+<h3 id="段寄存器和选择器"><a href="#段寄存器和选择器" class="headerlink" title="段寄存器和选择器"></a>段寄存器和选择器</h3><p>实模式下的段寄存器到保护模式下，摇身一变就成了选择器。不同的是，实模式下的<code>段选择器</code>是<code>16-bit</code>的，而保护模式下的<code>选择器</code>是<code>32-bit</code>的。</p>
+<h4 id="CS-代码段"><a href="#CS-代码段" class="headerlink" title="CS 代码段"></a>CS 代码段</h4><p><code>CS</code>，代码段，或代码选择器。同<code>IP寄存器</code>一同<code>指向当前正在执行的地址</code>。处理器执行时从这个寄存器指向的段（实模式）或内存（保护模式）中获取指令。除了跳转或其他分支指令外，你无法修改这个寄存器的内容。</p>
+<h4 id="DS-数据段"><a href="#DS-数据段" class="headerlink" title="DS 数据段"></a>DS 数据段</h4><p><code>DS</code>，数据段，或数据选择器。这个寄存器的<code>低16-bit</code>连同<code>ESI</code>一同<code>指向指令将要执行的内存</code>。同时，所有的内存操作指令默认情况下都用它指定操作段（实模式）或内存（保护模式下作为选择器）。这个寄存器<code>可被装入任意数值</code>，做法是先把数据给<code>AX</code>，在把它从AX传送给<code>DS</code>。当然也可通过堆栈来做。</p>
+<h4 id="ES-附加段"><a href="#ES-附加段" class="headerlink" title="ES 附加段"></a>ES 附加段</h4><p><code>ES</code>，附加段，或附加选择器。这个寄存器的<code>低16-bit</code>连同<code>EDI</code>一同<code>指向指令将要处理的内存</code>。其他同<code>DS</code>。</p>
+<h4 id="FS"><a href="#FS" class="headerlink" title="FS"></a>FS</h4><p><code>FS</code>，F段或F选择器。可以用这个寄存器<code>作为默认段寄存器或选择器的一个替代品</code>。</p>
+<h4 id="GS"><a href="#GS" class="headerlink" title="GS"></a>GS</h4><p><code>GS</code>，G段或G选择器。它和<code>FS</code>几乎完全一样。</p>
+<h4 id="SS"><a href="#SS" class="headerlink" title="SS"></a>SS</h4><p><code>SS</code>，堆栈段或堆栈选择器。这个寄存器的<code>低16-bit</code>连同<code>ESP</code>一同<code>指向下一次堆栈操作（push和pop）所要使用的堆栈地址</code>。这个寄存器也可以被装入任意数值，可通过入栈和出站操作来赋值。<br><strong>注意，一定不要在初学汇编阶段把这些寄存器弄混。段寄存器或选择器，在没有指定的情况下都是使用默认的那个。这句话在现在看来可能有点稀里糊涂，不过你很快会在后面知道如何去做。</strong></p>
+<h3 id="特殊寄存器"><a href="#特殊寄存器" class="headerlink" title="特殊寄存器"></a>特殊寄存器</h3><h4 id="EIP"><a href="#EIP" class="headerlink" title="EIP"></a>EIP</h4><p><code>EIP</code>，32-bit，这个寄存器非常重要，同<code>CS</code>一同<code>指向即将执行的那条指令的地址</code>。不能够直接修改这个寄存器的值，修改它的唯一方法是跳转或分支指令。（CS是默认的段或选择器）</p>
+<h4 id="ESP"><a href="#ESP" class="headerlink" title="ESP"></a>ESP</h4><p><code>ESP</code>，32-bit，这个寄存器<code>指向堆栈中即将被操作的那个地址</code>。尽管可以修改它的值，但并不提倡这样做，可能会破坏堆栈。（SS是默认的段或选择器）<br><code>IP</code>： Instruction Pointer，指令指针。<br><code>SP</code>： Stack Pointer，堆栈指针。</p>
+<h3 id="标志寄存器"><a href="#标志寄存器" class="headerlink" title="标志寄存器"></a>标志寄存器</h3><p><img src="/images/ba55d64305b1fd50da59b0a26241808a801d3ac9.png" alt="微信截图_20171112154249.png"></p>
+<h3 id="其他寄存器"><a href="#其他寄存器" class="headerlink" title="其他寄存器"></a>其他寄存器</h3><p><code>CR0</code>、<code>CR2</code>、<code>CR3</code>（控制寄存器）。例如<code>CR0</code>的作用是<code>切换实模式和保护模式</code>。<br><code>D0</code>、<code>D1</code>、<code>D2</code>、<code>D3</code>、<code>D6</code>和<code>D7</code>（调试寄存器），他们可以<code>作为调试器的硬件支持来设置条件断点</code>。<br><code>TR3</code>、<code>TR4</code>、<code>TR5</code>、<code>TR6</code>、<code>TR?</code>寄存器（测试寄存器）用于某些<code>条件测试</code>。</p>
+<h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><p>整理学习笔记，把学到的东西用自己的语言重新记录一遍</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/sqli/SQL%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94update%E6%B3%A8%E5%85%A5.html" rel="prev" title="SQL注入学习——update注入">
+      <i class="fa fa-chevron-left"></i> SQL注入学习——update注入
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%EF%BC%89.html" rel="next" title="逆向工程——汇编基础（二）">
+      逆向工程——汇编基础（二） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是汇编"><span class="nav-number">1.</span> <span class="nav-text">什么是汇编</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#学习汇编语言，你需要"><span class="nav-number">2.</span> <span class="nav-text">学习汇编语言，你需要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#认识处理器"><span class="nav-number">3.</span> <span class="nav-text">认识处理器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#典型处理器的主要任务"><span class="nav-number">3.1.</span> <span class="nav-text">典型处理器的主要任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寄存器"><span class="nav-number">3.2.</span> <span class="nav-text">寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通用寄存器的表示方法"><span class="nav-number">3.3.</span> <span class="nav-text">通用寄存器的表示方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通用寄存器"><span class="nav-number">3.4.</span> <span class="nav-text">通用寄存器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#EAX"><span class="nav-number">3.4.1.</span> <span class="nav-text">EAX</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ESI"><span class="nav-number">3.4.2.</span> <span class="nav-text">ESI</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#EDI"><span class="nav-number">3.4.3.</span> <span class="nav-text">EDI</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#EBP"><span class="nav-number">3.4.4.</span> <span class="nav-text">EBP</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#段寄存器和选择器"><span class="nav-number">3.5.</span> <span class="nav-text">段寄存器和选择器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CS-代码段"><span class="nav-number">3.5.1.</span> <span class="nav-text">CS 代码段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DS-数据段"><span class="nav-number">3.5.2.</span> <span class="nav-text">DS 数据段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ES-附加段"><span class="nav-number">3.5.3.</span> <span class="nav-text">ES 附加段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FS"><span class="nav-number">3.5.4.</span> <span class="nav-text">FS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GS"><span class="nav-number">3.5.5.</span> <span class="nav-text">GS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SS"><span class="nav-number">3.5.6.</span> <span class="nav-text">SS</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊寄存器"><span class="nav-number">3.6.</span> <span class="nav-text">特殊寄存器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#EIP"><span class="nav-number">3.6.1.</span> <span class="nav-text">EIP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ESP"><span class="nav-number">3.6.2.</span> <span class="nav-text">ESP</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标志寄存器"><span class="nav-number">3.7.</span> <span class="nav-text">标志寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他寄存器"><span class="nav-number">3.8.</span> <span class="nav-text">其他寄存器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作业"><span class="nav-number">4.</span> <span class="nav-text">作业</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">m0nst3r</p>
+  <div class="site-description" itemprop="description">m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/mr-m0nst3r" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mr-m0nst3r" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cnmichael@icloud.com" title="E-Mail → mailto:cnmichael@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">m0nst3r</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1275579962&web_id=1275579962"></script>
+  </div>
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"ve2qELpki5UClXHUdASXs3Sq-gzGzoHsz","app_key":"ihHY6qzhvTyzPA48CYV6O13N","security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://m0nst3r.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89.html";
+    this.page.identifier = "re/逆向工程——汇编基础（一）.html";
+    this.page.title = "逆向工程——汇编基础（一）";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://m0nst3r.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"m0nst3r.me","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="[TOC] case陈述式较少的情况1234567891011121314151617#include &lt;stdio.h&gt;voif f( int a)&amp;#123;	switch (a)	&amp;#123;		case 0: printf(&quot;zero\n&quot;); break;		case 1: printf(&quot;one\n&quot;); break;		case 2: printf(&quot;two\n&quot;); b">
+<meta property="og:type" content="article">
+<meta property="og:title" content="逆向工程——switch()">
+<meta property="og:url" content="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94switch().html">
+<meta property="og:site_name" content="m0nst3r&#39;s blog">
+<meta property="og:description" content="[TOC] case陈述式较少的情况1234567891011121314151617#include &lt;stdio.h&gt;voif f( int a)&amp;#123;	switch (a)	&amp;#123;		case 0: printf(&quot;zero\n&quot;); break;		case 1: printf(&quot;one\n&quot;); break;		case 2: printf(&quot;two\n&quot;); b">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-12-13T03:12:00.000Z">
+<meta property="article:modified_time" content="2020-06-03T10:46:42.206Z">
+<meta property="article:author" content="m0nst3r">
+<meta property="article:tag" content="Web安全">
+<meta property="article:tag" content="渗透测试">
+<meta property="article:tag" content="网络安全">
+<meta property="article:tag" content="代码审计">
+<meta property="article:tag" content="逆向">
+<meta property="article:tag" content="编程">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94switch().html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>逆向工程——switch() | m0nst3r's blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">m0nst3r's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello, Bugs</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94switch().html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          逆向工程——switch()
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-12-13 11:12:00" itemprop="dateCreated datePublished" datetime="2017-12-13T11:12:00+08:00">2017-12-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94switch().html" class="post-meta-item leancloud_visitors" data-flag-title="逆向工程——switch()" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94switch().html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="re/逆向工程——switch().html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[TOC]</p>
+<h2 id="case陈述式较少的情况"><a href="#case陈述式较少的情况" class="headerlink" title="case陈述式较少的情况"></a>case陈述式较少的情况</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function">voif <span class="title">f</span><span class="params">( <span class="keyword">int</span> a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">switch</span> (a)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">0</span>: <span class="built_in">printf</span>(<span class="string">"zero\n"</span>); <span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">1</span>: <span class="built_in">printf</span>(<span class="string">"one\n"</span>); <span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">2</span>: <span class="built_in">printf</span>(<span class="string">"two\n"</span>); <span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">default</span>: <span class="built_in">printf</span>(<span class="string">"sth unknown\n"</span>); <span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	f(<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="x86"><a href="#x86" class="headerlink" title="x86"></a>x86</h3><h4 id="未优化的MSVC"><a href="#未优化的MSVC" class="headerlink" title="未优化的MSVC"></a>未优化的MSVC</h4><p>指令清单如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">tv64 &#x3D; -4			; size &#x3D; 4</span><br><span class="line">_a$ &#x3D; 8 			; size &#x3D; 4</span><br><span class="line">_f		PROC</span><br><span class="line">	push ebp</span><br><span class="line">	mov ebp,esp</span><br><span class="line">	push ecx</span><br><span class="line">	mov eax, DWORD PTR _a$[ebp]</span><br><span class="line">	mov DWORD PTR tv64[ebp], eax</span><br><span class="line">	cmp DWORD PTR tv64[ebp], 0</span><br><span class="line">	je SHORT $LN4@f</span><br><span class="line">	cmp DWORD PTR tv64[ebp], 1</span><br><span class="line">	je SHORT $LN3@f</span><br><span class="line">	cmp DWORD PTR tv64[ebp], 2</span><br><span class="line">	je SHORT $LN2@f</span><br><span class="line">	jmp SHORT $LN1@f</span><br><span class="line">$LN4@f:</span><br><span class="line">	push OFFSET $SG739 ; &#39;zero&#39;, 0aH, 00H</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line">	jmp SHORT $LN7@f</span><br><span class="line">$LN3@f:</span><br><span class="line">	push OFFSET $SG741 ; &#39;one&#39;, 0aH, 00H</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line">	jmp SHORT $LN7@f</span><br><span class="line">$LN2@f:</span><br><span class="line">	push OFFSET $SG743 ; &#39;two&#39;, 0aH, 00H</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line">	jmp SHORT $LN7@f</span><br><span class="line">$LN1@f:</span><br><span class="line">	push OFFSET $SG745 ; &#39;sth unknown&#39;, 0aH, 00H</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line">	jmp SHORT $LN7@f</span><br><span class="line">$LN7@f:</span><br><span class="line">	mov esp, ebp</span><br><span class="line">	pop ebp</span><br><span class="line">	ret 0</span><br><span class="line">_f		ENDP</span><br></pre></td></tr></table></figure>
+
+<p>上面这个函数的源程序相当于：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">void f (int a)</span><br><span class="line">&#123;</span><br><span class="line">	if (a&#x3D;&#x3D;0)</span><br><span class="line">		printf (&quot;zero\n&quot;); </span><br><span class="line">	else if (a&#x3D;&#x3D;1)</span><br><span class="line">		printf (&quot;one\n&quot;); </span><br><span class="line">	else if (a&#x3D;&#x3D;2)</span><br><span class="line">		printf (&quot;two\n&quot;);</span><br><span class="line">elseprintf (&quot;sth unknown\n&quot;); &#125;;</span><br></pre></td></tr></table></figure>
+<p>如果仅从汇编代码入手，那么我们无法判断上述函数是一个判断表达式较少的switch()语句、还是一组 if()语句。确实可以认为，switch()语句是一种旨在简化大量嵌套if()语句而设计的语法糖。<br>若用GCC 4.4.1编译器编译这个程序，无论是否启用其最大程度优化的选项<code>-O3</code>，生成的汇编代码也和 MSVC 编译出来的代码没有什么区别。</p>
+<h4 id="优化的MSVC"><a href="#优化的MSVC" class="headerlink" title="优化的MSVC"></a>优化的MSVC</h4><p>若经指令<code>cl 1.c /Fa1.asm /Ox</code>编译上述程序，可得到如下指令清单：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">_a$ &#x3D; 8 	; size &#x3D; 4</span><br><span class="line">_f 		PROC</span><br><span class="line">	mov eax, DWORD PTR _a$[esp-4]</span><br><span class="line">	sub eax, 0</span><br><span class="line">	je SHORT $LN4@f</span><br><span class="line">	sub eax, 1</span><br><span class="line">	je SHORT $LN3@f</span><br><span class="line">	sub eax, 1</span><br><span class="line">	je SHORT $LN2@f</span><br><span class="line">	mov DWORD PTR _a$[esp-4], OFFSET $SG791 	; &#39;sth unknown&#39;, 0aH, 00H </span><br><span class="line">	jmp _printf</span><br><span class="line">$LN2@f:</span><br><span class="line">	mov DWORD PTR _a$[esp-4], OFFSET $SG789 ; &#39;two&#39;, 0aH, 00H </span><br><span class="line">	jmp _printf</span><br><span class="line">$LN3@f:</span><br><span class="line">		mov DWORD PTR _a$[esp-4], OFFSET $SG787 ; &#39;one&#39;, 0aH, 00H </span><br><span class="line">	jmp _printf</span><br><span class="line">$LN4@f:</span><br><span class="line">		mov DWORD PTR _a$[esp-4], OFFSET $SG785 ; &#39;zero&#39;, 0aH, 00H </span><br><span class="line">	jmp _printf</span><br><span class="line">_f		ENDP</span><br></pre></td></tr></table></figure>
+<p>我们看到，它有以下两处不同。</p>
+<ol>
+<li>程序把变量 a 存储到 EAX 寄存器之后，又用 EAX 的值减去零。似乎这样做并没有什么道理。但是 这两条指令可以检查 EAX 寄存器的值是否是零。如果 EAX 寄存器的值是零，<code>ZF 标志寄</code>存器会被置 1(也就是说 0−0=0，这就可以提前设置 ZF 标志位)，并会触发第一条条件转移指令 JE，使程序跳转到 $LN4@f，继而在屏幕 上打印<code>Zero</code>。如果 EAX 寄存器的值仍然不是零，则不会触发第一条跳转指令、做<code>EAX=EAX-1</code>的运算， 若计算结果是零则做相应输出;若此时 EAX 寄存器的值仍然不是零，就会再做一次这种减法操作和条件判断。<br>如果三次运算都没能使 EAX 寄存器的值变为零，那么程序会输出最后一条信息<code>something unknown</code>。</li>
+<li>在把字符串指针存储到变量 a 之后，函数使用 <code>JMP</code> 指令调用 <code>printf()</code>函数。在调用 printf()函 数的时候，调用方函数而没有使用常规的 <code>call</code> 指令。这点不难解释:调用方函数把参数推送入栈之后，的确通常通过 CALL 指令调用其他函数。这种情况下，<code>CALL 指令会把返回地址推送入栈、并通过无条件转移的手段启用被调用方函数</code>。就本例而言，在被调用方函数运行的任意时刻，栈的内存存储结构为:<ul>
+<li>ESP——指向 RA。</li>
+<li>ESP+4——指向变量 a。</li>
+</ul>
+</li>
+</ol>
+<p>这个程序把函数的第一个参数替换为字符串的指针，然后跳转到 printf()函数的地址，就好像程序没有 <code>调用</code>过 <code>f()</code>函数、直接<code>转移</code>了 <code>printf()</code>函数一般。当 printf()函数完成输出的使命以后，它会执行 RET 返回指令。RET 指令会从栈中读取(POP)返回地址<code>RA</code>、并跳转到 RA。不过这个 RA 不是其调用方函数—— f()函数内的某个地址，而是调用 f()函数的函数即 <code>main()</code>函数的某个地址。换而言之，跳转到这个 RA 地址后，printf()函数会伴随其调用方函数 f()一同结束。<br>除非每个case从句的最后一条指令都是调用printf()函数，否则编译器就做不到这种程度的优化。某种意义上说这与<code>longjmp()函数</code> 十分相似。当然，这种优化的目的无非就是提高程序的运行速度。</p>
+<h3 id="ARM-MIPS"><a href="#ARM-MIPS" class="headerlink" title="ARM/MIPS"></a>ARM/MIPS</h3><p>请参考《RE4B》对应篇章。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>在case分支较少的情况下，<code>switch()</code>和<code>if/else</code>语句的编译结果基本相同。</p>
+<h2 id="case陈述式较多的情况"><a href="#case陈述式较多的情况" class="headerlink" title="case陈述式较多的情况"></a>case陈述式较多的情况</h2><p>在 switch()语句存在大量case()分支的情况下，编译器就不能直接套用大量<code>JE/JNE</code>指令了。否则程序代码肯定会非常庞大。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">void f (int a)</span><br><span class="line">&#123;</span><br><span class="line">	switch (a)</span><br><span class="line">	&#123;</span><br><span class="line">		case 0: printf (&quot;zero\n&quot;); break;</span><br><span class="line">		case 1: printf (&quot;one\n&quot;); break;</span><br><span class="line">		case 2: printf (&quot;two\n&quot;); break;</span><br><span class="line">		case 3: printf (&quot;three\n&quot;); break;</span><br><span class="line">		case 4: printf (&quot;four\n&quot;); break;</span><br><span class="line">		default: printf (&quot;something unknown\n&quot;); break;</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123; </span><br><span class="line">	f(2); &#x2F;&#x2F; test </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="x86-1"><a href="#x86-1" class="headerlink" title="x86"></a>x86</h3><h4 id="未优化的MSVC-1"><a href="#未优化的MSVC-1" class="headerlink" title="未优化的MSVC"></a>未优化的MSVC</h4><p>在MSVC上编译的指令清单如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">tv64 &#x3D; -4 ; size&#x3D;4 </span><br><span class="line">_a$ &#x3D; 8 ;size&#x3D;4</span><br><span class="line">_f		 PROC</span><br><span class="line">		push ebp</span><br><span class="line">		mov ebp, esp</span><br><span class="line">		push ecx</span><br><span class="line">		mov eax, DWORD PTR _a$[ebp]</span><br><span class="line">		mov DWORD PTR tv64[ebp], eax</span><br><span class="line">		cmp DWORD PTR tv64[ebp], 4</span><br><span class="line">		ja SHORT $LN1@f</span><br><span class="line">		mov ecx, DWORD PTR tv64[ebp]</span><br><span class="line">		jmp DWORD PTR $LN11@f[ecx*4]</span><br><span class="line">$LN6@f:</span><br><span class="line">		push OFFSET $SG739 ; &#39;zero&#39;, 0aH, 00H</span><br><span class="line">		call _printf</span><br><span class="line">		add esp, 4</span><br><span class="line">		jmp SHORT $LN9@f</span><br><span class="line">$LN5@f:</span><br><span class="line">		push OFFSET $SG741 ; &#39;one&#39;, 0aH, 00H</span><br><span class="line">		call _printf</span><br><span class="line">		add esp, 4</span><br><span class="line">		jmp SHORT $LN9@f</span><br><span class="line">$LN4@f:</span><br><span class="line">		push OFFSET $SG743 ; &#39;two&#39;, 0aH, 00H</span><br><span class="line">		call _printf</span><br><span class="line">		add esp, 4</span><br><span class="line">		jmp SHORT $LN9@f</span><br><span class="line">$LN3@f:</span><br><span class="line">		push OFFSET $SG745 ; &#39;three&#39;, 0aH, 00H</span><br><span class="line">		call _printf</span><br><span class="line">		add esp, 4</span><br><span class="line">		jmp SHORT $LN9@f</span><br><span class="line">$LN2@f:</span><br><span class="line">		push OFFSET $SG747 ; &#39;four&#39;, 0aH, 00H</span><br><span class="line">		call _printf</span><br><span class="line">		add esp, 4</span><br><span class="line">		jmp SHORT $LN9@f</span><br><span class="line">$LN1@f:</span><br><span class="line">		push OFFSET $SG749 ; &#39;something unknown&#39;, 0aH, 00H</span><br><span class="line">		call _printf</span><br><span class="line">		add esp, 4</span><br><span class="line">$LN9@f:</span><br><span class="line">		mov esp, ebp</span><br><span class="line">		pop ebp</span><br><span class="line">		ret 0</span><br><span class="line">		npad 2		;align next lable</span><br><span class="line">$LN11@f:</span><br><span class="line">		DD $LN6@f 	; 0</span><br><span class="line">		DD $LN5@f 	; 1</span><br><span class="line">		DD $LN4@f 	; 2</span><br><span class="line">		DD $LN3@f 	; 3</span><br><span class="line">		DD $LN2@f 	; 4</span><br><span class="line">_f		ENDP</span><br></pre></td></tr></table></figure>
+<p>这段代码可被分为数个调用printf()函数的<code>指令组</code>，而且每组指令传递给printf()函数的参数还各不相 同。这些指令组在内存中拥有各自的起始地址，也就被编译器分配到了不同的符号标签(symbolic label) 之后。总的来看，程序通过<code>$LN11@f</code>处的一组数据调派这些符号标签。</p>
+<p>函数最初把变量<code>a</code>的值与数字<code>4</code>进行比较。如果 a 大于 4，函数则跳转到<code>$LN1@f</code>处，把字符串<code>something unknown</code>的指针传递给 printf()函数。</p>
+<p>如果变量 a 小于或等于 4，则会计算<code>a 乘以 4</code>的积，再计算积与<code>$LN11@f</code>的偏移量的<code>和(表查询)</code>， 并跳转到这个结果所指向的地址上。<br>以变量 a 等于 2 的情况来说，2×4=<code>8</code>(由于 x86 系统的内存地址都是 32 位数据，所以$LN11@f 表中的每个地址都占用 4 字节)。在计算<code>8</code>与<code>$LN11@f</code>的偏移量的和之后，再跳转到这个和指向的标签——即<code>$LN4@f</code>处。JMP 指令最终跳转到<code>$LN4@f</code>的地址。</p>
+<p><code>$LN11@f</code>标签(偏移量)开始的表，叫作<code>转移表jumptable</code>，也叫作<code>转移(输出)表branchtable</code>。<br>当 a 等于 2 的时候，程序分配给 printf()的参数是<code>two</code>。实际上，此时的 switch 语句的分支指令等效于<code>jmp DWORD PTR $LN11@f[ecx*4]</code>。它会进行间接取值的操作，把指针<code>PTR{表达式}</code>所指向的数据读取出来，当作 DWORD 型数据传递给 JMP 指令。在这个程序里，表达式的值为 <code>$LN11@f+ecx*4</code>。</p>
+<p>此后出现的<code>npad</code>指令属于<code>汇编宏</code>。它的作用是把紧接其后的标签地址<code>向 4 字节(或 16 字节)边界对齐</code>。npad 的地址对齐功能可提高处理器的 IO 读写效率，通过一次操作即可完成内存总线、缓冲内存等设备的数据操作。</p>
+<h4 id="开启优化的MSVC"><a href="#开启优化的MSVC" class="headerlink" title="开启优化的MSVC"></a>开启优化的MSVC</h4><p>请参考《RE4B》对应章节。此处省略，因为编译出来的代码几乎相同，只是用<code>左移</code>操作来做乘法。</p>
+<h4 id="ARM-MIPS-1"><a href="#ARM-MIPS-1" class="headerlink" title="ARM/MIPS"></a>ARM/MIPS</h4><p>请参考《RE4B》对应章节。</p>
+<h2 id="case从句多对一的情况"><a href="#case从句多对一的情况" class="headerlink" title="case从句多对一的情况"></a>case从句多对一的情况</h2><p>考虑如下程序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">void f (int a)</span><br><span class="line">&#123;</span><br><span class="line">	switch (a)</span><br><span class="line">	&#123;</span><br><span class="line">		case 1: </span><br><span class="line">		case 2: </span><br><span class="line">		case 7:</span><br><span class="line">		case 10:printf (&quot;1, 2, 7, 10\n&quot;);</span><br><span class="line">				break; </span><br><span class="line">		case 3:</span><br><span class="line">		case 4:</span><br><span class="line">		case 5:</span><br><span class="line">		case 6:printf (&quot;3, 4, 5\n&quot;);</span><br><span class="line">				break;</span><br><span class="line">		case 8: </span><br><span class="line">		case 9:</span><br><span class="line">		case 20:</span><br><span class="line">		case 21:printf (&quot;8 9, 21\n&quot;); </span><br><span class="line">				break;</span><br><span class="line">		case 22:printf (&quot;22\n&quot;); </span><br><span class="line">				break;</span><br><span class="line">		default:printf (&quot;default\n&quot;);</span><br><span class="line">		break; </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">	f(4);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一般而言，编译器会通过某种<code>派发机制</code>来降低代码的冗余度。</p>
+<h3 id="MSVC"><a href="#MSVC" class="headerlink" title="MSVC"></a>MSVC</h3><p>指令清单如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">$SG2798 DB &#39;1, 2, 7, 10&#39;, 0aH, 00H</span><br><span class="line">$SG2800 DB &#39;3, 4, 5&#39;, 0aH, 00H</span><br><span class="line">$SG2802 DB &#39;8, 9, 21&#39;, 0aH, 00H</span><br><span class="line">$SG2804 DB &#39;22&#39;, 0aH, 00H</span><br><span class="line">$SG2806 DB &#39;default&#39;, 0aH, 00H</span><br><span class="line"></span><br><span class="line">_ a $ &#x3D; 8</span><br><span class="line">_f 		PROC</span><br><span class="line">		mov eax, DWORD PTR _a$[esp-4] </span><br><span class="line">		dec eax</span><br><span class="line">		cmp eax, 21</span><br><span class="line">		ja SHORT $LN1@f</span><br><span class="line">		movzx eax, BYTE PTR $LN10@f[eax] </span><br><span class="line">		jmp DWORD PTR $LN11@f[eax*4]</span><br><span class="line">$LN5@f:</span><br><span class="line">		mov DWORD PTR _a$[esp-4], OFFSET $SG2798 ; &#39;1, 2, 7, 10&#39; </span><br><span class="line">		jmp DWORD PTR __imp__printf</span><br><span class="line">$LN4@f:</span><br><span class="line">		mov DWORD PTR _a$[esp-4], OFFSET $SG2800 ; &#39;3, 4, 5&#39; </span><br><span class="line">		jmp DWORD PTR __imp__printf</span><br><span class="line">$LN3@f:</span><br><span class="line">		mov DWORD PTR _a$[esp-4], OFFSET $SG2802 ; &#39;8, 9, 21&#39; </span><br><span class="line">		jmp DWORD PTR __imp__printf</span><br><span class="line">$LN2@f:</span><br><span class="line">		mov DWORD PTR _a$[esp-4], OFFSET $SG2804 ; &#39;22&#39; </span><br><span class="line">		jmp DWORD PTR __imp__printf</span><br><span class="line">$LN1@f:</span><br><span class="line">		mov DWORD PTR _a$[esp-4], OFFSET $SG2806 ; &#39;default&#39;</span><br><span class="line">		jmp DWORD PTR __imp__printf</span><br><span class="line">		npad 2 ; align $LN11@f table on 16-byte boundary</span><br><span class="line">$LN11@f:</span><br><span class="line">		DD $LN5@f ; print &#39;1, 2, 7, 10&#39;</span><br><span class="line">		DD $LN4@f ; print &#39;3, 4, 5&#39;</span><br><span class="line">		DD $LN3@f ; print &#39;8, 9, 21&#39;</span><br><span class="line">		DD $LN2@f ; print &#39;22&#39;</span><br><span class="line">		DD $LN1@f ; print &#39;default&#39;</span><br><span class="line">$LN10@f:</span><br><span class="line">		DB 0	;a&#x3D;1 </span><br><span class="line">		DB 0	;a&#x3D;2 </span><br><span class="line">		DB 1	;a&#x3D;3 </span><br><span class="line">		DB 1	;a&#x3D;4 </span><br><span class="line">		DB 1	;a&#x3D;5 </span><br><span class="line">		DB 1	;a&#x3D;6 </span><br><span class="line">		DB 0	;a&#x3D;7 </span><br><span class="line">		DB 2	;a&#x3D;8 </span><br><span class="line">		DB 2	;a&#x3D;9 </span><br><span class="line">		DB 0	;a&#x3D;10 </span><br><span class="line">		DB 4	;a&#x3D;11 </span><br><span class="line">		DB 4	;a&#x3D;12 </span><br><span class="line">		DB 4	;a&#x3D;13 </span><br><span class="line">		DB 4	;a&#x3D;14 </span><br><span class="line">		DB 4	;a&#x3D;15 </span><br><span class="line">		DB 4	;a&#x3D;16 </span><br><span class="line">		DB 4	;a&#x3D;17 </span><br><span class="line">		DB 4	;a&#x3D;18 </span><br><span class="line">		DB 4	;a&#x3D;19 </span><br><span class="line">		DB 2	;a&#x3D;20 </span><br><span class="line">		DB 2	;a&#x3D;21 </span><br><span class="line">		DB 3	;a&#x3D;22</span><br><span class="line">_f		ENDP</span><br></pre></td></tr></table></figure>
+<p>这个程序用到了两个表:一个是<code>索引表</code>$LN10@f;另一个是<code>转移表</code>$LN11@f。<br>第 13 行的<code>movzx</code>指令在索引表里查询输入值。<br>索引表的返回值又分为 0(输入值为 1、2、7、10)、1(输入值为 3、4、5)、2(输入值为 8、9、21)、3(输入值为 22)、4(其他值)这 5 种情况。<br>程序把索引表的返回值作为关键字，再在第二个转移表里进行查询，以完成相应跳转(第 14 行指令的作用)。<br>需要注意的是，输入值为 0 的情况没有相应的 case 从句。如果 a=0，则“dec eax”指令会继续进行计算，而$LN10@f 表的查询是从 1 开始的。可见，没有必要为 0 的特例设置单独的表。<br>在这种双表结构中，索引表采用的是<code>byte</code>型数据，所以双表结构比前面那种单表结构更为紧凑。</p>
+<h2 id="Fall-through"><a href="#Fall-through" class="headerlink" title="Fall-through"></a>Fall-through</h2>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E5%8F%82%E6%95%B0%E8%8E%B7%E5%8F%96%E3%80%81%E8%BF%94%E5%9B%9E%E5%80%BC%E3%80%81%E6%8C%87%E9%92%88%E3%80%81GOTO%E8%AF%AD%E5%8F%A5.html" rel="prev" title="逆向工程——参数获取、返回值、指针、GOTO语句">
+      <i class="fa fa-chevron-left"></i> 逆向工程——参数获取、返回值、指针、GOTO语句
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%9D%A1%E4%BB%B6%E8%BD%AC%E7%A7%BB%E6%8C%87%E4%BB%A4.html" rel="next" title="逆向工程——条件转移指令">
+      逆向工程——条件转移指令 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#case陈述式较少的情况"><span class="nav-number">1.</span> <span class="nav-text">case陈述式较少的情况</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#x86"><span class="nav-number">1.1.</span> <span class="nav-text">x86</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#未优化的MSVC"><span class="nav-number">1.1.1.</span> <span class="nav-text">未优化的MSVC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优化的MSVC"><span class="nav-number">1.1.2.</span> <span class="nav-text">优化的MSVC</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARM-MIPS"><span class="nav-number">1.2.</span> <span class="nav-text">ARM&#x2F;MIPS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#case陈述式较多的情况"><span class="nav-number">2.</span> <span class="nav-text">case陈述式较多的情况</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#x86-1"><span class="nav-number">2.1.</span> <span class="nav-text">x86</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#未优化的MSVC-1"><span class="nav-number">2.1.1.</span> <span class="nav-text">未优化的MSVC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开启优化的MSVC"><span class="nav-number">2.1.2.</span> <span class="nav-text">开启优化的MSVC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ARM-MIPS-1"><span class="nav-number">2.1.3.</span> <span class="nav-text">ARM&#x2F;MIPS</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#case从句多对一的情况"><span class="nav-number">3.</span> <span class="nav-text">case从句多对一的情况</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MSVC"><span class="nav-number">3.1.</span> <span class="nav-text">MSVC</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fall-through"><span class="nav-number">4.</span> <span class="nav-text">Fall-through</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">m0nst3r</p>
+  <div class="site-description" itemprop="description">m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/mr-m0nst3r" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mr-m0nst3r" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:cnmichael@icloud.com" title="E-Mail → mailto:cnmichael@icloud.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">m0nst3r</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1275579962&web_id=1275579962"></script>
+  </div>
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"ve2qELpki5UClXHUdASXs3Sq-gzGzoHsz","app_key":"ihHY6qzhvTyzPA48CYV6O13N","security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://m0nst3r.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94switch().html";
+    this.page.identifier = "re/逆向工程——switch().html";
+    this.page.title = "逆向工程——switch()";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://m0nst3r.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>

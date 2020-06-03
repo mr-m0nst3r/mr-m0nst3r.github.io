@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/m0nst3r
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://m0nst3r.me
+  * I am m0nst3r (https://keybase.io/m0nst3r) on keybase.
+  * I have a public key ASCdlZSHO88s-2k6XnMqxiZZknO8Pp8WhR7YfrwfBOevNAo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01207a74ff48d5eb5e9e6b4c52681894f047d8108ca53fa3f5a161b2a248591eab040a",
+      "host": "keybase.io",
+      "kid": "01209d9594873bcf2cfb693a5e732ac626599273bc3e9f16851ed87ebc1f04e7af340a",
+      "uid": "337ad3a22cc9c30956b974ebeb3ceb19",
+      "username": "m0nst3r"
+    },
+    "merkle_root": {
+      "ctime": 1586358194,
+      "hash": "d8a0e00f2e194c92b4b6812048d6d328bd5cd18cc0028de435b24357d2f16cb7b1da87839154aa9cb80146d51892bd50b3f2fe7648bdb536b5d475726fa48fed",
+      "hash_meta": "ed871e0bca1f104e1cbfa52181b63885c8f7f857cb7f6f327443a62b9d179d6f",
+      "seqno": 15835985
+    },
+    "service": {
+      "entropy": "cP6a5pdglJSveCPlDJXe2UMW",
+      "hostname": "m0nst3r.me",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "5.3.0"
+  },
+  "ctime": 1586358211,
+  "expire_in": 504576000,
+  "prev": "9af1d1b5206b79a2886fdd2392a70443974eaa2fd94a856e87a658e6cd685b20",
+  "seqno": 27,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgnZWUhzvPLPtpOl5zKsYmWZJzvD6fFoUe2H68HwTnrzQKp3BheWxvYWTESpcCG8QgmvHRtSBreaKIb90jkqcEQ5dOqi/ZSoVuh6ZY5s1oWyDEICTEHSyPxRSXotFDP3OZH6hVJSDuojGE9QH1ZDom4pBcAgHCo3NpZ8RAZdbBZYnGDp8Qy7/Z5MmODZ+Px9d7+tTD3Xi7jJVaIcwcaSo0tISjqRg0WZHwkphUHFsOE/ZJjHD9pMnnJCMPD6hzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEID2SWaUWKG+VMImFaMojkgzHGW0gJI4SbpTn1gBLxrg5o3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/m0nst3r
+
+==================================================================
