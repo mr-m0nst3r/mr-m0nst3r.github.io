@@ -175,7 +175,8 @@
   <entry>
     <title>Magisk Taichi Android 9 安装</title>
     <url>/android/Magisk-Taichi-Android-9-%E5%AE%89%E8%A3%85.html</url>
-    <content><![CDATA[<p>Android 9上已经不支持Xposed了，所以需要安抚Magisk Taichi。功能与Xposed基本相同。</p>
+    <content><![CDATA[<p>[TOC]</p>
+<p>Android 9上已经不支持Xposed了，所以需要安抚Magisk Taichi。功能与Xposed基本相同。</p>
 <p>下面的安装步骤是基于谷歌新儿子-Pixel 一代的。其他手机请在第一步的时候，也就是安装TWRP的时候选择自己的机型。</p>
 <h2 id="安装twrp"><a href="#安装twrp" class="headerlink" title="安装twrp"></a>安装twrp</h2><p><a href="https://twrp.me/google/googlepixel.html" target="_blank" rel="noopener">https://twrp.me/google/googlepixel.html</a></p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 安装twrp</span></span><br><span class="line">adb push twrp-pixel-installer-sailfish-3.3.0-0.zip /sdcard/</span><br><span class="line">adb reboot-bootloader</span><br><span class="line">fastboot boot path/to/twrp.img</span><br></pre></td></tr></table></figure>
