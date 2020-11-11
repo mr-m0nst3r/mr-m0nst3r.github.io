@@ -197,6 +197,112 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94scanf().html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94scanf().html" class="post-title-link" itemprop="url">逆向工程——scanf()</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-12-21 11:12:00" itemprop="dateCreated datePublished" datetime="2017-12-21T11:12:00+08:00">2017-12-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94scanf().html" class="post-meta-item leancloud_visitors" data-flag-title="逆向工程——scanf()" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94scanf().html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="re/逆向工程——scanf().html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<h1 id="程序"><a href="#程序" class="headerlink" title="程序"></a>程序</h1><h2 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int x;</span><br><span class="line">	printf(&quot;Enter X:\n&quot;);</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;x);</span><br><span class="line">	printf(&quot;You entered %d...\n&quot;,x);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">&#x2F;&#x2F;now,x is global variable</span><br><span class="line">int x;</span><br><span class="line">int main()&#123;</span><br><span class="line">	printf(&quot;Enter X:\n&quot;);</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;x);</span><br><span class="line">	printf(&quot;You entered %d...\n&quot;,x);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="scanf-函数的状态监测"><a href="#scanf-函数的状态监测" class="headerlink" title="scanf()函数的状态监测"></a>scanf()函数的状态监测</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int x;</span><br><span class="line">	printf (&quot;Enter X:\n&quot;);</span><br><span class="line">	if (scanf (&quot;%d&quot;, &amp;x)&#x3D;&#x3D;1)</span><br><span class="line">		printf (&quot;You entered %d...\n&quot;, x);</span><br><span class="line">	else</span><br><span class="line">		printf (&quot;What you entered? Huh?\n&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="x86"><a href="#x86" class="headerlink" title="x86"></a>x86</h2><h3 id="x86局部变量"><a href="#x86局部变量" class="headerlink" title="x86局部变量"></a>x86局部变量</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94scanf().html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%9D%A1%E4%BB%B6%E8%BD%AC%E7%A7%BB%E6%8C%87%E4%BB%A4.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1201,128 +1307,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%EF%BC%89.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="m0nst3r">
-      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="m0nst3r's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%EF%BC%89.html" class="post-title-link" itemprop="url">逆向工程——汇编基础（二）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2017-11-13 11:12:00" itemprop="dateCreated datePublished" datetime="2017-11-13T11:12:00+08:00">2017-11-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%EF%BC%89.html" class="post-meta-item leancloud_visitors" data-flag-title="逆向工程——汇编基础（二）" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%EF%BC%89.html#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="re/逆向工程——汇编基础（二）.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>[TOC]</p>
-<p>参考文档：《简明 x86 汇编语言教程》作者：司徒彦南<br>##使用寄存器<br>对x86基本寄存器的认识，对于一个汇编语言编程人员来说是不可或缺的。</p>
-<p>###汇编语言中的整数常量表示<br>####十进制整数<br>这是<code>汇编器</code>默认的数制。直接用我们熟悉的表示方式表示即可。例如，1234表示十进制的1234。不过，如果你指定了使用其他数制，或者有凡事都进行完整定义的习惯，也可以写成<code>[十进制数]d</code>或<code>[十进制数]D</code>在行式。<br>####十六进制数<br>这是<code>汇编程序</code>中最常用的数制。十六进制数表示为<code>0[十六进制数]h</code>或<code>0[十六进制数]H</code>，其中，如果十六进制数的第一位是数字，则开头的0可以省略，例如<code>7fffh</code>，<code>0ffffh</code>。<br>####二进制数<br>这也是一种常用的数制。二进制表示为<code>[二进制数]b</code>或<code>[二进制数]B</code>。一般程序中用二进制数表示掩码等数据非常的直观，但需要些很长的数据（4位二进制数相当于一位十六进制数）。例如，1010110b。<br>####八进制数<br>八进制数现在已经不是很常用了，一个典型的例子是Unix的文件属性。八进制数的形式是<code>[八进制数]q</code>、<code>[八进制数]Q</code>、<code>[八进制数]o</code>、<code>[八进制数]O</code>。例如，777Q。<br><strong>调试器默认使用十六进制表示整数</strong></p>
-<p>###简单指令<br>下面介绍一些指令，在这之前，我们约定：</p>
-<ol>
-<li>reg32，32-bit寄存器，如EAX、EBX等。</li>
-<li>reg16，16-bit寄存器，如AX，BX等。</li>
-<li>reg8？，8-bit寄存器，如AL，BH等。</li>
-<li>imm32，32-bit立即数，可以理解为常数。</li>
-<li>imm16，16-bit立即数。</li>
-<li>imm8？ 8-bit立即数。</li>
-</ol>
-<p>####MOV指令<br><code>mov</code>，要move的缩写，它可以将数据<code>发送到</code>寄存器中。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mov reg32,(reg32 | imm8 | imm16 | imm32)</span><br><span class="line">mov reg16,(reg16 | imm8 | imm16)</span><br><span class="line">mov reg8,(reg8 | imm8)</span><br><span class="line">	</span><br><span class="line">	例如：</span><br><span class="line">mov eax,ebx			;ebx内容送入eax</span><br><span class="line">mov ecx,ebx			;edx内容送入ecx</span><br></pre></td></tr></table></figure>
-<p><code>mov eax,010h</code>表示在EAX寄存器中载入<code>00000010h</code>。</p>
-<p>####xchg指令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">xchg reg32,reg32</span><br><span class="line">xchg reg16,reg16</span><br><span class="line">xchg reg8,reg8</span><br><span class="line">	</span><br><span class="line">	例如：</span><br><span class="line">	xchg ebx,ecx，表示ebx与ecx的数值被交换。</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%EF%BC%89.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1388,7 +1376,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-count">61</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1401,7 +1389,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

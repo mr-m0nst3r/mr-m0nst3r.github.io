@@ -197,6 +197,146 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF.html" class="post-title-link" itemprop="url">渗透测试报告模板</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-09 11:12:00" itemprop="dateCreated datePublished" datetime="2018-05-09T11:12:00+08:00">2018-05-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/pentest/" itemprop="url" rel="index"><span itemprop="name">pentest</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF.html" class="post-meta-item leancloud_visitors" data-flag-title="渗透测试报告模板" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="pentest/渗透测试报告模板.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="测试目的"><a href="#测试目的" class="headerlink" title="测试目的"></a>测试目的</h3><p>通过模拟黑客的渗透测试，评估目标系统是否存在可以被攻击者真实利用的漏洞以及由此引起的风险大小，为制定相应的安全措施与解决方案提供实际的依据。</p>
+<p>分析客户WEB应用系统的安全现状，检测WEB应用系统的漏洞和安全问题，并验证其他已知的脆弱点。对系统的任何弱点、技术缺陷或漏洞的主动分析，并且以有利于攻击为目的而对漏洞加以利用。从而全面了解和掌握WEB应用系统的信息安全威胁和风险，为WEB应用系统开展安全调优及加固建设提供依据，并指导客户实施调优及加固工作，具体的目标包括：</p>
+<ol>
+<li>帮助客户理解应用系统当前的安全状况，发现在系统复杂结构中的最脆弱链路；</li>
+<li>通过改进建议，保证WEB应用系统和相关基础设施满足标准的安全性基线；</li>
+<li>降低WEB应用系统信息安全事件发生的可能性；</li>
+<li>保障WEB应用系统的安全、可靠、稳定运行。</li>
+</ol>
+<h3 id="测试范围"><a href="#测试范围" class="headerlink" title="测试范围"></a>测试范围</h3><table>
+<thead>
+<tr>
+<th>序号</th>
+<th align="center">系统名称</th>
+<th align="center">地址</th>
+<th align="center">权限</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td align="center">test</td>
+<td align="center"><a href="http://test.com" target="_blank" rel="noopener">http://test.com</a></td>
+<td align="center">普通用户</td>
+</tr>
+</tbody></table>
+<h3 id="测试团队详细信息"><a href="#测试团队详细信息" class="headerlink" title="测试团队详细信息"></a>测试团队详细信息</h3><table>
+<thead>
+<tr>
+<th>序号</th>
+<th align="center">姓名</th>
+<th align="center">联系方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td align="center">宋鑫磊</td>
+<td align="center">18888888888</td>
+</tr>
+</tbody></table>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/pentest/%E5%88%A9%E7%94%A8INF%20Script%E4%B8%8B%E8%BD%BD%E6%89%A7%E8%A1%8C%E6%8A%80%E6%9C%AF%E6%9D%A5%E8%BF%9B%E8%A1%8C%E7%BB%95%E8%BF%87%EF%BC%8C%E5%85%8D%E6%9D%80%E5%92%8C%E6%8C%81%E4%B9%85%E5%8C%96(%E4%BA%8C).html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1327,116 +1467,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94scanf().html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="m0nst3r">
-      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="m0nst3r's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94scanf().html" class="post-title-link" itemprop="url">逆向工程——scanf()</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2017-12-21 11:12:00" itemprop="dateCreated datePublished" datetime="2017-12-21T11:12:00+08:00">2017-12-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94scanf().html" class="post-meta-item leancloud_visitors" data-flag-title="逆向工程——scanf()" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94scanf().html#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="re/逆向工程——scanf().html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>[TOC]</p>
-<h1 id="程序"><a href="#程序" class="headerlink" title="程序"></a>程序</h1><h2 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int x;</span><br><span class="line">	printf(&quot;Enter X:\n&quot;);</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;x);</span><br><span class="line">	printf(&quot;You entered %d...\n&quot;,x);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">&#x2F;&#x2F;now,x is global variable</span><br><span class="line">int x;</span><br><span class="line">int main()&#123;</span><br><span class="line">	printf(&quot;Enter X:\n&quot;);</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;x);</span><br><span class="line">	printf(&quot;You entered %d...\n&quot;,x);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="scanf-函数的状态监测"><a href="#scanf-函数的状态监测" class="headerlink" title="scanf()函数的状态监测"></a>scanf()函数的状态监测</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int x;</span><br><span class="line">	printf (&quot;Enter X:\n&quot;);</span><br><span class="line">	if (scanf (&quot;%d&quot;, &amp;x)&#x3D;&#x3D;1)</span><br><span class="line">		printf (&quot;You entered %d...\n&quot;, x);</span><br><span class="line">	else</span><br><span class="line">		printf (&quot;What you entered? Huh?\n&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="x86"><a href="#x86" class="headerlink" title="x86"></a>x86</h2><h3 id="x86局部变量"><a href="#x86局部变量" class="headerlink" title="x86局部变量"></a>x86局部变量</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94scanf().html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1502,7 +1536,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-count">61</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1515,7 +1549,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
