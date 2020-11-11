@@ -318,10 +318,10 @@
 </li>
 <li><p>第二种用法</p>
 <pre>
-mysql> select case when 1=1 then sleep(2) else sleep(5) end;</li>
+mysql> select case when 1=1 then sleep(2) else sleep(5) end;</pre></li>
 </ol>
 <p>+———————————————–+<br>| case when 1=1 then sleep(2) else sleep(5) end |<br>+———————————————–+<br>|                                             0 |<br>+———————————————–+<br>1 row in set (2.00 sec)</p>
-<pre><code>mysql&gt; select case when 1=2 then sleep(2) else sleep(5) end;</code></pre><p>+———————————————–+<br>| case when 1=2 then sleep(2) else sleep(5) end |<br>+———————————————–+<br>|                                             0 |<br>+———————————————–+<br>1 row in set (5.00 sec)<br></pre></p>
+<pre><code>mysql&gt; select case when 1=2 then sleep(2) else sleep(5) end;</code></pre><p>+———————————————–+<br>| case when 1=2 then sleep(2) else sleep(5) end |<br>+———————————————–+<br>|                                             0 |<br>+———————————————–+<br>1 row in set (5.00 sec)<br></p>
 
     </div>
 
