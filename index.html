@@ -197,6 +197,223 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/pentest/%E5%8A%A0%E5%AF%86%E6%B5%81%E9%87%8FAPP%E7%9A%84%E6%B8%97%E9%80%8F%E5%87%86%E5%A4%87.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/pentest/%E5%8A%A0%E5%AF%86%E6%B5%81%E9%87%8FAPP%E7%9A%84%E6%B8%97%E9%80%8F%E5%87%86%E5%A4%87.html" class="post-title-link" itemprop="url">加密流量APP的渗透准备</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-14 11:35:15 / Modified: 11:39:27" itemprop="dateCreated datePublished" datetime="2021-01-14T11:35:15+08:00">2021-01-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/pentest/" itemprop="url" rel="index"><span itemprop="name">pentest</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/pentest/%E5%8A%A0%E5%AF%86%E6%B5%81%E9%87%8FAPP%E7%9A%84%E6%B8%97%E9%80%8F%E5%87%86%E5%A4%87.html" class="post-meta-item leancloud_visitors" data-flag-title="加密流量APP的渗透准备" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/pentest/%E5%8A%A0%E5%AF%86%E6%B5%81%E9%87%8FAPP%E7%9A%84%E6%B8%97%E9%80%8F%E5%87%86%E5%A4%87.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="pentest/加密流量APP的渗透准备.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="涉及工具"><a href="#涉及工具" class="headerlink" title="涉及工具"></a>涉及工具</h2><ul>
+<li>JEB</li>
+<li>DDMS</li>
+<li>frida</li>
+<li>frida-dexdump</li>
+<li>burpy</li>
+</ul>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p><img src="/pentest/%E5%8A%A0%E5%AF%86%E6%B5%81%E9%87%8FAPP%E7%9A%84%E6%B8%97%E9%80%8F%E5%87%86%E5%A4%87/2021-01-08-16-33-15.png" alt></p>
+<p>又是喜闻乐见的加密流量！搞它。</p>
+<p>APP是加壳的，先上<code>frida-dexdump</code>脱壳。<br><img src="/pentest/%E5%8A%A0%E5%AF%86%E6%B5%81%E9%87%8FAPP%E7%9A%84%E6%B8%97%E9%80%8F%E5%87%86%E5%A4%87/2021-01-08-16-37-29.png" alt></p>
+<p><img src="/pentest/%E5%8A%A0%E5%AF%86%E6%B5%81%E9%87%8FAPP%E7%9A%84%E6%B8%97%E9%80%8F%E5%87%86%E5%A4%87/2021-01-08-16-38-22.png" alt></p>
+<p>这么多有<code>encrypt</code>关键字的，不好找，我们上<code>DDMS</code>：</p>
+<p>通过<code>profilling</code>，我们很容易就能定位到加密函数：<br><img src="/pentest/%E5%8A%A0%E5%AF%86%E6%B5%81%E9%87%8FAPP%E7%9A%84%E6%B8%97%E9%80%8F%E5%87%86%E5%A4%87/2021-01-08-16-40-30.png" alt></p>
+<p>上<code>JEB</code>，打开我们已经脱掉的<code>dex</code>文件：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/pentest/%E5%8A%A0%E5%AF%86%E6%B5%81%E9%87%8FAPP%E7%9A%84%E6%B8%97%E9%80%8F%E5%87%86%E5%A4%87.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/pentest/%E9%AB%98%E6%95%88%E5%A4%84%E7%90%86H5%E7%AB%99%E7%82%B9%E6%B5%81%E9%87%8F%E5%8A%A0%E8%A7%A3%E5%AF%86.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/pentest/%E9%AB%98%E6%95%88%E5%A4%84%E7%90%86H5%E7%AB%99%E7%82%B9%E6%B5%81%E9%87%8F%E5%8A%A0%E8%A7%A3%E5%AF%86.html" class="post-title-link" itemprop="url">高效处理H5站点流量加解密</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-14 11:35:15 / Modified: 11:38:51" itemprop="dateCreated datePublished" datetime="2021-01-14T11:35:15+08:00">2021-01-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/pentest/" itemprop="url" rel="index"><span itemprop="name">pentest</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/pentest/%E9%AB%98%E6%95%88%E5%A4%84%E7%90%86H5%E7%AB%99%E7%82%B9%E6%B5%81%E9%87%8F%E5%8A%A0%E8%A7%A3%E5%AF%86.html" class="post-meta-item leancloud_visitors" data-flag-title="高效处理H5站点流量加解密" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/pentest/%E9%AB%98%E6%95%88%E5%A4%84%E7%90%86H5%E7%AB%99%E7%82%B9%E6%B5%81%E9%87%8F%E5%8A%A0%E8%A7%A3%E5%AF%86.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="pentest/高效处理H5站点流量加解密.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="高效处理H5站点流量加解密"><a href="#高效处理H5站点流量加解密" class="headerlink" title="高效处理H5站点流量加解密"></a>高效处理H5站点流量加解密</h1><p><img src="/pentest/%E9%AB%98%E6%95%88%E5%A4%84%E7%90%86H5%E7%AB%99%E7%82%B9%E6%B5%81%E9%87%8F%E5%8A%A0%E8%A7%A3%E5%AF%86/2020-12-29-15-56-18.png" alt></p>
+<p>做项目时，如果遇到上面的流量，是不是觉得有点无从下手？</p>
+<p>今儿就看下如何使用<code>Burpy</code>来高效处理流量加解密。</p>
+<h2 id="Burpy"><a href="#Burpy" class="headerlink" title="Burpy"></a>Burpy</h2><p>先来地址：<code>Github: https://github.com/mr-m0nst3r/Burpy</code></p>
+<p>直接在<code>Release</code>下载下来，加载到<code>BurpSuite</code>。</p>
+<p>它本身的功能很简单，就是执行我们指定的python脚本，而python脚本能用来干啥，你可以百度一下（你能想到的，基本都能做到）。</p>
+<p>大概的实现是这样的：</p>
+<ul>
+<li>启动一个RPC服务器，作为Java和Python之间的数据交换桥梁</li>
+<li>解析python脚本，并新建Burpy类的一个实例</li>
+<li>将脚本中的<code>一些</code>函数加载到BurpSuite右键菜单</li>
+<li>当点击Burpy菜单项时，整个HTTP数据包通过RPC传给python脚本的对应函数进行处理，返回处理后的HTTP数据包，并更新BurpSuite</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/pentest/%E9%AB%98%E6%95%88%E5%A4%84%E7%90%86H5%E7%AB%99%E7%82%B9%E6%B5%81%E9%87%8F%E5%8A%A0%E8%A7%A3%E5%AF%86.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/burpsuite/%E6%89%93%E9%80%9ABurpSuite%E4%B8%8EPython%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1110,236 +1327,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/pwn/exploit-education-stack-five.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="m0nst3r">
-      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="m0nst3r's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/re/pwn/exploit-education-stack-five.html" class="post-title-link" itemprop="url">exploit.education/stack-five</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-04-11 23:06:00" itemprop="dateCreated datePublished" datetime="2019-04-11T23:06:00+08:00">2019-04-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/re/pwn/" itemprop="url" rel="index"><span itemprop="name">pwn</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/re/pwn/exploit-education-stack-five.html" class="post-meta-item leancloud_visitors" data-flag-title="exploit.education/stack-five" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/re/pwn/exploit-education-stack-five.html#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="re/pwn/exploit-education-stack-five.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>初次体验基于栈溢出的PWN！</p>
-<h2 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * phoenix/stack-five, by https://exploit.education</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Can you execve("/bin/sh", ...) ?</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * What is green and goes to summer camp? A brussel scout.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BANNER \</span></span><br><span class="line">  <span class="string">"Welcome to "</span> LEVELNAME <span class="string">", brought to you by https://exploit.education"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">gets</span><span class="params">(<span class="keyword">char</span> *)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">start_level</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">char</span> <span class="built_in">buffer</span>[<span class="number">128</span>];</span><br><span class="line">  gets(<span class="built_in">buffer</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%s\n"</span>, BANNER);</span><br><span class="line">  start_level();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>与<code>stack-four</code>基本一样，只不过<code>buffer</code>大了一些。<br>过这个关卡，不是要执行到<code>complete_level</code>函数了，而是要<code>get shell</code>。也就是通过溢出漏洞，来执行我们自己的程序，即<code>shellcode</code>。</p>
-<p><code>shellcode</code>就是一段执行返回一个shell的汇编代码。</p>
-<p>我们将<code>shellcode</code>写到栈中，再通过溢出控制<code>RIP</code>，让程序去执行我们在栈中写好的<code>shellcode</code>，从而拿到<code>shell</code>。</p>
-<p>所以，在栈中基本上是这样的：</p>
-<p>image-20190411231630801.png<br><img src="/images/pasted-11.png" alt="upload successful"></p>
-<p>为了让我们的<code>shellcode</code>顺利执行，<code>nopsled</code>最好要有，因为有比如环境变量等的影响，栈中的地址会出现小幅度的偏移。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/re/pwn/exploit-education-stack-five.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/pwn/exploit-education-stack-four.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="m0nst3r">
-      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="m0nst3r's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/re/pwn/exploit-education-stack-four.html" class="post-title-link" itemprop="url">exploit.education/stack-four</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-04-09 21:16:00" itemprop="dateCreated datePublished" datetime="2019-04-09T21:16:00+08:00">2019-04-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/re/pwn/" itemprop="url" rel="index"><span itemprop="name">pwn</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/re/pwn/exploit-education-stack-four.html" class="post-meta-item leancloud_visitors" data-flag-title="exploit.education/stack-four" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/re/pwn/exploit-education-stack-four.html#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="re/pwn/exploit-education-stack-four.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>这个关卡是一个标准的栈溢出的例子。</p>
-<h2 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * phoenix/stack-four, by https://exploit.education</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * The aim is to execute the function complete_level by modifying the</span></span><br><span class="line"><span class="comment"> * saved return address, and pointing it to the complete_level() function.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Why were the apple and orange all alone? Because the bananna split.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;err.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BANNER \</span></span><br><span class="line">  <span class="string">"Welcome to "</span> LEVELNAME <span class="string">", brought to you by https://exploit.education"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">gets</span><span class="params">(<span class="keyword">char</span> *)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">complete_level</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Congratulations, you've finished "</span> LEVELNAME <span class="string">" :-) Well done!\n"</span>);</span><br><span class="line">  <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">start_level</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">char</span> <span class="built_in">buffer</span>[<span class="number">64</span>];</span><br><span class="line">  <span class="keyword">void</span> *ret;</span><br><span class="line"></span><br><span class="line">  gets(<span class="built_in">buffer</span>);</span><br><span class="line"></span><br><span class="line">  ret = __builtin_return_address(<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"and will be returning to %p\n"</span>, ret);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"%s\n"</span>, BANNER);</span><br><span class="line">  start_level();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p><code>main</code>调用<code>start_level</code>，<code>start_level</code>中有一个<code>gets</code>函数会千万<code>栈溢出</code>，利用溢出漏洞我们可以控制<code>RIP/EIP</code>，也就是程序执行流程。通过将<code>返回地址</code>覆盖成<code>complete_level</code>函数的地址，就过关了。</p>
-<h2 id="实操"><a href="#实操" class="headerlink" title="实操"></a>实操</h2><p>先来看一下主要函数部分的汇编代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">000000000040061d &lt;complete_level&gt;:</span><br><span class="line">  40061d:	55                   	push   %rbp</span><br><span class="line">  40061e:	48 89 e5             	mov    %rsp,%rbp</span><br><span class="line">  400621:	bf f0 06 40 00       	mov    $0x4006f0,%edi</span><br><span class="line">  400626:	e8 55 fe ff ff       	callq  400480 &lt;puts@plt&gt;</span><br><span class="line">  40062b:	bf 00 00 00 00       	mov    $0x0,%edi</span><br><span class="line">  400630:	e8 5b fe ff ff       	callq  400490 &lt;exit@plt&gt;</span><br><span class="line"></span><br><span class="line">0000000000400635 &lt;start_level&gt;:</span><br><span class="line">  400635:	55                   	push   %rbp</span><br><span class="line">  400636:	48 89 e5             	mov    %rsp,%rbp</span><br><span class="line">  400639:	48 83 ec 50          	sub    $0x50,%rsp</span><br><span class="line">  40063d:	48 8d 45 b0          	lea    -0x50(%rbp),%rax</span><br><span class="line">  400641:	48 89 c7             	mov    %rax,%rdi</span><br><span class="line">  400644:	e8 27 fe ff ff       	callq  400470 &lt;gets@plt&gt;</span><br><span class="line">  400649:	48 8b 45 08          	mov    0x8(%rbp),%rax</span><br><span class="line">  40064d:	48 89 45 f8          	mov    %rax,-0x8(%rbp)</span><br><span class="line">  400651:	48 8b 45 f8          	mov    -0x8(%rbp),%rax</span><br><span class="line">  400655:	48 89 c6             	mov    %rax,%rsi</span><br><span class="line">  400658:	bf 33 07 40 00       	mov    $0x400733,%edi</span><br><span class="line">  40065d:	b8 00 00 00 00       	mov    $0x0,%eax</span><br><span class="line">  400662:	e8 f9 fd ff ff       	callq  400460 &lt;printf@plt&gt;</span><br><span class="line">  400667:	90                   	nop</span><br><span class="line">  400668:	c9                   	leaveq </span><br><span class="line">  400669:	c3                   	retq   </span><br><span class="line"></span><br><span class="line">000000000040066a &lt;main&gt;:</span><br><span class="line">  40066a:	55                   	push   %rbp</span><br><span class="line">  40066b:	48 89 e5             	mov    %rsp,%rbp</span><br><span class="line">  40066e:	48 83 ec 10          	sub    $0x10,%rsp</span><br><span class="line">  400672:	89 7d fc             	mov    %edi,-0x4(%rbp)</span><br><span class="line">  400675:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)</span><br><span class="line">  400679:	bf 50 07 40 00       	mov    $0x400750,%edi</span><br><span class="line">  40067e:	e8 fd fd ff ff       	callq  400480 &lt;puts@plt&gt;</span><br><span class="line">  400683:	b8 00 00 00 00       	mov    $0x0,%eax</span><br><span class="line">  400688:	e8 a8 ff ff ff       	callq  400635 &lt;start_level&gt;</span><br><span class="line">  40068d:	b8 00 00 00 00       	mov    $0x0,%eax</span><br><span class="line">  400692:	c9                   	leaveq </span><br><span class="line">  400693:	c3                   	retq   </span><br><span class="line">  400694:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)</span><br><span class="line">  40069b:	00 00 00 </span><br><span class="line">  40069e:	66 90                	xchg   %ax,%ax</span><br></pre></td></tr></table></figure>
-<p><code>call</code>汇编指令分为两个部分，</p>
-<ol>
-<li>将当前指令的下一条指令地址压入栈中</li>
-<li>JMP（无条件跳转）到目标函数地址。</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/re/pwn/exploit-education-stack-four.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1409,7 +1396,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">61</span>
+          <span class="site-state-item-count">63</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1457,7 +1444,7 @@
 <div class="copyright">
   
   &copy; 2017 – 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
