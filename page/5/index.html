@@ -197,6 +197,360 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6[ZI]%E7%BB%86[DUO]%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%20wfuzz%20%E5%BA%93.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%20wfuzz%20%E5%BA%93.html" class="post-title-link" itemprop="url">史上最详[ZI]细[DUO]的wfuzz中文教程（四）—— wfuzz 库</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-02-27 11:12:00" itemprop="dateCreated datePublished" datetime="2018-02-27T11:12:00+08:00">2018-02-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/web-sec/" itemprop="url" rel="index"><span itemprop="name">web-sec</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%20wfuzz%20%E5%BA%93.html" class="post-meta-item leancloud_visitors" data-flag-title="史上最详[ZI]细[DUO]的wfuzz中文教程（四）—— wfuzz 库" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%20wfuzz%20%E5%BA%93.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="web-sec/史上最详[ZI]细[DUO]的wfuzz中文教程（四）—— wfuzz 库.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<blockquote>
+<p>本文已在丁牛网安实验室FreeBuf专栏 <a href="http://www.freebuf.com/column/163632.html" target="_blank" rel="noopener" title="DigApis安全">DigApis安全</a> 中首发！引用转发请注明 “原文来自：DigApis安全 m0nst3r”字样，谢谢！</p>
+</blockquote>
+</blockquote>
+<p>[TOC]</p>
+<h2 id="wfuzz-库"><a href="#wfuzz-库" class="headerlink" title="wfuzz 库"></a>wfuzz 库</h2><hr>
+<h3 id="wfuzz库参数"><a href="#wfuzz库参数" class="headerlink" title="wfuzz库参数"></a>wfuzz库参数</h3><p>在wfuzz库中包含所有 wfuzz命令行的参数。</p>
+<table>
+<thead>
+<tr>
+<th>CLI Option</th>
+<th>Library Option</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#60;URL&#62;</td>
+<td>url=”url”</td>
+</tr>
+<tr>
+<td>–recipe &#60;filename&#62;</td>
+<td>recipe=”filename”</td>
+</tr>
+<tr>
+<td>-oF &#60;filename&#62;</td>
+<td>save=”filename”</td>
+</tr>
+<tr>
+<td>-f filename,printer</td>
+<td>printer=(“filename”,”printer”)</td>
+</tr>
+<tr>
+<td>–dry-run</td>
+<td>dryrun=True</td>
+</tr>
+<tr>
+<td>-p addr</td>
+<td>proxies=[(“ip”,”port”,”type”)]</td>
+</tr>
+<tr>
+<td>-t N</td>
+<td>concurrent=N</td>
+</tr>
+<tr>
+<td>-s N</td>
+<td>delay=0.0</td>
+</tr>
+<tr>
+<td>-R depth</td>
+<td>rlevel=depth</td>
+</tr>
+<tr>
+<td>–follow</td>
+<td>follow=True</td>
+</tr>
+<tr>
+<td>-Z</td>
+<td>scanmod=True</td>
+</tr>
+<tr>
+<td>–req-delay N</td>
+<td>req_delay=N</td>
+</tr>
+<tr>
+<td>–conn-delay N</td>
+<td>conn_delay=N</td>
+</tr>
+<tr>
+<td>–script=&#60;plugins&#62;</td>
+<td>script=”plugins”</td>
+</tr>
+<tr>
+<td>–script-args n1=v1,…</td>
+<td>script_args={n1:v1,}</td>
+</tr>
+<tr>
+<td>-m iterator</td>
+<td>iterator=”iterator”</td>
+</tr>
+<tr>
+<td>-z payload</td>
+<td>payloads=[(“name”,{default=””,encoder=[“md5”]},slice=””),]</td>
+</tr>
+<tr>
+<td>-V alltype</td>
+<td>allvars=”alltype”</td>
+</tr>
+<tr>
+<td>-X method</td>
+<td>method=”method”</td>
+</tr>
+<tr>
+<td>–hc/hl/hw/hh N[,N]+</td>
+<td>hc/hl/hw/hh=[N,N]</td>
+</tr>
+<tr>
+<td>–sc/sl/sw/sh N[,N]+</td>
+<td>sc/sl/sw/sh=[N,N]</td>
+</tr>
+<tr>
+<td>–ss/hs regex</td>
+<td>ss/hs=”regex”</td>
+</tr>
+<tr>
+<td>–filter &#60;filter&#62;</td>
+<td>filter=”filter exp”</td>
+</tr>
+<tr>
+<td>–prefilter &#60;filter&#62;</td>
+<td>prefilter=”filter exp”</td>
+</tr>
+<tr>
+<td>-b cookie</td>
+<td>cookie=[“cookie1=value1”,]</td>
+</tr>
+<tr>
+<td>-d postdata</td>
+<td>postdata=”postdata”</td>
+</tr>
+<tr>
+<td>-H header</td>
+<td>headers=[(“header1”,”value1”),]</td>
+</tr>
+<tr>
+<td>–basic/ntlm/digest auth</td>
+<td>auth=(“basic”,”user:pass”)</td>
+</tr>
+</tbody></table>
+<p>这些参数可以在这些主库的接口中直接使用：<code>fuzz</code>, <code>payload</code>, <code>session</code>。</p>
+<hr>
+<h3 id="测试一个URL"><a href="#测试一个URL" class="headerlink" title="测试一个URL"></a>测试一个URL</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%20wfuzz%20%E5%BA%93.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6[ZI]%E7%BB%86[DUO]%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%88%9D%E8%AF%86wfuzz.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%88%9D%E8%AF%86wfuzz.html" class="post-title-link" itemprop="url">史上最详[ZI]细[DUO]的wfuzz中文教程（一）——初识wfuzz</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-02-27 11:12:00" itemprop="dateCreated datePublished" datetime="2018-02-27T11:12:00+08:00">2018-02-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/web-sec/" itemprop="url" rel="index"><span itemprop="name">web-sec</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%88%9D%E8%AF%86wfuzz.html" class="post-meta-item leancloud_visitors" data-flag-title="史上最详[ZI]细[DUO]的wfuzz中文教程（一）——初识wfuzz" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%88%9D%E8%AF%86wfuzz.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="web-sec/史上最详[ZI]细[DUO]的wfuzz中文教程（一）——初识wfuzz.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<blockquote>
+<p>本文已在丁牛网安实验室FreeBuf专栏 <a href="http://www.freebuf.com/column/163553.html" target="_blank" rel="noopener" title="DigApis安全">DigApis安全</a> 中首发！引用转发请注明 “原文来自：DigApis安全 m0nst3r”字样，谢谢！</p>
+</blockquote>
+</blockquote>
+<p>[TOC]</p>
+<hr>
+<h2 id="wfuzz教程"><a href="#wfuzz教程" class="headerlink" title="wfuzz教程"></a>wfuzz教程</h2><p>这个教程主要内容是来自<a href="http://wfuzz.readthedocs.io" target="_blank" rel="noopener" title="wfuzz官方文档">wfuzz官方文档</a>。之所以写这个，是因为大多数的国内文章并没有对这个工具进行详细的说明。个人英文还算可以，所以抖胆翻译一下，加上自己的一些操作，一方面加深下自己对这个工具的熟练程度，另一方面方便广大初学者学习。<br>感觉这个工具比平时使用的御剑灵活很多（如果参数都弄明白的话），总之，作为渗透测试信息收集的一个环节，它还是有用武之地的。</p>
+<p>这个教程本来想弄一篇文章，但是实在是太多了，所以借鉴了一下官方文档的分节，把这个教程做成了一个系列，一共四个部分，分别是：</p>
+<ul>
+<li><p>初识wfuzz：看完这个，你应该可以使用比较简单的命令来做一些任务了。</p>
+</li>
+<li><p>wfuzz 基本用法：看完这个的话，你应该可以从容使用wfuzz来做一些常用扫描器做不了的活，而且觉得wfuzz是个好东西。</p>
+</li>
+<li><p>wfuzz 高级用法：看完这个，你应该就可以玩弄wfuzz于手掌之中，各种小姿势让你在别人扫不成的时候装装X。</p>
+</li>
+<li><p>wfuzz 库：看完这个，不，能去仔细学习这个的同学，我就不说了，此类人圈内统称”大婊哥“，小弟在这只是抛砖引玉了。</p>
+</li>
+</ul>
+<hr>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>wfuzz 是一款Python开发的Web安全测试工具<br>wfuzz不仅仅是一个web扫描器：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%88%9D%E8%AF%86wfuzz.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6[ZI]%E7%BB%86[DUO]%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94wfuzz%20%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -287,122 +641,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94wfuzz%20%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6[ZI]%E7%BB%86[DUO]%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94wfuzz%20%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="m0nst3r">
-      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="m0nst3r's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94wfuzz%20%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95.html" class="post-title-link" itemprop="url">史上最详[ZI]细[DUO]的wfuzz中文教程（二）——wfuzz 基本用法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-02-27 11:12:00" itemprop="dateCreated datePublished" datetime="2018-02-27T11:12:00+08:00">2018-02-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/web-sec/" itemprop="url" rel="index"><span itemprop="name">web-sec</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94wfuzz%20%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95.html" class="post-meta-item leancloud_visitors" data-flag-title="史上最详[ZI]细[DUO]的wfuzz中文教程（二）——wfuzz 基本用法" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94wfuzz%20%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95.html#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="web-sec/史上最详[ZI]细[DUO]的wfuzz中文教程（二）——wfuzz 基本用法.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<blockquote>
-<p>本文已在丁牛网安实验室FreeBuf专栏 <a href="http://www.freebuf.com/column/163632.html" target="_blank" rel="noopener" title="DigApis安全">DigApis安全</a> 中首发！引用转发请注明 “原文来自：DigApis安全 m0nst3r”字样，谢谢！</p>
-</blockquote>
-</blockquote>
-<p>[TOC]</p>
-<h2 id="wfuzz-基本用法"><a href="#wfuzz-基本用法" class="headerlink" title="wfuzz 基本用法"></a>wfuzz 基本用法</h2><hr>
-<h3 id="暴破文件和路径"><a href="#暴破文件和路径" class="headerlink" title="暴破文件和路径"></a>暴破文件和路径</h3><p>wfuzz可以用来查找一个web server中的隐藏的文件和路径，来扩大攻击面。值得注意的是，这种测试的成功与否很大程度上要依赖于使用的字典。<br>但是，一个web server的平台是有限的，还有一些是默认安装，再加上一些已知的资源比如日志文件，管理路径等等，我们还是可以在猜测到发现很多东西。因此，暴破文件的路径还是可行的。</p>
-<p>wfuzz自带一些字典文件，更多的字典可以参考下面两个开放的git：</p>
-<ul>
-<li><a href="https://code.google.com/p/fuzzdb/" target="_blank" rel="noopener" title="fuzzdb">fuzzdb</a></li>
-<li><a href="https://github.com/danielmiessler/SecLists" target="_blank" rel="noopener" title="seclists">seclists</a></li>
-</ul>
-<p>使用wfuzz暴力猜测目录的命令如下：<br><code>$ wfuzz -w /usr/share/wfuzz/wordlist/general/common.txt http://testphp.vulnweb.com/FUZZ</code></p>
-<p>使用wfuzz暴力猜测文件的命令如下：<br><code>$ wfuzz -w /usr/share/wfuzz/wordlist/general/common.txt http://testphp.vulnweb.com/FUZZ.php</code></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94wfuzz%20%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95.html#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -1179,121 +1417,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="m0nst3r">
-      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="m0nst3r's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89.html" class="post-title-link" itemprop="url">逆向工程——汇编基础（五）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2017-11-22 11:12:00" itemprop="dateCreated datePublished" datetime="2017-11-22T11:12:00+08:00">2017-11-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89.html" class="post-meta-item leancloud_visitors" data-flag-title="逆向工程——汇编基础（五）" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89.html#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="re/逆向工程——汇编基础（五）.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="子程序"><a href="#子程序" class="headerlink" title="子程序"></a>子程序</h2><p>在汇编语言中，无门并不能像高级语言中那样，在不和程序其他部分起冲突的情况下，定义和其他主程序或子程序一样的变量名。<br>汇编语言并不注重程序员的负担，它依赖程序员的良好设计，以期发挥CPU的最佳性能。<br>汇编语言不是结构化的语言，它不提供直接的“局部变量”。如果需要，只能<code>通过堆或栈自行实现</code>。</p>
-<p>参数的传递是靠<code>寄存器</code>或<code>堆栈</code>来完成的。高级语言中，子程序（函数／过程，或者类似概念的东西）依赖于堆和栈来传递。</p>
-<h3 id="子程序的执行过程"><a href="#子程序的执行过程" class="headerlink" title="子程序的执行过程"></a>子程序的执行过程</h3><p>无论是C／C++／BASIC／Pascal，子程序的执行过程基本都是一致的。</p>
-<ul>
-<li>调用者将子程序执行完成时应返回的地址／参数压入堆栈。</li>
-<li>子程序使用<code>BP指针+偏移量</code>对栈中的参数<code>寻址</code>，并取出，完成操作。</li>
-<li>子程序使用<code>RET</code>或<code>RETF</code>指令返回。此时，CPU将<code>IP</code>置为堆栈中保存的地址，并继续予以执行。</li>
-</ul>
-<p>毋庸置疑，堆栈在整个过程中发挥着非常重要的作用。不过，本质上对子程序最重要的还是<code>返回地址</code>，如果子程序不知道这个地址，那么系统将会崩溃。<br>调用子程序的指令是<code>CALL</code>，对应的返回指令是<code>RET</code>，另外还有<code>ENTER</code>和<code>LEAVE</code>，她们可以帮助进行堆栈的维护。</p>
-<p><code>CALL</code>指令的参数是<code>被调用子程序的地址</code>。使用宏汇编的时候，这通常是一个标号。CALL和RET，一级ENTER和LEAVE配对，以实现<code>对堆栈的自动操作</code>，而不需要程序员进行PUSH/POP，以及跳转的操作，从而提高了效率。</p>
-<blockquote>
-<p>下面一段程序，是从作者文档中抄下来的，我搭建环境并且编译之后，并没有得到相同的汇编代码，所以大家不用拘泥于下面的细节，但是可以从原作者的分析中得到一些有用的知识。</p>
-</blockquote>
-<p>程序是这样的：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1363,7 +1486,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1376,7 +1499,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

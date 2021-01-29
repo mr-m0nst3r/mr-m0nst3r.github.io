@@ -197,6 +197,113 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/pwn/GOT-Hijack.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/re/pwn/GOT-Hijack.html" class="post-title-link" itemprop="url">GOT Hijack</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-29 09:22:01 / Modified: 11:09:13" itemprop="dateCreated datePublished" datetime="2021-01-29T09:22:01+08:00">2021-01-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/re/pwn/" itemprop="url" rel="index"><span itemprop="name">pwn</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/re/pwn/GOT-Hijack.html" class="post-meta-item leancloud_visitors" data-flag-title="GOT Hijack" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/re/pwn/GOT-Hijack.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="re/pwn/GOT-Hijack.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="GOT-Hijack"><a href="#GOT-Hijack" class="headerlink" title="GOT Hijack"></a>GOT Hijack</h1><p>GOT表劫持。</p>
+<h2 id="GOT和PLT"><a href="#GOT和PLT" class="headerlink" title="GOT和PLT"></a>GOT和PLT</h2><blockquote>
+<p>个人理解<br><code>GOT</code>, <code>global offset table</code>，全局偏移表；<code>PLT</code>，<code>procedure linkage table</code>，函数链接表。<br>GOT和PLT是<code>重定向</code>的一种实现方式。在程序编译时（动态编译），在程序中会留下一些变量和函数的“坑”，这些坑只记录了程序用到的变量和符号，但并没有真正实现的代码，而程序运行时，会由解释器或动态链接器<code>ld</code>在这些坑中填上真正变量或函数的地址，比如我们使用到<code>puts</code>函数，在二进制文件中并不会把puts函数代码编译进去，而是在<code>GOT</code>表中留下了<code>puts</code>函数的一个地址，这个地址指向<code>plt</code>表，而plt表会通过<code>dl_runtime_resolve</code>来把这个函数地址解释出来，再将这个地址填回GOT表中的坑，这时GOT表的puts函数就不会再次指向plt表，而是直接指向内存中真正puts函数的地址，这种机制叫做<code>延迟绑定</code>。<br>GOT 位于 .got.plt section 中，而 PLT 位于 .plt section中</p>
+</blockquote>
+<h2 id="GOT劫持"><a href="#GOT劫持" class="headerlink" title="GOT劫持"></a>GOT劫持</h2><p>GOT劫持就是通过程序的漏洞或功能，将GOT表中的函数地址修改为我们想要执行的函数或代码地址，当程序再次调用该函数时，就会跳转到我们的目标地址处开始执行，进而劫持程序执行流程。</p>
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><p>源码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// gcc gothijack.c -no-pie -z execstack -o gothijack</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> name[<span class="number">0x40</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">win</span><span class="params">()</span></span>&#123;</span><br><span class="line">    system(<span class="string">"sh\n"</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> addr;</span><br><span class="line">  setvbuf(<span class="built_in">stdin</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>);</span><br><span class="line">  setvbuf(<span class="built_in">stdout</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"What's you name?\n"</span>);</span><br><span class="line">  <span class="built_in">read</span>(<span class="number">0</span>, name, <span class="number">0x40</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Where do you want to write?\n"</span>);</span><br><span class="line">  <span class="built_in">scanf</span>(<span class="string">"%llu"</span>, &amp;addr); <span class="comment">// &lt;------- 在这里输入我们想要写数据的地址，我们改为GOT表中PUTS项的地址</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Data: "</span>);</span><br><span class="line">  <span class="built_in">read</span>(<span class="number">0</span>, (<span class="keyword">char</span> *)addr, <span class="number">8</span>); <span class="comment">// &lt;-------------- 在这里输入我们想要写入的数据，改为win函数的地址</span></span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"Done!"</span>); <span class="comment">// &lt;------------------ 当程序再次调用puts函数时，由于我们劫持了GOT表中puts函数的地址，会执行我们的win函数</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Thank you %s!\n"</span>, name);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>思路：<br><img src="/re/pwn/GOT-Hijack/2021-01-29-10-10-48.png" alt></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/re/pwn/GOT-Hijack.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/pentest/%E5%8A%A0%E5%AF%86%E6%B5%81%E9%87%8FAPP%E7%9A%84%E6%B8%97%E9%80%8F%E5%87%86%E5%A4%87.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1217,116 +1324,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/android/Android-7-Burpsuite-%E6%8A%93%E5%8C%85.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="m0nst3r">
-      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="m0nst3r's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/android/Android-7-Burpsuite-%E6%8A%93%E5%8C%85.html" class="post-title-link" itemprop="url">Android >=7 Burpsuite 抓包</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-10-31 15:56:00" itemprop="dateCreated datePublished" datetime="2019-10-31T15:56:00+08:00">2019-10-31</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/android/" itemprop="url" rel="index"><span itemprop="name">android</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/android/Android-7-Burpsuite-%E6%8A%93%E5%8C%85.html" class="post-meta-item leancloud_visitors" data-flag-title="Android >=7 Burpsuite 抓包" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/android/Android-7-Burpsuite-%E6%8A%93%E5%8C%85.html#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="android/Android-7-Burpsuite-抓包.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h1><p>在Burp中导出证书,这里的名字为<code>burp.der</code>.</p>
-<p>然后在命令行中进行如下操作:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -inform DER -in burp.der -out burp.pem #转换格式</span><br><span class="line">openssl x509 -inform PEM -subject_hash_old -in burp.pem | head -1 #打印hash,并将pem命名为hash.0</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> 9a5ba575</span></span><br><span class="line">cp burp.pem 9a5ba575.0</span><br><span class="line">adb remount #重新mount</span><br><span class="line">adb push 9a5ba575.0 /system/etc/security/cacerts/ #传上去</span><br><span class="line">adb reboot #搞定</span><br></pre></td></tr></table></figure>
-
-<h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><ol>
-<li>手机完全root</li>
-</ol>
-<h1 id="适用"><a href="#适用" class="headerlink" title="适用"></a>适用</h1><p>要测试的APP在<code>容器是的容器</code>里面,<code>sslunpinning</code>有时不能将所有层都hook好,导致一部分流量仍然提示证书错误.</p>
-<h1 id="可能遇到的问题"><a href="#可能遇到的问题" class="headerlink" title="可能遇到的问题"></a>可能遇到的问题</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">remount of /system failed: Read-only file system</span><br><span class="line">remount failed</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/android/Android-7-Burpsuite-%E6%8A%93%E5%8C%85.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1396,7 +1393,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1409,7 +1406,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

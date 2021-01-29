@@ -197,6 +197,107 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/uncategorized/Build-tcpdump-for-Android.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/uncategorized/Build-tcpdump-for-Android.html" class="post-title-link" itemprop="url">Build tcpdump for Android</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-11-23 15:29:31" itemprop="dateCreated datePublished" datetime="2018-11-23T15:29:31+08:00">2018-11-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
+              </span>
+
+          
+            <span id="/uncategorized/Build-tcpdump-for-Android.html" class="post-meta-item leancloud_visitors" data-flag-title="Build tcpdump for Android" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/uncategorized/Build-tcpdump-for-Android.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="uncategorized/Build-tcpdump-for-Android.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>使用从网上下载的tcpdump, 遇到以下错误：</p>
+<p><code>error: only position independent executables (PIE) are supported.</code></p>
+<p>直接使用NDK在电脑上交叉编译一个。</p>
+<p>GitHub上有个脚本，[<a href="https://github.com/imrivera/build-android-tcpdump.git]" target="_blank" rel="noopener">https://github.com/imrivera/build-android-tcpdump.git]</a></p>
+<p>直接编译会产生错误因为<code>libpcap</code>版本的原因，好在上面的脚本提供了选择版本的参数。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/imrivera/build-android-tcpdump.git</span><br><span class="line">./build-android-tcpdump -a arm64 -n /Users/michael/Library/Android/android-ndk-r10e -l 1.4.0</span><br></pre></td></tr></table></figure>
+
+<p>抓包：<br><code>./tcpdump -vv -p -s 0 -w /sdcard/Mcart003.pcap</code></p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/uncategorized/Build-tcpdump-for-Android.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/blaa/%E7%BB%86%E6%80%9D%E6%9E%81%E6%81%90.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1187,110 +1288,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/sqli/%E7%BC%96%E7%A0%81%E5%BC%95%E8%B5%B7%E7%9A%84SQL%E6%B3%A8%E5%85%A5%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="m0nst3r">
-      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="m0nst3r's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/sqli/%E7%BC%96%E7%A0%81%E5%BC%95%E8%B5%B7%E7%9A%84SQL%E6%B3%A8%E5%85%A5%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93.html" class="post-title-link" itemprop="url">编码引起的SQL注入问题总结</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-05-17 11:12:00" itemprop="dateCreated datePublished" datetime="2018-05-17T11:12:00+08:00">2018-05-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/sqli/" itemprop="url" rel="index"><span itemprop="name">sqli</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/sqli/%E7%BC%96%E7%A0%81%E5%BC%95%E8%B5%B7%E7%9A%84SQL%E6%B3%A8%E5%85%A5%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93.html" class="post-meta-item leancloud_visitors" data-flag-title="编码引起的SQL注入问题总结" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/sqli/%E7%BC%96%E7%A0%81%E5%BC%95%E8%B5%B7%E7%9A%84SQL%E6%B3%A8%E5%85%A5%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93.html#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="sqli/编码引起的SQL注入问题总结.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://security.stackexchange.com/questions/9908/multibyte-character-exploits-php-mysql" target="_blank" rel="noopener">https://security.stackexchange.com/questions/9908/multibyte-character-exploits-php-mysql</a><br><a href="https://www.erich-kachel.de/unicode-issues-on-php/" target="_blank" rel="noopener">https://www.erich-kachel.de/unicode-issues-on-php/</a><br><a href="https://vigilance.fr/vulnerability/MySQL-SQL-injection-via-multi-byte-characters-5885" target="_blank" rel="noopener">https://vigilance.fr/vulnerability/MySQL-SQL-injection-via-multi-byte-characters-5885</a><br><a href="http://shiflett.org/blog/2006/addslashes-versus-mysql-real-escape-string" target="_blank" rel="noopener">http://shiflett.org/blog/2006/addslashes-versus-mysql-real-escape-string</a><br><a href="https://stackoverflow.com/questions/5741187/sql-injection-that-gets-around-mysql-real-escape-string/12118602#12118602" target="_blank" rel="noopener">https://stackoverflow.com/questions/5741187/sql-injection-that-gets-around-mysql-real-escape-string/12118602#12118602</a></p>
-<p><a href="http://eleves.ec-lille.fr/~couprieg/post/Bypass-addslashes-with-UTF-8-characters" target="_blank" rel="noopener">http://eleves.ec-lille.fr/~couprieg/post/Bypass-addslashes-with-UTF-8-characters</a></p>
-
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/sqli/%E7%BC%96%E7%A0%81%E5%BC%95%E8%B5%B7%E7%9A%84SQL%E6%B3%A8%E5%85%A5%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1360,7 +1357,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1373,7 +1370,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
