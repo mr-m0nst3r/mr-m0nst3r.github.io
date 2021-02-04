@@ -197,6 +197,115 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/blockchain/DAPP%E6%9C%AC%E5%9C%B0%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/blockchain/DAPP%E6%9C%AC%E5%9C%B0%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2.html" class="post-title-link" itemprop="url">DAPP本地环境部署</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-02-04 18:40:11 / Modified: 18:42:11" itemprop="dateCreated datePublished" datetime="2021-02-04T18:40:11+08:00">2021-02-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/blockchain/" itemprop="url" rel="index"><span itemprop="name">blockchain</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/blockchain/DAPP%E6%9C%AC%E5%9C%B0%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2.html" class="post-meta-item leancloud_visitors" data-flag-title="DAPP本地环境部署" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/blockchain/DAPP%E6%9C%AC%E5%9C%B0%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="blockchain/DAPP本地环境部署.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="DAPP"><a href="#DAPP" class="headerlink" title="DAPP"></a>DAPP</h1><p>现在局域网内的区块链已经跑起来了，也布置了一个DAPP，在这个DAPP中，你可以使用已经挖到的ETH换成ACFC币。</p>
+<p>以下是参与方式。</p>
+<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><h3 id="GO环境"><a href="#GO环境" class="headerlink" title="GO环境"></a>GO环境</h3><p>访问Golang官网并下载：<code>https://golang.org/doc/install</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">https://golang.org/dl/go1.15.7.linux-amd64.tar.gz</span><br><span class="line">tar -C /usr/local -xzf go1.15.7.linux-amd64.tar.gz # sudo if needed</span><br><span class="line">echo 'export PATH=$PATH:/usr/local/go/bin' &gt;&gt; ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>GO &lt;1.13无法从源码安装<code>go-ethereum</code>。</p>
+<h3 id="安装geth"><a href="#安装geth" class="headerlink" title="安装geth"></a>安装geth</h3><ol>
+<li>下载<code>go-ethereum</code>:<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/ethereum/go-ethereum.git</span><br><span class="line">cd go-ethereum</span><br><span class="line">make geth # make all</span><br><span class="line">echo 'export PATH=$PATH:&lt;PWD&gt;/build/bin' &gt;&gt; ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+
+
+
+</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blockchain/DAPP%E6%9C%AC%E5%9C%B0%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/pwn/GOT-Hijack.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1216,114 +1325,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/games/OverTheWire-bandit-notes.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="m0nst3r">
-      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="m0nst3r's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/games/OverTheWire-bandit-notes.html" class="post-title-link" itemprop="url">OverTheWire: bandit notes</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-11-15 14:36:00" itemprop="dateCreated datePublished" datetime="2019-11-15T14:36:00+08:00">2019-11-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/games/" itemprop="url" rel="index"><span itemprop="name">games</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/games/OverTheWire-bandit-notes.html" class="post-meta-item leancloud_visitors" data-flag-title="OverTheWire: bandit notes" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/games/OverTheWire-bandit-notes.html#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="games/OverTheWire-bandit-notes.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>网址:<a href="https://overthewire.org/wargames/bandit/" target="_blank" rel="noopener">https://overthewire.org/wargames/bandit/</a></p>
-<p>目前就34个关卡,大部分比较容易,有几个需要一些搜索.</p>
-<p>不写整体的writeup了,只写其中做的几个笔记</p>
-<h2 id="find"><a href="#find" class="headerlink" title="find"></a>find</h2><p><code>find / -type f -user xxx -group yyy -size 33c ! -executable 2&gt;/dev/null -exec cat {} \;</code></p>
-<h2 id="cut-awk"><a href="#cut-awk" class="headerlink" title="cut/awk"></a>cut/awk</h2><p><code>cat data.txt | grep millionth | cut -f 2</code></p>
-<p><code>cat data.txt | grep millionth | awk &#39;{print $2}&#39;</code></p>
-<h2 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h2><p><code>cat data.txt | sort | uniq -c | sort -nr | tail -n 1 | awk &#39;{print $2}&#39;</code></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/games/OverTheWire-bandit-notes.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1393,20 +1394,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-count">65</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

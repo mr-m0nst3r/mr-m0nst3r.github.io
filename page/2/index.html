@@ -197,6 +197,114 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/games/OverTheWire-bandit-notes.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/games/OverTheWire-bandit-notes.html" class="post-title-link" itemprop="url">OverTheWire: bandit notes</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-15 14:36:00" itemprop="dateCreated datePublished" datetime="2019-11-15T14:36:00+08:00">2019-11-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/category/games/" itemprop="url" rel="index"><span itemprop="name">games</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/games/OverTheWire-bandit-notes.html" class="post-meta-item leancloud_visitors" data-flag-title="OverTheWire: bandit notes" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/games/OverTheWire-bandit-notes.html#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="games/OverTheWire-bandit-notes.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>网址:<a href="https://overthewire.org/wargames/bandit/" target="_blank" rel="noopener">https://overthewire.org/wargames/bandit/</a></p>
+<p>目前就34个关卡,大部分比较容易,有几个需要一些搜索.</p>
+<p>不写整体的writeup了,只写其中做的几个笔记</p>
+<h2 id="find"><a href="#find" class="headerlink" title="find"></a>find</h2><p><code>find / -type f -user xxx -group yyy -size 33c ! -executable 2&gt;/dev/null -exec cat {} \;</code></p>
+<h2 id="cut-awk"><a href="#cut-awk" class="headerlink" title="cut/awk"></a>cut/awk</h2><p><code>cat data.txt | grep millionth | cut -f 2</code></p>
+<p><code>cat data.txt | grep millionth | awk &#39;{print $2}&#39;</code></p>
+<h2 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h2><p><code>cat data.txt | sort | uniq -c | sort -nr | tail -n 1 | awk &#39;{print $2}&#39;</code></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/games/OverTheWire-bandit-notes.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/android/Android-7-Burpsuite-%E6%8A%93%E5%8C%85.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1206,118 +1314,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/blaa/nginx-acme-sh-%E8%87%AA%E5%8A%A8%E7%AE%A1%E7%90%86SSL%E8%AF%81%E4%B9%A6.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="m0nst3r">
-      <meta itemprop="description" content="m0nst3r喜欢Web安全、渗透测试、网络安全、代码审计、逆向、编程，欢迎各位大表哥莅临指导。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="m0nst3r's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/blaa/nginx-acme-sh-%E8%87%AA%E5%8A%A8%E7%AE%A1%E7%90%86SSL%E8%AF%81%E4%B9%A6.html" class="post-title-link" itemprop="url">nginx + acme.sh 自动管理SSL证书</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-11-29 00:13:00" itemprop="dateCreated datePublished" datetime="2018-11-29T00:13:00+08:00">2018-11-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-03 18:46:42" itemprop="dateModified" datetime="2020-06-03T18:46:42+08:00">2020-06-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/category/blaa/" itemprop="url" rel="index"><span itemprop="name">blaa</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/blaa/nginx-acme-sh-%E8%87%AA%E5%8A%A8%E7%AE%A1%E7%90%86SSL%E8%AF%81%E4%B9%A6.html" class="post-meta-item leancloud_visitors" data-flag-title="nginx + acme.sh 自动管理SSL证书" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/blaa/nginx-acme-sh-%E8%87%AA%E5%8A%A8%E7%AE%A1%E7%90%86SSL%E8%AF%81%E4%B9%A6.html#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="blaa/nginx-acme-sh-自动管理SSL证书.html" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="准备nginx环境"><a href="#准备nginx环境" class="headerlink" title="准备nginx环境"></a>准备nginx环境</h2><p>建立目录专门用作ssl的证书申请</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /www/sites/le_root/.well-known/acme-challenge</span><br><span class="line">chown -R root:www-data /www/sites/le_root</span><br></pre></td></tr></table></figure>
-
-<p>新建一个nginx配置文档<code>/www/nginx/acme-challenge.conf</code>，用作申请证书时的认证</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /.well-known/acme-challenge/ &#123;</span><br><span class="line">    alias /www/sites/le_root/.well-known/acme-challenge/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>想让哪个网站配置ssl之前，先编辑对应的配置文件，相当于apache的vhost</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">server_name mydomain.com;</span><br><span class="line"><span class="meta">#</span><span class="bash"> ....</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Let<span class="string">'s Encrypt webroot</span></span></span><br><span class="line">    include /www/nginx/acme-challenge.conf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>重启nginx<br><code>systemctl reload nginx.service</code></p>
-<h2 id="证书申请与安装"><a href="#证书申请与安装" class="headerlink" title="证书申请与安装"></a>证书申请与安装</h2><p>acme.sh的安装很简单，不重复了。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/blaa/nginx-acme-sh-%E8%87%AA%E5%8A%A8%E7%AE%A1%E7%90%86SSL%E8%AF%81%E4%B9%A6.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1387,20 +1383,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-count">65</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
