@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"m0nst3r.me","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="原因自己在VPS上也可以弄，这个博客上有设置方法，还能够自动更新HTTPS证书。可自行查找。 但作为一个记录、分享型的博客，没必要用后端数据库，直接静态页面就行。 而静态页面最好就是用Markdown写作了。 那自然想到Hexo，但Hexo如果放在VPS上，还需要配置nginx或者hexo-admin插件，才能像常规CMS一样更新内容。总感觉有些不方便。 于是就有了这次的折腾。 结果折腾完之后，工">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用hexo在github&#x2F;gitee上建博客">
+<meta property="og:url" content="https://m0nst3r.me/blaa/%E7%94%A8hexo%E5%9C%A8github-gitee%E4%B8%8A%E5%BB%BA%E5%8D%9A%E5%AE%A2.html">
+<meta property="og:site_name" content="m0nst3r&#39;s blog">
+<meta property="og:description" content="原因自己在VPS上也可以弄，这个博客上有设置方法，还能够自动更新HTTPS证书。可自行查找。 但作为一个记录、分享型的博客，没必要用后端数据库，直接静态页面就行。 而静态页面最好就是用Markdown写作了。 那自然想到Hexo，但Hexo如果放在VPS上，还需要配置nginx或者hexo-admin插件，才能像常规CMS一样更新内容。总感觉有些不方便。 于是就有了这次的折腾。 结果折腾完之后，工">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://m0nst3r.me/blaa/%E7%94%A8hexo%E5%9C%A8github-gitee%E4%B8%8A%E5%BB%BA%E5%8D%9A%E5%AE%A2/2020-04-07-23-35-57.png">
+<meta property="article:published_time" content="2020-04-07T15:28:21.000Z">
+<meta property="article:modified_time" content="2022-08-08T14:27:53.017Z">
+<meta property="article:author" content="m0nst3r">
+<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="github pages">
+<meta property="article:tag" content="gitee page">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://m0nst3r.me/blaa/%E7%94%A8hexo%E5%9C%A8github-gitee%E4%B8%8A%E5%BB%BA%E5%8D%9A%E5%AE%A2/2020-04-07-23-35-57.png">
+
+
+<link rel="canonical" href="https://m0nst3r.me/blaa/%E7%94%A8hexo%E5%9C%A8github-gitee%E4%B8%8A%E5%BB%BA%E5%8D%9A%E5%AE%A2.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://m0nst3r.me/blaa/%E7%94%A8hexo%E5%9C%A8github-gitee%E4%B8%8A%E5%BB%BA%E5%8D%9A%E5%AE%A2.html","path":"blaa/用hexo在github-gitee上建博客.html","title":"用hexo在github/gitee上建博客"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>用hexo在github/gitee上建博客 | m0nst3r's blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">m0nst3r's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello, Bugs</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%9F%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">原因</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C"><span class="nav-number">2.</span> <span class="nav-text">结果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F"><span class="nav-number">3.1.</span> <span class="nav-text">系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vs-code"><span class="nav-number">3.2.</span> <span class="nav-text">vs code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hexo"><span class="nav-number">3.3.</span> <span class="nav-text">hexo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#github-%E4%B8%8E-gitee"><span class="nav-number">3.4.</span> <span class="nav-text">github 与 gitee</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E5%AE%8C%E7%BE%8E%EF%BC%81%E6%89%93%E5%AE%8C%E6%94%B6%E5%B7%A5"><span class="nav-number">4.</span> <span class="nav-text">流程完美！打完收工</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">m0nst3r</p>
+  <div class="site-description" itemprop="description">Web安全、渗透测试、网络安全、代码审计、逆向、编程</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/blaa/%E7%94%A8hexo%E5%9C%A8github-gitee%E4%B8%8A%E5%BB%BA%E5%8D%9A%E5%AE%A2.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="用hexo在github/gitee上建博客 | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          用hexo在github/gitee上建博客
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-04-07 23:28:21" itemprop="dateCreated datePublished" datetime="2020-04-07T23:28:21+08:00">2020-04-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/blaa/" itemprop="url" rel="index"><span itemprop="name">blaa</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h1><p>自己在VPS上也可以弄，这个博客上有设置方法，还能够自动更新HTTPS证书。可自行查找。</p>
+<p>但作为一个记录、分享型的博客，没必要用后端数据库，直接静态页面就行。</p>
+<p>而静态页面最好就是用Markdown写作了。</p>
+<p>那自然想到Hexo，但Hexo如果放在VPS上，还需要配置nginx或者hexo-admin插件，才能像常规CMS一样更新内容。总感觉有些不方便。</p>
+<p>于是就有了这次的折腾。</p>
+<h1 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h1><p>折腾完之后，工作流是这样的：</p>
+<ol>
+<li>本地<code>hex new \[文章名字\]</code></li>
+<li>本地 <code>vscode</code>，编写markdown</li>
+<li>写完之后，<code>hexo g &amp;&amp; hexo d</code> 自动上传到gitee和github。是的，两个同时传。</li>
+<li>gitee无法绑定个人域名，github可以。所以两个都传。都免费的，不用白不用，万一其中一个不能用了，另一个顶上。</li>
+</ol>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="系统"><a href="#系统" class="headerlink" title="系统"></a>系统</h2><p>wsl2 ubuntu</p>
+<h2 id="vs-code"><a href="#vs-code" class="headerlink" title="vs code"></a>vs code</h2><p>插件如下：</p>
+<ul>
+<li>Markdown Preview Enhanced</li>
+<li>Paste Image</li>
+</ul>
+<p>其中<code>Paste Image</code>配置好下：<br><img src="/blaa/%E7%94%A8hexo%E5%9C%A8github-gitee%E4%B8%8A%E5%BB%BA%E5%8D%9A%E5%AE%A2/2020-04-07-23-35-57.png"></p>
+<h2 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h2><p>需要安装的插件</p>
+<ul>
+<li>hexo-generate-searchdb</li>
+<li>hexo-deployer-git</li>
+<li>hexo-excerpt</li>
+<li>next 主题</li>
+</ul>
+<h2 id="github-与-gitee"><a href="#github-与-gitee" class="headerlink" title="github 与 gitee"></a>github 与 gitee</h2><ol>
+<li><p>申请账号</p>
+</li>
+<li><p>新建repo</p>
+<ul>
+<li>github上用<code>username.github.io</code></li>
+<li>gitee上用<code>username</code></li>
+</ul>
+</li>
+<li><p>生成密钥，并把同一个公钥都添加到github和gitee</p>
+</li>
+<li><p>github上设置github page, 绑定个人域名，在<code>theme/next/source</code>下，新建<code>CNAME</code>文件，内容为你的域名</p>
+</li>
+<li><p>在域名服务商那里设置dns解析</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">record  host    target</span><br><span class="line"></span><br><span class="line">A   @   185.199.108.153</span><br><span class="line">A   @   185.199.109.153</span><br><span class="line">A   @   185.199.110.153</span><br><span class="line">A   @   185.199.111.153</span><br><span class="line">CNAME   www     [your-username].github.io</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>设置<code>hexo</code>的<code>_config.yml</code></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">type:</span> <span class="string">&#x27;git&#x27;</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">&#x27;git@gitee.com:m0nst3r/m0nst3r.git&#x27;</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">&#x27;master&#x27;</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">type:</span> <span class="string">&#x27;git&#x27;</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">&#x27;git@github.com:mr-m0nst3r/mr-m0nst3r.github.io.git&#x27;</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">&#x27;master&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>先安装依赖</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">python3 -m pip install pyvirtualdisplay</span><br><span class="line">python3 -m pip install selenium</span><br><span class="line">sudo apt-get install xvfb</span><br><span class="line">wget https://chromedriver.storage.googleapis.com/80.0.3987.106/chromedriver_linux64.zip</span><br><span class="line">unzip chromedriver_linux64.zip</span><br><span class="line">sudo mv chromedriver /usr/bin/</span><br><span class="line">sudo apt install libnss3 libnss3-dev libnss3-tools chromium-browser</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>gitee上的页面不是push上去就会更新，需要登陆点一下，于是借用了这个脚本.</p>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> pyvirtualdisplay <span class="keyword">import</span> Display</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.common.alert <span class="keyword">import</span> Alert</span><br><span class="line"></span><br><span class="line">display = Display(visible=<span class="number">0</span>, size=(<span class="number">800</span>, <span class="number">600</span>))</span><br><span class="line">display.start()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模拟浏览器打开到gitee登录界面</span></span><br><span class="line">driver = webdriver.Chrome()</span><br><span class="line">driver.get(<span class="string">&#x27;https://gitee.com/login&#x27;</span>)</span><br><span class="line"><span class="comment"># 将窗口最大化</span></span><br><span class="line">driver.maximize_window()</span><br><span class="line">time.sleep(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输入账号--通过html的id属性定位输入位置--改为你的账号</span></span><br><span class="line">user_login = driver.find_element_by_id(<span class="string">&#x27;user_login&#x27;</span>)</span><br><span class="line">user_login.send_keys(<span class="string">&quot;改为你的账号&quot;</span>)</span><br><span class="line"><span class="comment"># 输入密码--通过html的id属性定位输入位置--改为你的密码</span></span><br><span class="line">driver.find_element_by_id(<span class="string">&#x27;user_password&#x27;</span>).send_keys(<span class="string">&quot;改为你的密码&quot;</span>)</span><br><span class="line"><span class="comment"># 点击登录按钮--通过xpath确定点击位置</span></span><br><span class="line">driver.find_element_by_xpath(</span><br><span class="line">    <span class="string">&#x27;/html/body/div[2]/div[2]/div/div[1]/div[2]/div/form[1]/div[2]/div/div/div[4]/input&#x27;</span>).click()</span><br><span class="line"></span><br><span class="line">time.sleep(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换到gitee pages界面--改为you_gitee_id</span></span><br><span class="line">driver.get(<span class="string">&#x27;https://gitee.com/改为you_gitee_id/改为you_gitee_id/pages&#x27;</span>)</span><br><span class="line"><span class="comment"># 点击更新按钮--通过xpath确定点击位置</span></span><br><span class="line"><span class="comment"># /html/body/div[3]/div[2]/div/div[2]/div[1]/form/div[7]</span></span><br><span class="line">driver.find_element_by_xpath(<span class="string">&#x27;/html/body/div[3]/div[2]/div/div[2]/div[1]/form/div[7]&#x27;</span>).click()</span><br><span class="line"><span class="comment"># 确认更新提示框--这个函数的作用是确认提示框</span></span><br><span class="line">Alert(driver).accept()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 等待5秒更新</span></span><br><span class="line">time.sleep(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个print其实没事什么用,如果真的要测试脚本是否运行成功，可以用try来抛出异常</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;成功&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 脚本运行成功,退出浏览器</span></span><br><span class="line">driver.quit()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 写上更新日志</span></span><br><span class="line"><span class="comment"># 我这里是写在D盘，可以改为自己喜欢的目录</span></span><br><span class="line">fp = <span class="built_in">open</span>(<span class="string">&quot;D:\sites\log.txt&quot;</span>, <span class="string">&quot;a+&quot;</span>)</span><br><span class="line">now_time = time.strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>, time.localtime())</span><br><span class="line">fp.write(<span class="string">&quot;auto update time:&#123;0&#125;\n&quot;</span>.<span class="built_in">format</span>(now_time))</span><br><span class="line">fp.close()</span><br></pre></td></tr></table></figure>
+
+<p>最后优化一下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod +x gitee-update.py</span><br><span class="line">sudo ln -s /mnt/d/sites/gitee-update.py /usr/bin/update-gitee</span><br></pre></td></tr></table></figure>
+<p>以后更新完之后，执行<code>update-gitee</code>就ok了！</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">michael@DESKTOP-HE0BL7H:/mnt/d/sites/m0nst3r.me$ hexo g &amp;&amp; hexo d</span><br><span class="line">INFO  Start processing</span><br><span class="line">INFO  Files loaded in 995 ms</span><br><span class="line">INFO  Generated: blaa/用hexo在github-gitee上建博客.html</span><br><span class="line">INFO  Generated: index.html</span><br><span class="line">INFO  Generated: search.xml</span><br><span class="line">INFO  3 files generated in 1.18 s</span><br><span class="line">INFO  Deploying: git</span><br><span class="line">INFO  Clearing .deploy_git folder...</span><br><span class="line">INFO  Copying files from public folder...</span><br><span class="line">INFO  Copying files from extend dirs...</span><br><span class="line">[master b0ccc14] Site updated: 2020-04-07 23:50:20</span><br><span class="line"> 3 files changed, 17 insertions(+), 7 deletions(-)</span><br><span class="line">Counting objects: 6, done.</span><br><span class="line">Delta compression using up to 12 threads.</span><br><span class="line">Compressing objects: 100% (6/6), done.</span><br><span class="line">Writing objects: 100% (6/6), 2.73 KiB | 62.00 KiB/s, done.</span><br><span class="line">Total 6 (delta 5), reused 0 (delta 0)</span><br><span class="line">remote: Powered by GITEE.COM [GNK-3.8]</span><br><span class="line">To gitee.com:m0nst3r/m0nst3r.git</span><br><span class="line">   030129a..b0ccc14  HEAD -&gt; master</span><br><span class="line">Branch &#x27;master&#x27; set up to track remote branch &#x27;master&#x27; from &#x27;git@gitee.com:m0nst3r/m0nst3r.git&#x27;.</span><br><span class="line">INFO  Deploy done: git</span><br><span class="line">INFO  Deploying: git</span><br><span class="line">INFO  Clearing .deploy_git folder...</span><br><span class="line">INFO  Copying files from public folder...</span><br><span class="line">INFO  Copying files from extend dirs...</span><br><span class="line">On branch master</span><br><span class="line">nothing to commit, working tree clean</span><br><span class="line">Counting objects: 6, done.</span><br><span class="line">Delta compression using up to 12 threads.</span><br><span class="line">Compressing objects: 100% (6/6), done.</span><br><span class="line">Writing objects: 100% (6/6), 2.73 KiB | 60.00 KiB/s, done.</span><br><span class="line">Total 6 (delta 5), reused 0 (delta 0)</span><br><span class="line">remote: Resolving deltas: 100% (5/5), completed with 5 local objects.</span><br><span class="line">To github.com:mr-m0nst3r/mr-m0nst3r.github.io.git</span><br><span class="line">   030129a..b0ccc14  HEAD -&gt; master</span><br><span class="line">Branch &#x27;master&#x27; set up to track remote branch &#x27;master&#x27; from &#x27;git@github.com:mr-m0nst3r/mr-m0nst3r.github.io.git&#x27;.</span><br><span class="line">INFO  Deploy done: git</span><br><span class="line">michael@DESKTOP-HE0BL7H:/mnt/d/sites$ update-gitee</span><br><span class="line">成功</span><br><span class="line">michael@DESKTOP-HE0BL7H:/mnt/d/sites$ </span><br></pre></td></tr></table></figure>
+
+<h1 id="流程完美！打完收工"><a href="#流程完美！打完收工" class="headerlink" title="流程完美！打完收工"></a>流程完美！打完收工</h1>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/hexo/" rel="tag"># hexo</a>
+              <a href="/tags/github-pages/" rel="tag"># github pages</a>
+              <a href="/tags/gitee-page/" rel="tag"># gitee page</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/re/pwn/angr%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C%E7%BB%83%E4%B9%A0-angr-ctf.html" rel="prev" title="angr符号执行练习 angr_ctf">
+                  <i class="fa fa-chevron-left"></i> angr符号执行练习 angr_ctf
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/android/Magisk-Taichi-Android-9-%E5%AE%89%E8%A3%85.html" rel="next" title="Magisk Taichi Android 9 安装">
+                  Magisk Taichi Android 9 安装 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">m0nst3r</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

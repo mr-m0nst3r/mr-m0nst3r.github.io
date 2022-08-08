@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"m0nst3r.me","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="[TOC] 参数获取示例程序如下： 123456789101112#include &lt;stdio.h&gt;int f ( int a, int b, int c)&amp;#123;	return a*b+c;&amp;#125;int main()&amp;#123;	printf(&quot;%d\n&quot;, f(1,2,3));	return 0;&amp;#125;  x86MSVCMSVC编译后的指令清单">
+<meta property="og:type" content="article">
+<meta property="og:title" content="逆向工程——参数获取、返回值、指针、GOTO语句">
+<meta property="og:url" content="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E5%8F%82%E6%95%B0%E8%8E%B7%E5%8F%96%E3%80%81%E8%BF%94%E5%9B%9E%E5%80%BC%E3%80%81%E6%8C%87%E9%92%88%E3%80%81GOTO%E8%AF%AD%E5%8F%A5.html">
+<meta property="og:site_name" content="m0nst3r&#39;s blog">
+<meta property="og:description" content="[TOC] 参数获取示例程序如下： 123456789101112#include &lt;stdio.h&gt;int f ( int a, int b, int c)&amp;#123;	return a*b+c;&amp;#125;int main()&amp;#123;	printf(&quot;%d\n&quot;, f(1,2,3));	return 0;&amp;#125;  x86MSVCMSVC编译后的指令清单">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://m0nst3r.me/images/2dafc9dd1817ec6d0abefc90ac50b9d649884ae4.png">
+<meta property="og:image" content="https://m0nst3r.me/images/573d76d43e38cff66ac6337d31ccb75b7fb13e99.png">
+<meta property="article:published_time" content="2017-12-08T03:12:00.000Z">
+<meta property="article:modified_time" content="2022-08-08T14:27:53.031Z">
+<meta property="article:author" content="m0nst3r">
+<meta property="article:tag" content="Web安全,渗透测试,网络安全,代码审计,逆向,编程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://m0nst3r.me/images/2dafc9dd1817ec6d0abefc90ac50b9d649884ae4.png">
+
+
+<link rel="canonical" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E5%8F%82%E6%95%B0%E8%8E%B7%E5%8F%96%E3%80%81%E8%BF%94%E5%9B%9E%E5%80%BC%E3%80%81%E6%8C%87%E9%92%88%E3%80%81GOTO%E8%AF%AD%E5%8F%A5.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E5%8F%82%E6%95%B0%E8%8E%B7%E5%8F%96%E3%80%81%E8%BF%94%E5%9B%9E%E5%80%BC%E3%80%81%E6%8C%87%E9%92%88%E3%80%81GOTO%E8%AF%AD%E5%8F%A5.html","path":"re/逆向工程——参数获取、返回值、指针、GOTO语句.html","title":"逆向工程——参数获取、返回值、指针、GOTO语句"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>逆向工程——参数获取、返回值、指针、GOTO语句 | m0nst3r's blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">m0nst3r's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello, Bugs</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E8%8E%B7%E5%8F%96"><span class="nav-number">1.</span> <span class="nav-text">参数获取</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#x86"><span class="nav-number">1.1.</span> <span class="nav-text">x86</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MSVC"><span class="nav-number">1.1.1.</span> <span class="nav-text">MSVC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GCC"><span class="nav-number">1.1.2.</span> <span class="nav-text">GCC</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x64"><span class="nav-number">1.2.</span> <span class="nav-text">x64</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MSVC-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">MSVC</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARM"><span class="nav-number">1.3.</span> <span class="nav-text">ARM</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AA%E5%BC%80%E5%90%AF%E4%BC%98%E5%8C%96%E7%9A%84%EF%BC%9A"><span class="nav-number">1.3.1.</span> <span class="nav-text">未开启优化的：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E4%BC%98%E5%8C%96%E7%9A%84%EF%BC%9A"><span class="nav-number">1.3.2.</span> <span class="nav-text">开启优化的：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E4%BC%98%E5%8C%96%E7%9A%84Thumb%E6%A8%A1%E5%BC%8F%EF%BC%9A"><span class="nav-number">1.3.3.</span> <span class="nav-text">开启优化的Thumb模式：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARM64"><span class="nav-number">1.4.</span> <span class="nav-text">ARM64</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E4%BC%98%E5%8C%96%E7%9A%84GCC"><span class="nav-number">1.4.1.</span> <span class="nav-text">开启优化的GCC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AA%E5%BC%80%E5%90%AF%E4%BC%98%E5%8C%96%E7%9A%84GCC"><span class="nav-number">1.4.2.</span> <span class="nav-text">未开启优化的GCC</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MIPS"><span class="nav-number">1.5.</span> <span class="nav-text">MIPS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">2.</span> <span class="nav-text">返回值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#void%E5%9E%8B%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">2.1.</span> <span class="nav-text">void型函数的返回值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC%E4%B8%8D%E8%A2%AB%E8%B0%83%E7%94%A8%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">2.2.</span> <span class="nav-text">函数返回值不被调用的情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%94%E5%9B%9E%E5%80%BC%E4%B8%BA%E7%BB%93%E6%9E%84%E4%BD%93%E5%9E%8B%E6%95%B0%E6%8D%AE"><span class="nav-number">2.3.</span> <span class="nav-text">返回值为结构体型数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E9%92%88"><span class="nav-number">3.</span> <span class="nav-text">指针</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E3%80%81%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F"><span class="nav-number">3.1.</span> <span class="nav-text">全局变量、局部变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GOTO%E8%AF%AD%E5%8F%A5"><span class="nav-number">4.</span> <span class="nav-text">GOTO语句</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">m0nst3r</p>
+  <div class="site-description" itemprop="description">Web安全、渗透测试、网络安全、代码审计、逆向、编程</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E5%8F%82%E6%95%B0%E8%8E%B7%E5%8F%96%E3%80%81%E8%BF%94%E5%9B%9E%E5%80%BC%E3%80%81%E6%8C%87%E9%92%88%E3%80%81GOTO%E8%AF%AD%E5%8F%A5.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="逆向工程——参数获取、返回值、指针、GOTO语句 | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          逆向工程——参数获取、返回值、指针、GOTO语句
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-12-08 11:12:00" itemprop="dateCreated datePublished" datetime="2017-12-08T11:12:00+08:00">2017-12-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>[TOC]</p>
+<h2 id="参数获取"><a href="#参数获取" class="headerlink" title="参数获取"></a>参数获取</h2><p>示例程序如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">f</span> <span class="params">( <span class="type">int</span> a, <span class="type">int</span> b, <span class="type">int</span> c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a*b+c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">f</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>));</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="x86"><a href="#x86" class="headerlink" title="x86"></a>x86</h3><h4 id="MSVC"><a href="#MSVC" class="headerlink" title="MSVC"></a>MSVC</h4><p>MSVC编译后的指令清单如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">_TEXT	SEGMENT</span><br><span class="line">_a$ = 8		; size = 4</span><br><span class="line">_b$ = 12	; size = 4</span><br><span class="line">_c$ = 16	; size = 4</span><br><span class="line">_f		PROC</span><br><span class="line">			push	ebp</span><br><span class="line">			mov		ebp,esp</span><br><span class="line">			mov		eax, DWORD PTR _a$[ebp]</span><br><span class="line">			imul		eax, DWORD PTR _b$[ebp]</span><br><span class="line">			add		eax, DWORD PTR _c$[ebp]</span><br><span class="line">			pop		ebp</span><br><span class="line">			ret		0</span><br><span class="line">_f		ENDP</span><br><span class="line"></span><br><span class="line">_main	PROC</span><br><span class="line">			push	ebp</span><br><span class="line">			push	ebp,esp</span><br><span class="line">			push	3		; 3rd argument</span><br><span class="line">			push	2		; 2nd argument</span><br><span class="line">			push	1		; 1st argument</span><br><span class="line">			call	_f</span><br><span class="line">			add		esp, 12</span><br><span class="line">			push	eax</span><br><span class="line">			push	OFFSET $SG2463		; &#x27;$d&#x27;, 0aH, 00H</span><br><span class="line">			call	_printf</span><br><span class="line">			add		esp, 8</span><br><span class="line">			; return 0</span><br><span class="line">			xor		eax, eax</span><br><span class="line">			pop		ebp</span><br><span class="line">			ret		0</span><br><span class="line">_main	ENDP</span><br></pre></td></tr></table></figure>
+
+<p>main()函数把 3 个数字推送入栈，然后调用了<code>f(int, int, int)</code>。被调用方函数f()通过<code>_a$=8</code>一类的汇编宏访问所需参数以及函数自定义的局部变量。只不过从被调用方函数的数据栈的角度来看，<code>外部参考的偏移量是正值</code>，而<code>局部变量的偏移量是负值</code>。可见，当需要访问栈帧(stack frame)以外的数据时，被调用方函数可把汇编宏(例如_a$)与EBP寄存器的值<code>相加</code>，从而求得所需地址。<br>当变量 a 的值存入<code>EAX</code>寄存器之后，f()函数通过各参数的地址依次进行乘法和加法运算，运算结果 一直存储于 EAX 寄存器。此后 EAX 的值就可以直接作为返回值传递给调用方函数。调用方函数 main()再 把 EAX 的值当作参数传递给 printf()函数。</p>
+<h4 id="GCC"><a href="#GCC" class="headerlink" title="GCC"></a>GCC</h4><p>GCC编译结果和MSVC基本相同。如果函数尾声使用了<code>leave</code>指令，则不需要被调用房函数还原栈指针<code>sp</code>。</p>
+<h3 id="x64"><a href="#x64" class="headerlink" title="x64"></a>x64</h3><h4 id="MSVC-1"><a href="#MSVC-1" class="headerlink" title="MSVC"></a>MSVC</h4><p>x86-64系统能够使用<code>寄存器传递参数</code>（一般为前4个或前6个），被调用方函数会从寄存器里获取参数，而不需要访问栈。<br>开启优化：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$SG2997	DB	&#x27;%d&#x27;, 0aH, 00H</span><br><span class="line"></span><br><span class="line">main	PROC</span><br><span class="line">			sub	rsp, 40</span><br><span class="line">			mov	edx, 2</span><br><span class="line">			lea	r8d, QWORD PTR [rdx+1]		; r8d=3</span><br><span class="line">			lea	ecx, QWORD PTR [rdx-1]		; ecx=1</span><br><span class="line">			call	f</span><br><span class="line">			lea	rcx, OFFSET FLAT:$SG2997	; &#x27;%d&#x27;</span><br><span class="line">			mov	edx, eax</span><br><span class="line">			call	printf</span><br><span class="line">			xor	eax,eax</span><br><span class="line">			add	rsp, 40</span><br><span class="line">			ret	0</span><br><span class="line">main	ENDP</span><br><span class="line"></span><br><span class="line">f	PROC</span><br><span class="line">		; ECX - 1st argument</span><br><span class="line">		; EDX - 2nd argument</span><br><span class="line">		; R8D - 3rd argument</span><br><span class="line">		imul	ecx,edx</span><br><span class="line">		lea	eax,DWORD PTR [r8+rcx]</span><br><span class="line">		ret	0</span><br><span class="line">f	ENDP</span><br></pre></td></tr></table></figure>
+<p>我们可以看到，f()函数通过<code>寄存器</code>获取了全部的所需参数。此处求址的加法运算是通过<code>LEA</code>指令实现 的。很明显，编译器认为 LEA 指令的效率比 ADD 指令的效率高，所以它分配了 LEA 指令。在制备 f()函 数的第一个和第三个参数时，main()函数同样使用了 LEA 指令。编译器无疑认为 LEA 指令向寄存器赋值 的速度比常规的 MOV 指令速度快。</p>
+<p>未开启优化：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">f   proc near</span><br><span class="line">    ; shadow space:</span><br><span class="line">    arg_0 = dword ptr 8</span><br><span class="line">    arg_8 = dword ptr 10h</span><br><span class="line">    arg_10 = dword ptr 18h</span><br><span class="line">    ; ECX - 1st argument</span><br><span class="line">    ; EDX - 2nd argument</span><br><span class="line">    ; R8D - 3rd argument</span><br><span class="line">    mov [rsp+arg_10], r8d     </span><br><span class="line">    mov [rsp+arg_8], edx</span><br><span class="line">    mov [rsp+arg_0], ecx</span><br><span class="line">    mov eax, [rsp+arg_0]</span><br><span class="line">    imul eax, [rsp+arg_8]</span><br><span class="line">    add eax, [rsp+arg_10]</span><br><span class="line">    retn</span><br><span class="line">f endp</span><br><span class="line"></span><br><span class="line">main  proc near</span><br><span class="line">    sub rsp, 28h</span><br><span class="line">    mov r8d,3 ; 3rd argument</span><br><span class="line">    mov edx,2 ; 2nd argument</span><br><span class="line">    mov ecx,1 ; 1st argument</span><br><span class="line">    call f</span><br><span class="line">    mov edx, eax</span><br><span class="line">    lea rcx, $SG2931 ; &quot;%d\n&quot; </span><br><span class="line">    call printf</span><br><span class="line">    ; return 0</span><br><span class="line">    xor eax, eax </span><br><span class="line">    add rsp, 28h </span><br><span class="line">    retn</span><br><span class="line">main  endp</span><br></pre></td></tr></table></figure>
+<p>比较意外的是，原本位于寄存器的 3 个参数都被推送到了栈里。这种现象叫作<code>阴影空间/shadow space</code> 。 每个Win64程序都可以(但非必须)把 4 个寄存器的值保存到阴影空间里。<br>使用阴影空间有以下两个优点: </p>
+<ol>
+<li>通过栈传递参数，可避免浪费寄存器资源(有时可能会占用 4 个寄存器);</li>
+<li>便于调试器debugger在程序中断时找到函数参数</li>
+</ol>
+<p>大型函数可能会把输入参数保存在阴影空间里，但是小型函数(如本例)可能就不会使用阴影空间了。<br>在使用阴影空间时，由<code>调用方</code>函数分配栈空间，由被调用方函数根据需要将寄存器参数转储到它们的阴影空间中。</p>
+<h3 id="ARM"><a href="#ARM" class="headerlink" title="ARM"></a>ARM</h3><h4 id="未开启优化的："><a href="#未开启优化的：" class="headerlink" title="未开启优化的："></a>未开启优化的：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">.text:000000A4 0030A0E1 MOV R3, R0</span><br><span class="line">.text:000000A8 932120E0 MLA R0, R3, R1, R2</span><br><span class="line">.text:000000AC 1EFF2FE1 BX  LR</span><br><span class="line">... </span><br><span class="line">.text:000000B0 				main</span><br><span class="line">.text:000000B0 10402DE9 STMFD SP!, &#123;R4,LR&#125;</span><br><span class="line">.text:000000B4 0320A0E3 MOV R2, #3</span><br><span class="line">.text:000000B8 0210A0E3 MOV R1, #2</span><br><span class="line">.text:000000BC 0100A0E3 MOV R0, #1</span><br><span class="line">.text:000000C0 F7FFFFEB BL f</span><br><span class="line">.text:000000C4 0040A0E1 MOV R4, R0</span><br><span class="line">.text:000000C8 0410A0E1 MOV R1, R4</span><br><span class="line">.text:000000CC 5A0F8FE2 ADR R0, aD_0 ; &quot;%d\n&quot;</span><br><span class="line">.text:000000D0 E31800EB BL __2printf</span><br><span class="line">.text:000000D4 0000A0E3 MOV R0, #0</span><br><span class="line">.text:000000D8 0000A0E3 LDMFD SP!, &#123;R4,PC&#125;</span><br></pre></td></tr></table></figure>
+<p>主函数只起到了调用另外 2 个函数的作用。它把 3 个参数传递给了f()函数。<br>在 ARM 系统里，前 4 个寄存器<code>R0~R3</code>负责传递前 4 个参数。<br>在本例中，f()函数通过前 3 个寄存器(R0~R2)读取参数。</p>
+<p><code>MLA(Multiply Accumulate)</code>指令将前两个操作数(R3 和 R1 里的值)相乘，然后再计算第三个操作数(R2 里的值)和这个积的和，并且把最终运算结果存储在零号寄存器 R0 之中。根据 ARM 指令的有关 规范，<code>返回值</code>就应该存放在 <code>R0</code> 寄存器里。<br>首条指令<code>MOV R3, R0</code>属于冗余指令。即使此处没有这条指令，后面的 MLA 指令直接使用有关的 寄存器也不会出现任何问题。</p>
+<p><code>BL</code>指令把程序的控制流交给<code>LR</code>寄存器里的地址，而且会在必要的时候切换处理器的运行模式(Thumb 模式和ARM模式之间进行模式切换)。被调用方函数f()并不知道它会被什么模式的代码调用，不知道调用方函数属于 ARM模式的代码还是Thumb模式的代码。所以这种模式切换的功能还是必要的。如果它被 Thumb模式的代码调用，BX指令不仅会进行相应的跳转，还会把处理器模式调整为Thumb。如果它被ARM 模式的指令调用，则不会进行模式切换。</p>
+<h4 id="开启优化的："><a href="#开启优化的：" class="headerlink" title="开启优化的："></a>开启优化的：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.text:00000098							f</span><br><span class="line">.text:00000098 91 20 20 E0		MLA R0, R1, R0, R2 .text:0000009C 1E FF 2F E1		BX LR</span><br></pre></td></tr></table></figure>
+<p>在启用最大幅度的优化功能(<code>-O3</code>)之后，前面那条 MOV 指令被优化了，或者说被删除了。MLA 直接使用所有寄存器的参数，并且把返回值保存在 R0 寄存器里。调用方函数继而可从 R0 寄存器获取返回值。</p>
+<h4 id="开启优化的Thumb模式："><a href="#开启优化的Thumb模式：" class="headerlink" title="开启优化的Thumb模式："></a>开启优化的Thumb模式：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.text:0000005E 48 43		MULS R0, R1</span><br><span class="line">.text:00000060 80 18		ADDS R0, R0, R2</span><br><span class="line">.text:00000062 70 47		BX LR</span><br></pre></td></tr></table></figure>
+<p>因为 Thumb 模式的指令集里没有 MLA 指令，所以编译器将它分为两个指令。第一条 MULS 指令计算 R0 和 R1 的积，把运算结果存储在 R1 寄存器里。第二条 ADDS 计算 R1 和 R2 的和，并且把计算结果存储在 R0 寄存器里。</p>
+<h3 id="ARM64"><a href="#ARM64" class="headerlink" title="ARM64"></a>ARM64</h3><h4 id="开启优化的GCC"><a href="#开启优化的GCC" class="headerlink" title="开启优化的GCC"></a>开启优化的GCC</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">f:</span><br><span class="line">		madd	w0, w0, w1, w2</span><br><span class="line">		ret</span><br><span class="line">main: </span><br><span class="line">; save FP and LR to stack frame:</span><br><span class="line">		stp x29, x30, [sp, -16]! </span><br><span class="line">		mov w2, 3</span><br><span class="line">		mov w1, 2</span><br><span class="line">		add x29, sp, 0</span><br><span class="line">		mov w0, 1</span><br><span class="line">		bl f</span><br><span class="line">		mov w1, w0</span><br><span class="line">		adrp x0, .LC7</span><br><span class="line">		add x0, x0, :lo12:.LC7 bl printf</span><br><span class="line">; return 0</span><br><span class="line">		mov w0, 0</span><br><span class="line">; restore FP and LR</span><br><span class="line">		ldp x29, x30, [sp], 16</span><br><span class="line">		ret</span><br><span class="line">.LC7:</span><br><span class="line">		.string &quot;%d\n&quot;</span><br></pre></td></tr></table></figure>
+<p>ARM64 的情况简单一些。<code>MADD</code> 指令可以一次进行乘法和加法的混合运算，与前文的 MLA 指令十 分类似。全部 3 个参数由 X-字头寄存器的低 32 位传递。这是因为这些参数都是 32 位整型数据。函数的返 回值存储在 <code>W0</code> 寄存器。</p>
+<blockquote>
+<p>采用 64 位参数之后，程序使用了整个 64 位 <code>X 寄存器</code>。程序通过<code>两条指令</code>才能把长数据类型的 64 位值存储到寄存器里。</p>
+</blockquote>
+<h4 id="未开启优化的GCC"><a href="#未开启优化的GCC" class="headerlink" title="未开启优化的GCC"></a>未开启优化的GCC</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">f:</span><br><span class="line">		sub sp, sp, #16</span><br><span class="line">		str w0, [sp,12] </span><br><span class="line">		str w1, [sp,8] </span><br><span class="line">		str w2, [sp,4] </span><br><span class="line">		ldr w1, [sp,12] </span><br><span class="line">		ldr w0, [sp,8] </span><br><span class="line">		mul w1, w1, w0 l</span><br><span class="line">		dr w0, [sp,4] </span><br><span class="line">		add w0, w1, w0 </span><br><span class="line">		add sp, sp, 16</span><br><span class="line">		ret</span><br></pre></td></tr></table></figure>
+<p>函数 f()把传入的参数保存在数据栈里，以防止后期的指令占用<code>W0~W2 寄存器</code>。这可防止后续指令覆盖函数参数，起到保护传入参数的作用。这种技术叫作<code>寄存器保护区/Register Save Area</code>。 但是，本例的这种被调用方函数可以不这样保存参数。<br>在启用优化选项后，GCC会把这部分寄存器存储指令删除。这是因为优化功能判断出后续指令不会再操作函数参数的相关地址，所以编译器不再另行保存 W0~W2 中存储的数据。<br>此外，上述代码使用了 <code>MUL/ADD</code> 指令对，而没有使用 MADD 指令。</p>
+<h3 id="MIPS"><a href="#MIPS" class="headerlink" title="MIPS"></a>MIPS</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">.text:00000000	f:</span><br><span class="line">; $a0=a</span><br><span class="line">; $a1=b</span><br><span class="line">; $a2=c</span><br><span class="line">.text:00000000 mult		$a1, $a0</span><br><span class="line">.text:00000004 mflo		$v0</span><br><span class="line">.text:00000008 jr			$ra</span><br><span class="line">.text:0000000C addu		$v0, $a2, $v0		; branch delay slot</span><br><span class="line">; result in $v0 upon return</span><br><span class="line">text:00000010		main:</span><br><span class="line">.text:00000010 </span><br><span class="line">.text:00000010 var_10	= -0x10</span><br><span class="line">.text:00000010 var_4	= -4</span><br><span class="line">.text:00000010 </span><br><span class="line">.text:00000010 lui		$gp, (__gnu_local_gp &gt;&gt; 16)</span><br><span class="line">.text:00000014 addiu	$sp, -0x20</span><br><span class="line">.text:00000018 la		$gp, (__gnu_local_gp &amp; 0xFFFF)</span><br><span class="line">.text:0000001C sw		$ra, 0x20+var_4($sp)</span><br><span class="line">.text:00000020 sw		$gp, 0x20+var_10($sp)</span><br><span class="line">; set c: </span><br><span class="line">.text:00000024 li		$a2, 3</span><br><span class="line">; set a: </span><br><span class="line">.text:00000028 li		$a0, 1</span><br><span class="line">.text:0000002C jal		f</span><br><span class="line">; set b: </span><br><span class="line">.text:00000030 li		$a1, 2		; branch delay slot</span><br><span class="line">; result in $v0 now </span><br><span class="line">.text:00000034 lw		$gp, 0x20+var_10($sp)</span><br><span class="line">.text:00000038 lui		$a0, ($LC0 &gt;&gt; 16)</span><br><span class="line">.text:0000003C lw		$t9, (printf &amp; 0xFFFF)($gp)</span><br><span class="line">.text:00000040 la		$a0, ($LC0 &amp; 0xFFFF)</span><br><span class="line">.text:00000044 jalr		$t9</span><br><span class="line">; take result of f()		function and pass it as a second argument to printf():</span><br><span class="line">.text:00000048 move	$a1, $v0 ; branch delay slot</span><br><span class="line">.text:0000004C lw		$ra, 0x20+var_4($sp)</span><br><span class="line">.text:00000050 move	$v0, $zero</span><br><span class="line">.text:00000054 jr		$ra</span><br><span class="line">.text:00000058 addiu	$sp, 0x20		; branch delay slot</span><br></pre></td></tr></table></figure>
+<p>MIPS参数传递会用<code>$a0 - $a3</code>这四个寄存器。<br>MIPS平台有两个特殊的寄存器:<code>HI </code>和 <code>LO</code>。它们用来存储MULT指令的乘法计算结果——<code>64位的积</code>。 只有 <code>MFLO</code> 和 <code>MFHI</code> 指令能够访问 HI 和 LO 寄存器。其中，MFLO 负责访问积的低 32 位部分。本例中它把积的低 32 位部分存储到<code>$V0 </code>寄存器。<br>因为本例没有访问积的高 32 位，所以那半部分被丢弃了。不过我们的程序的积是 32 位的整型数据。<br>最终 <code>ADDU(Add Unsigned)</code>指令计算第三个参数与积的和。<br>在MIPS平台上，<code>ADD</code>和<code>ADDU</code>是两个不同的指令。此二者的区别体现在<code>异常处理</code>的方式上，而符号位的处理方式反而没有区别。ADD指令可以触发<code>溢出处理</code>机制。溢出有时候是必要的，而且被Ada和其他编程语言支持。ADDU不会引发溢出。因为C&#x2F;C++不支持这种机制，所以本例使用的是ADDU指令而非ADD指令。</p>
+<p>此后<code>$V0 </code>寄存器存储这 32 位的运算结果。</p>
+<p>main()函数使用到了<code> JAL(Jump and Link)</code>指令。JAL 和 JALR 指令有所区别，前者使用的是<code>相对地址—— 偏移量</code>，后者则跳转到寄存器存储的绝对地址里。JALR 的 R 代表 Register。由于 f()函数和 main()函数都位于同一个 object 文件，所以 f()函数的相对地址是已知的，可以被计算出来。</p>
+<h2 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h2><p>在x86系统里，被调用方函数通常通过<code>EAX</code>寄存器返回运算结果。若返回值属于byte或char类型数据，返回值将存储于EAX寄存器的低 8 位——<code>AL</code>寄存器存储返回值。如果返回值是浮点float型数据，那么返回值将存储在FPU的 <code>ST(0)</code>寄存器里。ARM系统的情况相对简单一些，它通常使用<code>R0 </code>寄存器回传返回值。</p>
+<h3 id="void型函数的返回值"><a href="#void型函数的返回值" class="headerlink" title="void型函数的返回值"></a>void型函数的返回值</h3><p>主函数 main()的数据类型通常是 void 而不是 int，调用 main()函数的有关代码大体会是这样的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">push envp </span><br><span class="line">push argv </span><br><span class="line">push argc </span><br><span class="line">call main </span><br><span class="line">push eax </span><br><span class="line">call exit</span><br></pre></td></tr></table></figure>
+<p>将其转换为源代码，也就是<code>exit(main(argc,argv,envp));</code><br>如果声明 main()的数据类型是 void，则 main()函数不会明确返回任何值(没有 return 指令)。不过在 main()函数退出时，EAX 寄存器还会存有数据，EAX 寄存器保存的数据会被传递给 exit()函数、成为后者的输入参数。通常 EAX 寄存器的值会是被调用方函数残留的确定数据，所以 void 类型函数的返回值、也就是主函数退出代码往往属于<code>伪随机数(pseudorandom)</code>。</p>
+<p>例如下面的程序：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;hello, world!\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在main()函数结束时，EAX寄存器的值不会是零，应当是上一个函数——puts()函数的返回值。</p>
+<h3 id="函数返回值不被调用的情况"><a href="#函数返回值不被调用的情况" class="headerlink" title="函数返回值不被调用的情况"></a>函数返回值不被调用的情况</h3><p>例如如下程序：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">f</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">rand</span>();</span><br><span class="line">	<span class="built_in">rand</span>();</span><br><span class="line">	<span class="built_in">rand</span>();</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">rand</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述四个rand()函数都会把运算结果存储到EAX寄存器里，但是前三个rand()函数留在EAX寄存器的运算结果都被抛弃了。</p>
+<h3 id="返回值为结构体型数据"><a href="#返回值为结构体型数据" class="headerlink" title="返回值为结构体型数据"></a>返回值为结构体型数据</h3><p>函数只能够使用 EAX 这 1 个寄存器回传返回 值。因为这种局限，过去的 C 编译器无法编译返回值超过 EAX 容量(一般来说，就是 int 型数据)的函 数。那个时候，如果要让返回多个返回值，那么只能用函数返回一个值、再通过指针传递其余的返回值。 现在的 C 编译器已经没有这种短板了，return 指令甚至可以返回结构体型的数据，只是时下很少有人会这 么做。如果函数的返回值是大型结构的数据，那么应由调用方函数(caller)负责分配空间，给结构体分配 指针，再把指针作为第一个参数传递给被调用方函数。现在的编译器已经能够替程序员自动完成这种复杂 的操作了，其处理方式相当于上述几个步骤，只是编译器隐藏了有关操作。<br>调用方函数(caller)创建数据结构、分配数据空间，被调用的函数仅向结构体填充数据。<br>其效果等同于返回结构体。这种处理方法并不会影响程序性能。</p>
+<h2 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h2><h3 id="全局变量、局部变量"><a href="#全局变量、局部变量" class="headerlink" title="全局变量、局部变量"></a>全局变量、局部变量</h3><p>全局：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f1</span><span class="params">( <span class="type">int</span> x, <span class="type">int</span> y, <span class="type">int</span> *sum, <span class="type">int</span> *product)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	*sum = x+y;</span><br><span class="line">	*product = x*y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> sum, product;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">f1</span>(<span class="number">123</span>,<span class="number">456</span>,&amp;sum,&amp;product);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;sum=%d, product=%d\n&quot;</span>, sum, product);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>数据传递过程如下：<br><img src="/images/2dafc9dd1817ec6d0abefc90ac50b9d649884ae4.png" alt="屏幕快照 2017-12-11 下午12.05.07.png"><br>局部：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> sum, product; <span class="comment">// now variables are local in this function</span></span><br><span class="line">	<span class="built_in">f1</span>(<span class="number">123</span>,<span class="number">456</span>,&amp;sum,&amp;product);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;sum=%d, product=%d\n&quot;</span>, sum, product);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>数据传递过程如下：<br><img src="/images/573d76d43e38cff66ac6337d31ccb75b7fb13e99.png" alt="屏幕快照 2017-12-11 下午12.02.06.png"></p>
+<h2 id="GOTO语句"><a href="#GOTO语句" class="headerlink" title="GOTO语句"></a>GOTO语句</h2><p>GOTO语句在反汇编后得到的命令是<code>jmp</code>，无条件跳转指令。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94printf().html" rel="prev" title="逆向工程——printf()">
+                  <i class="fa fa-chevron-left"></i> 逆向工程——printf()
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94switch().html" rel="next" title="逆向工程——switch()">
+                  逆向工程——switch() <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">m0nst3r</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

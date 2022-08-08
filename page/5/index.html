@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"m0nst3r.me","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+<meta property="og:type" content="website">
+<meta property="og:title" content="m0nst3r&#39;s blog">
+<meta property="og:url" content="https://m0nst3r.me/page/5/index.html">
+<meta property="og:site_name" content="m0nst3r&#39;s blog">
+<meta property="og:description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="m0nst3r">
+<meta property="article:tag" content="Web安全,渗透测试,网络安全,代码审计,逆向,编程">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://m0nst3r.me/page/5/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"page/5/index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>m0nst3r's blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">m0nst3r's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello, Bugs</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">m0nst3r</p>
+  <div class="site-description" itemprop="description">Web安全、渗透测试、网络安全、代码审计、逆向、编程</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6[ZI]%E7%BB%86[DUO]%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94wfuzz%20%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94wfuzz%20%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95.html" class="post-title-link" itemprop="url">史上最详[ZI]细[DUO]的wfuzz中文教程（三）——wfuzz 高级用法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-02-27 11:12:00" itemprop="dateCreated datePublished" datetime="2018-02-27T11:12:00+08:00">2018-02-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/web-sec/" itemprop="url" rel="index"><span itemprop="name">web-sec</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<blockquote>
+<p>本文已在丁牛网安实验室FreeBuf专栏 <a target="_blank" rel="noopener" href="http://www.freebuf.com/column/163787.html" title="DigApis安全">DigApis安全</a> 中首发！引用转发请注明 “原文来自：DigApis安全 m0nst3r”字样，谢谢！</p>
+</blockquote>
+</blockquote>
+<p>[TOC]</p>
+<h2 id="wfuzz-高级用法"><a href="#wfuzz-高级用法" class="headerlink" title="wfuzz 高级用法"></a>wfuzz 高级用法</h2><hr>
+<h3 id="wfuzz全局配置"><a href="#wfuzz全局配置" class="headerlink" title="wfuzz全局配置"></a>wfuzz全局配置</h3><p>wfuzz的全局配置文件位于<code>~/.wfuzz/wfuzz.ini</code>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">┌─[michael@parrot]─[~/.wfuzz]</span><br><span class="line">└──╼ $cat wfuzz.ini </span><br><span class="line">[kbase]</span><br><span class="line">discovery.blacklist = .svg-.css-.js-.jpg-.gif-.png-.jpeg-.mov-.avi-.flv-.ico #这里配置忽略的后缀，用 - 号分隔</span><br><span class="line"></span><br><span class="line">[connection]</span><br><span class="line">concurrent = 50 #并发数</span><br><span class="line">conn_delay = 90 #连接间隔</span><br><span class="line">req_delay = 90 #请求间隔</span><br><span class="line">retries = 3 #重试次数</span><br><span class="line">user-agent = Mozilla/5.0 (X11; Linux x86_64; rv:58.0) Gecko/20100101 Firefox/58.0 #UA，默认为Wfuzz/版本</span><br><span class="line"></span><br><span class="line">[general]</span><br><span class="line">default_printer = raw #默认输出格式</span><br><span class="line">cancel_on_plugin_except = 1 #插件出错则退出</span><br><span class="line">concurrent_plugins = 3 #最多同时指定的插件数量</span><br><span class="line">lookup_dirs = /usr/share/wfuzz/wordlist,. #查找字典的目录，若让wfuzz自动查找字典，则在命令行中只指定字典名字即可</span><br><span class="line">encode_space = 1 #编码空格</span><br><span class="line"></span><br><span class="line">[plugins]</span><br><span class="line">bing_apikey =     #设置bing API在key</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="Iterators：组合payloads"><a href="#Iterators：组合payloads" class="headerlink" title="Iterators：组合payloads"></a>Iterators：组合payloads</h3><p>不同的payload可以通过<code>-m</code>参数指定的方式组合起来，在wfuzz中，提供这种组合能力的功能的，我们称为迭代器。<br>关于wfuzz中所有可用的iterators可参考<code>重要关键词</code>部分。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94wfuzz%20%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6[ZI]%E7%BB%86[DUO]%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%88%9D%E8%AF%86wfuzz.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%88%9D%E8%AF%86wfuzz.html" class="post-title-link" itemprop="url">史上最详[ZI]细[DUO]的wfuzz中文教程（一）——初识wfuzz</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-02-27 11:12:00" itemprop="dateCreated datePublished" datetime="2018-02-27T11:12:00+08:00">2018-02-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/web-sec/" itemprop="url" rel="index"><span itemprop="name">web-sec</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<blockquote>
+<p>本文已在丁牛网安实验室FreeBuf专栏 <a target="_blank" rel="noopener" href="http://www.freebuf.com/column/163553.html" title="DigApis安全">DigApis安全</a> 中首发！引用转发请注明 “原文来自：DigApis安全 m0nst3r”字样，谢谢！</p>
+</blockquote>
+</blockquote>
+<p>[TOC]</p>
+<hr>
+<h2 id="wfuzz教程"><a href="#wfuzz教程" class="headerlink" title="wfuzz教程"></a>wfuzz教程</h2><p>这个教程主要内容是来自<a target="_blank" rel="noopener" href="http://wfuzz.readthedocs.io/" title="wfuzz官方文档">wfuzz官方文档</a>。之所以写这个，是因为大多数的国内文章并没有对这个工具进行详细的说明。个人英文还算可以，所以抖胆翻译一下，加上自己的一些操作，一方面加深下自己对这个工具的熟练程度，另一方面方便广大初学者学习。<br>感觉这个工具比平时使用的御剑灵活很多（如果参数都弄明白的话），总之，作为渗透测试信息收集的一个环节，它还是有用武之地的。</p>
+<p>这个教程本来想弄一篇文章，但是实在是太多了，所以借鉴了一下官方文档的分节，把这个教程做成了一个系列，一共四个部分，分别是：</p>
+<ul>
+<li><p>初识wfuzz：看完这个，你应该可以使用比较简单的命令来做一些任务了。</p>
+</li>
+<li><p>wfuzz 基本用法：看完这个的话，你应该可以从容使用wfuzz来做一些常用扫描器做不了的活，而且觉得wfuzz是个好东西。</p>
+</li>
+<li><p>wfuzz 高级用法：看完这个，你应该就可以玩弄wfuzz于手掌之中，各种小姿势让你在别人扫不成的时候装装X。</p>
+</li>
+<li><p>wfuzz 库：看完这个，不，能去仔细学习这个的同学，我就不说了，此类人圈内统称”大婊哥“，小弟在这只是抛砖引玉了。</p>
+</li>
+</ul>
+<hr>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>wfuzz 是一款Python开发的Web安全测试工具<br>wfuzz不仅仅是一个web扫描器：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%88%9D%E8%AF%86wfuzz.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6[ZI]%E7%BB%86[DUO]%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%20wfuzz%20%E5%BA%93.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%20wfuzz%20%E5%BA%93.html" class="post-title-link" itemprop="url">史上最详[ZI]细[DUO]的wfuzz中文教程（四）—— wfuzz 库</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-02-27 11:12:00" itemprop="dateCreated datePublished" datetime="2018-02-27T11:12:00+08:00">2018-02-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:52" itemprop="dateModified" datetime="2022-08-08T22:27:52+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/web-sec/" itemprop="url" rel="index"><span itemprop="name">web-sec</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<blockquote>
+<p>本文已在丁牛网安实验室FreeBuf专栏 <a target="_blank" rel="noopener" href="http://www.freebuf.com/column/163632.html" title="DigApis安全">DigApis安全</a> 中首发！引用转发请注明 “原文来自：DigApis安全 m0nst3r”字样，谢谢！</p>
+</blockquote>
+</blockquote>
+<p>[TOC]</p>
+<h2 id="wfuzz-库"><a href="#wfuzz-库" class="headerlink" title="wfuzz 库"></a>wfuzz 库</h2><hr>
+<h3 id="wfuzz库参数"><a href="#wfuzz库参数" class="headerlink" title="wfuzz库参数"></a>wfuzz库参数</h3><p>在wfuzz库中包含所有 wfuzz命令行的参数。</p>
+<table>
+<thead>
+<tr>
+<th>CLI Option</th>
+<th>Library Option</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&amp;#60;URL&amp;#62;</td>
+<td>url&#x3D;”url”</td>
+</tr>
+<tr>
+<td>–recipe &amp;#60;filename&amp;#62;</td>
+<td>recipe&#x3D;”filename”</td>
+</tr>
+<tr>
+<td>-oF &amp;#60;filename&amp;#62;</td>
+<td>save&#x3D;”filename”</td>
+</tr>
+<tr>
+<td>-f filename,printer</td>
+<td>printer&#x3D;(“filename”,”printer”)</td>
+</tr>
+<tr>
+<td>–dry-run</td>
+<td>dryrun&#x3D;True</td>
+</tr>
+<tr>
+<td>-p addr</td>
+<td>proxies&#x3D;[(“ip”,”port”,”type”)]</td>
+</tr>
+<tr>
+<td>-t N</td>
+<td>concurrent&#x3D;N</td>
+</tr>
+<tr>
+<td>-s N</td>
+<td>delay&#x3D;0.0</td>
+</tr>
+<tr>
+<td>-R depth</td>
+<td>rlevel&#x3D;depth</td>
+</tr>
+<tr>
+<td>–follow</td>
+<td>follow&#x3D;True</td>
+</tr>
+<tr>
+<td>-Z</td>
+<td>scanmod&#x3D;True</td>
+</tr>
+<tr>
+<td>–req-delay N</td>
+<td>req_delay&#x3D;N</td>
+</tr>
+<tr>
+<td>–conn-delay N</td>
+<td>conn_delay&#x3D;N</td>
+</tr>
+<tr>
+<td>–script&#x3D;&amp;#60;plugins&amp;#62;</td>
+<td>script&#x3D;”plugins”</td>
+</tr>
+<tr>
+<td>–script-args n1&#x3D;v1,…</td>
+<td>script_args&#x3D;{n1:v1,}</td>
+</tr>
+<tr>
+<td>-m iterator</td>
+<td>iterator&#x3D;”iterator”</td>
+</tr>
+<tr>
+<td>-z payload</td>
+<td>payloads&#x3D;[(“name”,{default&#x3D;””,encoder&#x3D;[“md5”]},slice&#x3D;””),]</td>
+</tr>
+<tr>
+<td>-V alltype</td>
+<td>allvars&#x3D;”alltype”</td>
+</tr>
+<tr>
+<td>-X method</td>
+<td>method&#x3D;”method”</td>
+</tr>
+<tr>
+<td>–hc&#x2F;hl&#x2F;hw&#x2F;hh N[,N]+</td>
+<td>hc&#x2F;hl&#x2F;hw&#x2F;hh&#x3D;[N,N]</td>
+</tr>
+<tr>
+<td>–sc&#x2F;sl&#x2F;sw&#x2F;sh N[,N]+</td>
+<td>sc&#x2F;sl&#x2F;sw&#x2F;sh&#x3D;[N,N]</td>
+</tr>
+<tr>
+<td>–ss&#x2F;hs regex</td>
+<td>ss&#x2F;hs&#x3D;”regex”</td>
+</tr>
+<tr>
+<td>–filter &amp;#60;filter&amp;#62;</td>
+<td>filter&#x3D;”filter exp”</td>
+</tr>
+<tr>
+<td>–prefilter &amp;#60;filter&amp;#62;</td>
+<td>prefilter&#x3D;”filter exp”</td>
+</tr>
+<tr>
+<td>-b cookie</td>
+<td>cookie&#x3D;[“cookie1&#x3D;value1”,]</td>
+</tr>
+<tr>
+<td>-d postdata</td>
+<td>postdata&#x3D;”postdata”</td>
+</tr>
+<tr>
+<td>-H header</td>
+<td>headers&#x3D;[(“header1”,”value1”),]</td>
+</tr>
+<tr>
+<td>–basic&#x2F;ntlm&#x2F;digest auth</td>
+<td>auth&#x3D;(“basic”,”user:pass”)</td>
+</tr>
+</tbody></table>
+<p>这些参数可以在这些主库的接口中直接使用：<code>fuzz</code>, <code>payload</code>, <code>session</code>。</p>
+<hr>
+<h3 id="测试一个URL"><a href="#测试一个URL" class="headerlink" title="测试一个URL"></a>测试一个URL</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%20wfuzz%20%E5%BA%93.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6[ZI]%E7%BB%86[DUO]%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94wfuzz%20%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94wfuzz%20%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95.html" class="post-title-link" itemprop="url">史上最详[ZI]细[DUO]的wfuzz中文教程（二）——wfuzz 基本用法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-02-27 11:12:00" itemprop="dateCreated datePublished" datetime="2018-02-27T11:12:00+08:00">2018-02-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:52" itemprop="dateModified" datetime="2022-08-08T22:27:52+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/web-sec/" itemprop="url" rel="index"><span itemprop="name">web-sec</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<blockquote>
+<p>本文已在丁牛网安实验室FreeBuf专栏 <a target="_blank" rel="noopener" href="http://www.freebuf.com/column/163632.html" title="DigApis安全">DigApis安全</a> 中首发！引用转发请注明 “原文来自：DigApis安全 m0nst3r”字样，谢谢！</p>
+</blockquote>
+</blockquote>
+<p>[TOC]</p>
+<h2 id="wfuzz-基本用法"><a href="#wfuzz-基本用法" class="headerlink" title="wfuzz 基本用法"></a>wfuzz 基本用法</h2><hr>
+<h3 id="暴破文件和路径"><a href="#暴破文件和路径" class="headerlink" title="暴破文件和路径"></a>暴破文件和路径</h3><p>wfuzz可以用来查找一个web server中的隐藏的文件和路径，来扩大攻击面。值得注意的是，这种测试的成功与否很大程度上要依赖于使用的字典。<br>但是，一个web server的平台是有限的，还有一些是默认安装，再加上一些已知的资源比如日志文件，管理路径等等，我们还是可以在猜测到发现很多东西。因此，暴破文件的路径还是可行的。</p>
+<p>wfuzz自带一些字典文件，更多的字典可以参考下面两个开放的git：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://code.google.com/p/fuzzdb/" title="fuzzdb">fuzzdb</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/danielmiessler/SecLists" title="seclists">seclists</a></li>
+</ul>
+<p>使用wfuzz暴力猜测目录的命令如下：<br><code>$ wfuzz -w /usr/share/wfuzz/wordlist/general/common.txt http://testphp.vulnweb.com/FUZZ</code></p>
+<p>使用wfuzz暴力猜测文件的命令如下：<br><code>$ wfuzz -w /usr/share/wfuzz/wordlist/general/common.txt http://testphp.vulnweb.com/FUZZ.php</code></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94wfuzz%20%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94scanf().html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94scanf().html" class="post-title-link" itemprop="url">逆向工程——scanf()</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-12-21 11:12:00" itemprop="dateCreated datePublished" datetime="2017-12-21T11:12:00+08:00">2017-12-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[TOC]</p>
+<h1 id="程序"><a href="#程序" class="headerlink" title="程序"></a>程序</h1><h2 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int x;</span><br><span class="line">	printf(&quot;Enter X:\n&quot;);</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;x);</span><br><span class="line">	printf(&quot;You entered %d...\n&quot;,x);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">//now,x is global variable</span><br><span class="line">int x;</span><br><span class="line">int main()&#123;</span><br><span class="line">	printf(&quot;Enter X:\n&quot;);</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;x);</span><br><span class="line">	printf(&quot;You entered %d...\n&quot;,x);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="scanf-函数的状态监测"><a href="#scanf-函数的状态监测" class="headerlink" title="scanf()函数的状态监测"></a>scanf()函数的状态监测</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int x;</span><br><span class="line">	printf (&quot;Enter X:\n&quot;);</span><br><span class="line">	if (scanf (&quot;%d&quot;, &amp;x)==1)</span><br><span class="line">		printf (&quot;You entered %d...\n&quot;, x);</span><br><span class="line">	else</span><br><span class="line">		printf (&quot;What you entered? Huh?\n&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="x86"><a href="#x86" class="headerlink" title="x86"></a>x86</h2><h3 id="x86局部变量"><a href="#x86局部变量" class="headerlink" title="x86局部变量"></a>x86局部变量</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94scanf().html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%9D%A1%E4%BB%B6%E8%BD%AC%E7%A7%BB%E6%8C%87%E4%BB%A4.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%9D%A1%E4%BB%B6%E8%BD%AC%E7%A7%BB%E6%8C%87%E4%BB%A4.html" class="post-title-link" itemprop="url">逆向工程——条件转移指令</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-12-21 11:12:00" itemprop="dateCreated datePublished" datetime="2017-12-21T11:12:00+08:00">2017-12-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[TOC]</p>
+<h2 id="数值比较"><a href="#数值比较" class="headerlink" title="数值比较"></a>数值比较</h2><h3 id="主要程序"><a href="#主要程序" class="headerlink" title="主要程序"></a>主要程序</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">void f_signed(int a,int b)</span><br><span class="line">&#123;</span><br><span class="line">	if(a&gt;b)</span><br><span class="line">		printf(&quot;a&gt;b\n&quot;);</span><br><span class="line">	if(a==b)</span><br><span class="line">		printf(&quot;a==b\n&quot;);</span><br><span class="line">	if(a&lt;b)</span><br><span class="line">		printf(&quot;a&lt;b\n&quot;);</span><br><span class="line">&#125;</span><br><span class="line">void f_unsigned(unsigned int a,int b)</span><br><span class="line">&#123;</span><br><span class="line">	if(a&gt;b)</span><br><span class="line">		printf(&quot;a&gt;b\n&quot;);</span><br><span class="line">	if(a==b)</span><br><span class="line">		printf(&quot;a==b\n&quot;);</span><br><span class="line">	if(a&lt;b)</span><br><span class="line">		printf(&quot;a&lt;b\n&quot;);</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	f_signed(1,2);</span><br><span class="line">	f_unsigned(1,2);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="x86"><a href="#x86" class="headerlink" title="x86"></a>x86</h3><h4 id="x86-msvc"><a href="#x86-msvc" class="headerlink" title="x86+msvc"></a>x86+msvc</h4><p>关闭优化选项时，可得到f_signed()函数:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">_a$ = 8</span><br><span class="line">_b$ = 12</span><br><span class="line">_f_signed PROC</span><br><span class="line">	push ebp</span><br><span class="line">	mov ebp,esp</span><br><span class="line">	mov eax,DWORD PTR _a$[ebp]</span><br><span class="line">	cmp eax,DWORD PTR _a$[ebp]</span><br><span class="line">	jle SHORT $LN3@f_signed</span><br><span class="line">	push OFFSET $SG737   ;&#x27;a&gt;b&#x27;</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line">$LN3@f_signed:</span><br><span class="line">	mov ecx,DWORD PTR _a$[ebp]</span><br><span class="line">	cmp ecx,DWORD PTR _b$[ebp]</span><br><span class="line">	jne SHORT $LN2@f_signed</span><br><span class="line">	push OFFSET $SG739    ;&#x27;a==b&#x27;</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line">$LN2@f_signed:</span><br><span class="line">	mov edx,DWORD PTR _a$[ebp]</span><br><span class="line">	cmp edx,DWORD PTR _a$[ebp]</span><br><span class="line">	jge SHORT $$LN4@f_signed</span><br><span class="line">	push OFFSET $SG741    ;&#x27;a&lt;b&#x27;</span><br><span class="line">	call _prinf</span><br><span class="line">$LN4@f_signed:</span><br><span class="line">	pop ebp</span><br><span class="line">	ret 0</span><br><span class="line"></span><br><span class="line">_f_signed ENDP</span><br></pre></td></tr></table></figure>
+<p>第一个条件转一会领是JLE，即“Junp if Less or Equal”。如果上一条CMP指令的第一个操作数表达式小于或等于（不大于）第二个表达式，JLE将跳转到指令所标明的地址；如果不满足上述条件，则运行下一条指令，就本例而言程序将会调用printf（）函数，第二个条件转移指令是JNE，”Jump if Not Equal“,如果上一条CMP指令的两个操作符不相等，则进行相应跳转。<br>第三个转移指令是JGE，即”Jump if Greater or Equal“，如果CMP的第一个表达式大于或等于第二个表达式（不小于），则进行跳转。这段程序里，如果三个跳转的判断条件都不满足，将不会调用pringtf（）函数；不过除非进行特殊干预，，否则这种情况应该不会发生。<br>现在我们观察 f_unsigned()函数的汇编指令。f_unsigned()函数和 f_signed()函数大体相同。它们的区别集中体现在条件转移指令上:f_unsinged()函数的使用的条件转移指令是 JBE 和 JAE,而 f_signed()函数使用的条件转移指令则是 JLE 和 JGE。<br>使用 GCC 编译上述程序,可得到 f_unsigned()的汇编指令如下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">_a$=8   ;size=4</span><br><span class="line">_b$=12  ;size=4</span><br><span class="line">_f_unsifned PROC</span><br><span class="line">	push ebp</span><br><span class="line">	mov ebp,esp</span><br><span class="line">	mov eax,DWORD PTR _a$[ebp]</span><br><span class="line">	cmp eax,DWORD PTR _b$[ebp]</span><br><span class="line">	jbe SHORT $LN3@f _unsigned</span><br><span class="line">	push OFFSET $SG2761    &#x27;a&gt;b&#x27;</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line">$LN3@f _unsigned:</span><br><span class="line">	mov ecx,DWORD PTR _a$[ebp]</span><br><span class="line">	cmp ecx,DWORD PTR _b$[ebp]</span><br><span class="line">	jne SHORT $LN2@f_unsigned</span><br><span class="line">	push OFFSET $SG2763  ; &#x27;a==b&#x27;</span><br><span class="line">	call _printf</span><br><span class="line">	add esp, 4</span><br><span class="line">$LN2@f_unsigned:</span><br><span class="line">	mov edx,DWORD PTR _a$[ebp]</span><br><span class="line">	cmp edx,DWORD PTR _b$[ebp]</span><br><span class="line">	jae SHORT $LN4@f_unsigned</span><br><span class="line">	push OFFSET $SG2765   ; &#x27;a&lt;b&#x27;</span><br><span class="line">	call _printf</span><br><span class="line">	add esp, 4</span><br><span class="line">LN4@f_unsigned:</span><br><span class="line">	pop ebp</span><br><span class="line">	Ret 0</span><br><span class="line">_f_unsigned ENDP</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%9D%A1%E4%BB%B6%E8%BD%AC%E7%A7%BB%E6%8C%87%E4%BB%A4.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94switch().html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94switch().html" class="post-title-link" itemprop="url">逆向工程——switch()</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-12-13 11:12:00" itemprop="dateCreated datePublished" datetime="2017-12-13T11:12:00+08:00">2017-12-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[TOC]</p>
+<h2 id="case陈述式较少的情况"><a href="#case陈述式较少的情况" class="headerlink" title="case陈述式较少的情况"></a>case陈述式较少的情况</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function">voif <span class="title">f</span><span class="params">( <span class="type">int</span> a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">switch</span> (a)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">0</span>: <span class="built_in">printf</span>(<span class="string">&quot;zero\n&quot;</span>); <span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">1</span>: <span class="built_in">printf</span>(<span class="string">&quot;one\n&quot;</span>); <span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">2</span>: <span class="built_in">printf</span>(<span class="string">&quot;two\n&quot;</span>); <span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">default</span>: <span class="built_in">printf</span>(<span class="string">&quot;sth unknown\n&quot;</span>); <span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">f</span>(<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="x86"><a href="#x86" class="headerlink" title="x86"></a>x86</h3><h4 id="未优化的MSVC"><a href="#未优化的MSVC" class="headerlink" title="未优化的MSVC"></a>未优化的MSVC</h4><p>指令清单如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">tv64 = -4			; size = 4</span><br><span class="line">_a$ = 8 			; size = 4</span><br><span class="line">_f		PROC</span><br><span class="line">	push ebp</span><br><span class="line">	mov ebp,esp</span><br><span class="line">	push ecx</span><br><span class="line">	mov eax, DWORD PTR _a$[ebp]</span><br><span class="line">	mov DWORD PTR tv64[ebp], eax</span><br><span class="line">	cmp DWORD PTR tv64[ebp], 0</span><br><span class="line">	je SHORT $LN4@f</span><br><span class="line">	cmp DWORD PTR tv64[ebp], 1</span><br><span class="line">	je SHORT $LN3@f</span><br><span class="line">	cmp DWORD PTR tv64[ebp], 2</span><br><span class="line">	je SHORT $LN2@f</span><br><span class="line">	jmp SHORT $LN1@f</span><br><span class="line">$LN4@f:</span><br><span class="line">	push OFFSET $SG739 ; &#x27;zero&#x27;, 0aH, 00H</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line">	jmp SHORT $LN7@f</span><br><span class="line">$LN3@f:</span><br><span class="line">	push OFFSET $SG741 ; &#x27;one&#x27;, 0aH, 00H</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line">	jmp SHORT $LN7@f</span><br><span class="line">$LN2@f:</span><br><span class="line">	push OFFSET $SG743 ; &#x27;two&#x27;, 0aH, 00H</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line">	jmp SHORT $LN7@f</span><br><span class="line">$LN1@f:</span><br><span class="line">	push OFFSET $SG745 ; &#x27;sth unknown&#x27;, 0aH, 00H</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line">	jmp SHORT $LN7@f</span><br><span class="line">$LN7@f:</span><br><span class="line">	mov esp, ebp</span><br><span class="line">	pop ebp</span><br><span class="line">	ret 0</span><br><span class="line">_f		ENDP</span><br></pre></td></tr></table></figure>
+
+<p>上面这个函数的源程序相当于：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">void f (int a)</span><br><span class="line">&#123;</span><br><span class="line">	if (a==0)</span><br><span class="line">		printf (&quot;zero\n&quot;); </span><br><span class="line">	else if (a==1)</span><br><span class="line">		printf (&quot;one\n&quot;); </span><br><span class="line">	else if (a==2)</span><br><span class="line">		printf (&quot;two\n&quot;);</span><br><span class="line">elseprintf (&quot;sth unknown\n&quot;); &#125;;</span><br></pre></td></tr></table></figure>
+<p>如果仅从汇编代码入手，那么我们无法判断上述函数是一个判断表达式较少的switch()语句、还是一组 if()语句。确实可以认为，switch()语句是一种旨在简化大量嵌套if()语句而设计的语法糖。<br>若用GCC 4.4.1编译器编译这个程序，无论是否启用其最大程度优化的选项<code>-O3</code>，生成的汇编代码也和 MSVC 编译出来的代码没有什么区别。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94switch().html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E5%8F%82%E6%95%B0%E8%8E%B7%E5%8F%96%E3%80%81%E8%BF%94%E5%9B%9E%E5%80%BC%E3%80%81%E6%8C%87%E9%92%88%E3%80%81GOTO%E8%AF%AD%E5%8F%A5.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E5%8F%82%E6%95%B0%E8%8E%B7%E5%8F%96%E3%80%81%E8%BF%94%E5%9B%9E%E5%80%BC%E3%80%81%E6%8C%87%E9%92%88%E3%80%81GOTO%E8%AF%AD%E5%8F%A5.html" class="post-title-link" itemprop="url">逆向工程——参数获取、返回值、指针、GOTO语句</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-12-08 11:12:00" itemprop="dateCreated datePublished" datetime="2017-12-08T11:12:00+08:00">2017-12-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[TOC]</p>
+<h2 id="参数获取"><a href="#参数获取" class="headerlink" title="参数获取"></a>参数获取</h2><p>示例程序如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">f</span> <span class="params">( <span class="type">int</span> a, <span class="type">int</span> b, <span class="type">int</span> c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a*b+c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">f</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>));</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="x86"><a href="#x86" class="headerlink" title="x86"></a>x86</h3><h4 id="MSVC"><a href="#MSVC" class="headerlink" title="MSVC"></a>MSVC</h4><p>MSVC编译后的指令清单如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">_TEXT	SEGMENT</span><br><span class="line">_a$ = 8		; size = 4</span><br><span class="line">_b$ = 12	; size = 4</span><br><span class="line">_c$ = 16	; size = 4</span><br><span class="line">_f		PROC</span><br><span class="line">			push	ebp</span><br><span class="line">			mov		ebp,esp</span><br><span class="line">			mov		eax, DWORD PTR _a$[ebp]</span><br><span class="line">			imul		eax, DWORD PTR _b$[ebp]</span><br><span class="line">			add		eax, DWORD PTR _c$[ebp]</span><br><span class="line">			pop		ebp</span><br><span class="line">			ret		0</span><br><span class="line">_f		ENDP</span><br><span class="line"></span><br><span class="line">_main	PROC</span><br><span class="line">			push	ebp</span><br><span class="line">			push	ebp,esp</span><br><span class="line">			push	3		; 3rd argument</span><br><span class="line">			push	2		; 2nd argument</span><br><span class="line">			push	1		; 1st argument</span><br><span class="line">			call	_f</span><br><span class="line">			add		esp, 12</span><br><span class="line">			push	eax</span><br><span class="line">			push	OFFSET $SG2463		; &#x27;$d&#x27;, 0aH, 00H</span><br><span class="line">			call	_printf</span><br><span class="line">			add		esp, 8</span><br><span class="line">			; return 0</span><br><span class="line">			xor		eax, eax</span><br><span class="line">			pop		ebp</span><br><span class="line">			ret		0</span><br><span class="line">_main	ENDP</span><br></pre></td></tr></table></figure>
+
+<p>main()函数把 3 个数字推送入栈，然后调用了<code>f(int, int, int)</code>。被调用方函数f()通过<code>_a$=8</code>一类的汇编宏访问所需参数以及函数自定义的局部变量。只不过从被调用方函数的数据栈的角度来看，<code>外部参考的偏移量是正值</code>，而<code>局部变量的偏移量是负值</code>。可见，当需要访问栈帧(stack frame)以外的数据时，被调用方函数可把汇编宏(例如_a$)与EBP寄存器的值<code>相加</code>，从而求得所需地址。<br>当变量 a 的值存入<code>EAX</code>寄存器之后，f()函数通过各参数的地址依次进行乘法和加法运算，运算结果 一直存储于 EAX 寄存器。此后 EAX 的值就可以直接作为返回值传递给调用方函数。调用方函数 main()再 把 EAX 的值当作参数传递给 printf()函数。</p>
+<h4 id="GCC"><a href="#GCC" class="headerlink" title="GCC"></a>GCC</h4>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E5%8F%82%E6%95%B0%E8%8E%B7%E5%8F%96%E3%80%81%E8%BF%94%E5%9B%9E%E5%80%BC%E3%80%81%E6%8C%87%E9%92%88%E3%80%81GOTO%E8%AF%AD%E5%8F%A5.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94printf().html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94printf().html" class="post-title-link" itemprop="url">逆向工程——printf()</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-11-30 11:12:00" itemprop="dateCreated datePublished" datetime="2017-11-30T11:12:00+08:00">2017-11-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[TOC]</p>
+<h2 id="程序"><a href="#程序" class="headerlink" title="程序"></a>程序</h2><h3 id="三个参数"><a href="#三个参数" class="headerlink" title="三个参数"></a>三个参数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;a=%d; b=%d; c=%d&quot;, 1, 2, 3);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="九个参数"><a href="#九个参数" class="headerlink" title="九个参数"></a>九个参数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;a=%d; b=%d; c=%d; d=%d; e=%d; f=%d; g=%d; h=%d\n&quot;, 1, 2, 3, 4, 5, 6, 7, 8);</span><br><span class="line">	return 0; </span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>我们用这个程序来演示它的参数传递过程。</p>
+<h3 id="x86"><a href="#x86" class="headerlink" title="x86"></a>x86</h3><h4 id="x86：传递3个参数"><a href="#x86：传递3个参数" class="headerlink" title="x86：传递3个参数"></a>x86：传递3个参数</h4><h5 id="MSVC"><a href="#MSVC" class="headerlink" title="MSVC"></a>MSVC</h5>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94printf().html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%A0%88.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%A0%88.html" class="post-title-link" itemprop="url">逆向工程——栈</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-11-30 11:12:00" itemprop="dateCreated datePublished" datetime="2017-11-30T11:12:00+08:00">2017-11-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[TOC]</p>
+<h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><p>栈是计算机科学李最重要的且最基础的<code>数据结构</code>之一。<br>从技术上讲，栈就是CPU寄存器里面的某个指针所指向的一片内存区域。这里所说的<code>某个指针</code>通常位于x86&#x2F;x64平台的<code>ESP寄存器/RSP寄存器</code>，以及ARM平台的<code>SP寄存器</code>。<br>操作站最常见的指令是<code>PUSH</code>和<code>POP</code>，在 x86 和 ARM Thumb 模式的指令集里都有这两条指令。<br><code>PUSH指令</code>会对ESP&#x2F;RSP&#x2F;SP寄存器的值进行<code>减法运算</code>，使之<code>减去4(32位）或8(64位</code>），然后将操作数写到上述寄存器里的指针所指向的内存中。<br><code>POP指令</code>是PUSH的逆操作：他先从栈指针（Stack Pionter,上面三个寄存器之一）指向的内存中读取数据，用以备用（通常是写到其他寄存器里面），然后再将栈指针的数值<code>加上4或8</code>.<br>在分配栈的空间之后，栈指针，即Stack Pointer所指向的地址是栈的底部。PUSH将减少栈指针的数值，而POP会增加它的数值。栈的“底”实际上使用的是整个栈的最低地址，即是整个栈的启始内存地址。<br>ARM的栈分为递增栈和递减栈。递减栈（descending stack)的首地址是栈的最高地址，栈向低地址增长，栈指针的值随栈的增长而减少，如STMFA&#x2F;LMDFA、STMFD&#x2F;LDMFD、STMED、LDMEA等指令，都是递增栈的操作指令。</p>
+<h3 id="栈的用途"><a href="#栈的用途" class="headerlink" title="栈的用途"></a>栈的用途</h3><h4 id="保存函数结束时的返回地址"><a href="#保存函数结束时的返回地址" class="headerlink" title="保存函数结束时的返回地址"></a>保存函数结束时的返回地址</h4><h5 id="x86"><a href="#x86" class="headerlink" title="x86"></a>x86</h5><p>当程序使用call指令调用其他函数时，call指令结束后的返回地址将被保存到栈里，在call所调用的函数结束之后，程序将执行无条件跳转指令，跳转到这个返回地址。<br>call指令等价于“PUSH返回地址”和“JMP函数地址”的指令对<br>被调用函数里的RET指令，会从栈中读取返回地址，然后跳转到这个这个地址，就相当于“POP返回地址”+“JMP返回地址”指令。<br>栈是有限的，溢出它很容易。直接使用无线递归，栈就会满：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">f</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	f();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果使用MSVC2008编译上面的问题程序，就会得到报告：<br>​	<br>​	c:\tmp6&gt;cl ss.cpp &#x2F;Fass.asm<br>​	Microsoft (R) 32-bit C&#x2F;C++ Optimizing Compiler Version 15.00.21022.08 for 80x86<br>​	Copyright (C) Microsoft Corporation. All rights reserved.<br>​	ss.cpp<br>​	c:\tmp6\ss.cpp(4) : warning C4717:’f’ : recursive on all control paths. Function will cause runtime stack overflow<br>但它还是会生成汇编文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">?f@@YAXXZ PROC              ; f</span><br><span class="line">; File c:\tmp6\ss.cpp</span><br><span class="line">; Line 2</span><br><span class="line">	push ebp</span><br><span class="line">	mov ebp, esp</span><br><span class="line">; Line 3</span><br><span class="line">	call ?f@@YAXXZ         ; f</span><br><span class="line">; Line 4</span><br><span class="line">	pop ebp</span><br><span class="line">	ret 0</span><br><span class="line">?f@@YAXXZ ENDP                 ; f</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%A0%88.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">m0nst3r</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

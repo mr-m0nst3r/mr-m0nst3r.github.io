@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"m0nst3r.me","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本文已在丁牛网安实验室FreeBuf专栏 DigApis安全 中首发！引用转发请注明 “原文来自：DigApis安全 m0nst3r”字样，谢谢！   [TOC] wfuzz 基本用法 暴破文件和路径wfuzz可以用来查找一个web server中的隐藏的文件和路径，来扩大攻击面。值得注意的是，这种测试的成功与否很大程度上要依赖于使用的字典。但是，一个web server的平台是有限的，还有一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="史上最详[ZI]细[DUO]的wfuzz中文教程（二）——wfuzz 基本用法">
+<meta property="og:url" content="https://m0nst3r.me/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6[ZI]%E7%BB%86[DUO]%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94wfuzz%20%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95.html">
+<meta property="og:site_name" content="m0nst3r&#39;s blog">
+<meta property="og:description" content="本文已在丁牛网安实验室FreeBuf专栏 DigApis安全 中首发！引用转发请注明 “原文来自：DigApis安全 m0nst3r”字样，谢谢！   [TOC] wfuzz 基本用法 暴破文件和路径wfuzz可以用来查找一个web server中的隐藏的文件和路径，来扩大攻击面。值得注意的是，这种测试的成功与否很大程度上要依赖于使用的字典。但是，一个web server的平台是有限的，还有一">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-02-27T03:12:00.000Z">
+<meta property="article:modified_time" content="2022-08-08T14:27:52.983Z">
+<meta property="article:author" content="m0nst3r">
+<meta property="article:tag" content="Web安全,渗透测试,网络安全,代码审计,逆向,编程">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://m0nst3r.me/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6[ZI]%E7%BB%86[DUO]%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94wfuzz%20%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://m0nst3r.me/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6[ZI]%E7%BB%86[DUO]%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94wfuzz%20%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95.html","path":"web-sec/史上最详[ZI]细[DUO]的wfuzz中文教程（二）——wfuzz 基本用法.html","title":"史上最详[ZI]细[DUO]的wfuzz中文教程（二）——wfuzz 基本用法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>史上最详[ZI]细[DUO]的wfuzz中文教程（二）——wfuzz 基本用法 | m0nst3r's blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">m0nst3r's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello, Bugs</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#wfuzz-%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">wfuzz 基本用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9A%B4%E7%A0%B4%E6%96%87%E4%BB%B6%E5%92%8C%E8%B7%AF%E5%BE%84"><span class="nav-number">1.1.</span> <span class="nav-text">暴破文件和路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95URL%E4%B8%AD%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">测试URL中的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95POST%E8%AF%B7%E6%B1%82"><span class="nav-number">1.3.</span> <span class="nav-text">测试POST请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95Cookies"><span class="nav-number">1.4.</span> <span class="nav-text">测试Cookies</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AF%B7%E6%B1%82%E5%A4%B4"><span class="nav-number">1.5.</span> <span class="nav-text">测试自定义请求头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95HTTP%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95%EF%BC%88%E5%8A%A8%E8%AF%8D%EF%BC%89"><span class="nav-number">1.6.</span> <span class="nav-text">测试HTTP请求方法（动词）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86"><span class="nav-number">1.7.</span> <span class="nav-text">使用代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A4%E8%AF%81"><span class="nav-number">1.8.</span> <span class="nav-text">认证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E6%B5%8B%E8%AF%95"><span class="nav-number">1.9.</span> <span class="nav-text">递归测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E9%80%9F%E5%BA%A6%E4%B8%8E%E6%95%88%E7%8E%87"><span class="nav-number">1.10.</span> <span class="nav-text">测试速度与效率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E5%88%B0%E6%96%87%E4%BB%B6"><span class="nav-number">1.11.</span> <span class="nav-text">输出到文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E7%9A%84%E8%BE%93%E5%87%BA"><span class="nav-number">1.12.</span> <span class="nav-text">不同的输出</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">m0nst3r</p>
+  <div class="site-description" itemprop="description">Web安全、渗透测试、网络安全、代码审计、逆向、编程</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6[ZI]%E7%BB%86[DUO]%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94wfuzz%20%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="史上最详[ZI]细[DUO]的wfuzz中文教程（二）——wfuzz 基本用法 | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          史上最详[ZI]细[DUO]的wfuzz中文教程（二）——wfuzz 基本用法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-02-27 11:12:00" itemprop="dateCreated datePublished" datetime="2018-02-27T11:12:00+08:00">2018-02-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:52" itemprop="dateModified" datetime="2022-08-08T22:27:52+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/web-sec/" itemprop="url" rel="index"><span itemprop="name">web-sec</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<blockquote>
+<p>本文已在丁牛网安实验室FreeBuf专栏 <a target="_blank" rel="noopener" href="http://www.freebuf.com/column/163632.html" title="DigApis安全">DigApis安全</a> 中首发！引用转发请注明 “原文来自：DigApis安全 m0nst3r”字样，谢谢！</p>
+</blockquote>
+</blockquote>
+<p>[TOC]</p>
+<h2 id="wfuzz-基本用法"><a href="#wfuzz-基本用法" class="headerlink" title="wfuzz 基本用法"></a>wfuzz 基本用法</h2><hr>
+<h3 id="暴破文件和路径"><a href="#暴破文件和路径" class="headerlink" title="暴破文件和路径"></a>暴破文件和路径</h3><p>wfuzz可以用来查找一个web server中的隐藏的文件和路径，来扩大攻击面。值得注意的是，这种测试的成功与否很大程度上要依赖于使用的字典。<br>但是，一个web server的平台是有限的，还有一些是默认安装，再加上一些已知的资源比如日志文件，管理路径等等，我们还是可以在猜测到发现很多东西。因此，暴破文件的路径还是可行的。</p>
+<p>wfuzz自带一些字典文件，更多的字典可以参考下面两个开放的git：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://code.google.com/p/fuzzdb/" title="fuzzdb">fuzzdb</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/danielmiessler/SecLists" title="seclists">seclists</a></li>
+</ul>
+<p>使用wfuzz暴力猜测目录的命令如下：<br><code>$ wfuzz -w /usr/share/wfuzz/wordlist/general/common.txt http://testphp.vulnweb.com/FUZZ</code></p>
+<p>使用wfuzz暴力猜测文件的命令如下：<br><code>$ wfuzz -w /usr/share/wfuzz/wordlist/general/common.txt http://testphp.vulnweb.com/FUZZ.php</code></p>
+<hr>
+<h3 id="测试URL中的参数"><a href="#测试URL中的参数" class="headerlink" title="测试URL中的参数"></a>测试URL中的参数</h3><p>通过在URL中在<code>？</code>后面设置FUZZ占位符，我们就可以使用wfuzz来测试URL传入的参数：<br><code>$ wfuzz -z range,0-10 --hl 97 http://testphp.vulnweb.com/listproducts.php?cat=FUZZ</code></p>
+<hr>
+<h3 id="测试POST请求"><a href="#测试POST请求" class="headerlink" title="测试POST请求"></a>测试POST请求</h3><p>如果想使用wfuzz测试<code>form-encoded</code>的数据，比如 HTML表单那样的，只需要传入<code>-d</code>参数即可：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">┌─[michael@parrot]─[/usr/share/wfuzz/wordlist]</span><br><span class="line">└──╼ $wfuzz -z file,/usr/share/wfuzz/wordlist/others/common_pass.txt -d &quot;uname=FUZZ&amp;pass=FUZZ&quot; --hc 302 http://testphp.vulnweb.com/userinfo.php</span><br><span class="line">********************************************************</span><br><span class="line">* Wfuzz 2.2.9 - The Web Fuzzer                         *</span><br><span class="line">********************************************************</span><br><span class="line"></span><br><span class="line">Target: http://testphp.vulnweb.com/userinfo.php</span><br><span class="line">Total requests: 52</span><br><span class="line"></span><br><span class="line">==================================================================</span><br><span class="line">ID	Response   Lines      Word         Chars          Payload    </span><br><span class="line">==================================================================</span><br><span class="line"></span><br><span class="line">000044:  C=200    114 L	     356 W	   5111 Ch	  &quot;test&quot;</span><br><span class="line"></span><br><span class="line">Total time: 1.308365</span><br><span class="line">Processed Requests: 52</span><br><span class="line">Filtered Requests: 51</span><br><span class="line">Requests/sec.: 39.74425</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="测试Cookies"><a href="#测试Cookies" class="headerlink" title="测试Cookies"></a>测试Cookies</h3><p>在测试请求中加入自己设置的cookies，可以使用<code>-b</code>参数指定，多个cookies使用多次。<br><code>$ wfuzz -z file,/usr/share/wfuzz/wordlist/general/common.txt -b cookie=value1 -b cookie2=value2 http://testphp.vulnweb.com/FUZZ</code></p>
+<p>以上命令可生成如下的HTTP请求：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GET /attach HTTP/1.1</span><br><span class="line">Host: testphp.vulnweb.com</span><br><span class="line">Accept: */*</span><br><span class="line">Content-Type:  application/x-www-form-urlencoded</span><br><span class="line">Cookie:  cookie=value1; cookie2=value2</span><br><span class="line">User-Agent:  Wfuzz/2.2</span><br><span class="line">Connection: close</span><br></pre></td></tr></table></figure>
+
+<p>测试cookie字段的话，可以使用下面的命令：<br><code>$ wfuzz -z file,/usr/share/wfuzz/wordlist/general/common.txt -b cookie=FUZZ http://testphp.vulnweb.com/</code></p>
+<hr>
+<h3 id="测试自定义请求头"><a href="#测试自定义请求头" class="headerlink" title="测试自定义请求头"></a>测试自定义请求头</h3><p>使用<code>-H</code>参数来指定HTTP请求的请求头，多次指定多次使用。<br><code>$ wfuzz -z file,/usr/share/wfuzz/wordlist/general/common.txt -H &quot;myheader: headervalue&quot; -H &quot;myheader2: headervalue2&quot; http://testphp.vulnweb.com/FUZZ</code></p>
+<p>生成的HTTP请求如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">GET /agent HTTP/1.1</span><br><span class="line">Host: testphp.vulnweb.com</span><br><span class="line">Accept: */*</span><br><span class="line">Myheader2:  headervalue2</span><br><span class="line">Myheader:  headervalue</span><br><span class="line">Content-Type:  application/x-www-form-urlencoded</span><br><span class="line">User-Agent:  Wfuzz/2.2</span><br><span class="line">Connection: close</span><br></pre></td></tr></table></figure>
+
+<p>我们还可以修改存在的请求头，比如修改User-Agent头：<br><code>$ wfuzz -z file,/usr/share/wfuzz/wordlist/general/common.txt -H &quot;myheader: headervalue&quot; -H &quot;User-Agent: Googlebot-News&quot; http://testphp.vulnweb.com/FUZZ</code></p>
+<p>生成的HTTP请求如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GET /asp HTTP/1.1</span><br><span class="line">Host: testphp.vulnweb.com</span><br><span class="line">Accept: */*</span><br><span class="line">Myheader:  headervalue</span><br><span class="line">Content-Type:  application/x-www-form-urlencoded</span><br><span class="line">User-Agent:  Googlebot-News</span><br><span class="line">Connection: close</span><br></pre></td></tr></table></figure>
+
+<p>Headers也可以被测试：<br><code>wfuzz -z file,/usr/share/wfuzz/wordlist/general/common.txt -H &quot;User-Agent: FUZZ&quot; http://testphp.vulnweb.com/</code></p>
+<hr>
+<h3 id="测试HTTP请求方法（动词）"><a href="#测试HTTP请求方法（动词）" class="headerlink" title="测试HTTP请求方法（动词）"></a>测试HTTP请求方法（动词）</h3><p>HTTP请求方法的测试可通过指定<code>-X</code>参数指定：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">┌─[michael@parrot]─[/usr/share/wfuzz/wordlist]</span><br><span class="line">└──╼ $wfuzz -z list,GET-HEAD-POST-TRACE-OPTIONS -X FUZZ http://testphp.vulnweb.com/</span><br><span class="line">********************************************************</span><br><span class="line">* Wfuzz 2.2.9 - The Web Fuzzer                         *</span><br><span class="line">********************************************************</span><br><span class="line"></span><br><span class="line">Target: http://testphp.vulnweb.com/</span><br><span class="line">Total requests: 5</span><br><span class="line"></span><br><span class="line">==================================================================</span><br><span class="line">ID      Response   Lines      Word         Chars          Request</span><br><span class="line">==================================================================</span><br><span class="line"></span><br><span class="line">00002:  C=200      0 L         0 W            0 Ch        &quot;HEAD&quot;</span><br><span class="line">00004:  C=405      7 L        12 W          172 Ch        &quot;TRACE&quot;</span><br><span class="line">00005:  C=405      7 L        12 W          172 Ch        &quot;OPTIONS&quot;</span><br><span class="line">00001:  C=200    104 L       296 W         4096 Ch        &quot;GET&quot;</span><br><span class="line">00003:  C=200    104 L       296 W         4096 Ch        &quot;POST&quot;</span><br><span class="line"></span><br><span class="line">Total time: 1.030354</span><br><span class="line">Processed Requests: 5</span><br><span class="line">Filtered Requests: 0</span><br><span class="line">Requests/sec.: 4.852696</span><br></pre></td></tr></table></figure>
+<p>如果在测试时要指定请求使用的HTTP方法（动词），同样可以使用<code>-X</code>参数指定。相当于御剑中的GET&#x2F;HEAD。HEAD方法要快一些。</p>
+<hr>
+<h3 id="使用代理"><a href="#使用代理" class="headerlink" title="使用代理"></a>使用代理</h3><p>如果在测试时想要使用代理的话，只需要传入<code>-p</code>参数即可：<br><code>$ wfuzz -z file,/usr/share/wfuzz/wordlist/general/common.txt -p localhost:8080 http://testphp.vulnweb.com/FUZZ</code></p>
+<p>默认情况下，指定的代理是HTTP Basic类型的，如果想用其他类型的代理，可通过指定类型来使用：<br><code>$ wfuzz -z file,/usr/share/wfuzz/wordlist/general/common.txt -p localhost:2222:SOCKS5 http://testphp.vulnweb.com/FUZZ</code></p>
+<p>多个代理可使用多个<code>-p</code>参数同时指定：<br><code>$ wfuzz -z file,/usr/share/wfuzz/wordlist/general/common.txt -p localhost:8080 -p localhost:9090 http://testphp.vulnweb.com/FUZZ</code><br>这样每次请求都会选取不同的代理进行。</p>
+<hr>
+<h3 id="认证"><a href="#认证" class="headerlink" title="认证"></a>认证</h3><p>wfuzz可以通过<code>--basec/ntml/digest</code>来设置认证头。</p>
+<p>例如，想要测试一个需要HTTP Basic Auth保护的内容可使用如下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">┌─[michael@parrot]─[/usr/share/wfuzz/wordlist]</span><br><span class="line">└──╼ $wfuzz -z list,nonvalid-httpwatch --basic FUZZ:FUZZ https://www.httpwatch.com/httpgallery/authentication/authenticatedimage/default.aspx</span><br><span class="line">********************************************************</span><br><span class="line">* Wfuzz 2.2.9 - The Web Fuzzer                         *</span><br><span class="line">********************************************************</span><br><span class="line"></span><br><span class="line">Target: https://www.httpwatch.com/httpgallery/authentication/authenticatedimage/default.aspx</span><br><span class="line">Total requests: 2</span><br><span class="line"></span><br><span class="line">==================================================================</span><br><span class="line">ID	Response   Lines      Word         Chars          Payload    </span><br><span class="line">==================================================================</span><br><span class="line"></span><br><span class="line">000001:  C=401      0 L	      11 W	     58 Ch	  &quot;nonvalid&quot;</span><br><span class="line">000002:  C=200     20 L	      91 W	   5294 Ch	  &quot;httpwatch&quot;</span><br><span class="line"></span><br><span class="line">Total time: 1.332051</span><br><span class="line">Processed Requests: 2</span><br><span class="line">Filtered Requests: 0</span><br><span class="line">Requests/sec.: 1.501443</span><br></pre></td></tr></table></figure>
+
+<p>想测试经过认证之后的资源，我们可以通过指定<code>--basic user:pass</code>的方式来测试。</p>
+<hr>
+<h3 id="递归测试"><a href="#递归测试" class="headerlink" title="递归测试"></a>递归测试</h3><p>使用<code>-R</code>参数可以指定一个payload被递归的深度。例如，暴破目录时，我们想使用相同的payload对已发现的目录进行测试，可以使用如下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">┌─[michael@parrot]─[/usr/share/wfuzz/wordlist]</span><br><span class="line">└──╼ $wfuzz -z list,&quot;admin-CVS-cgi\-bin&quot; -R 1 http://testphp.vulnweb.com/FUZZ</span><br><span class="line">********************************************************</span><br><span class="line">* Wfuzz 2.2.9 - The Web Fuzzer                         *</span><br><span class="line">********************************************************</span><br><span class="line"></span><br><span class="line">Target: http://testphp.vulnweb.com/FUZZ</span><br><span class="line">Total requests: 3</span><br><span class="line"></span><br><span class="line">==================================================================</span><br><span class="line">ID	Response   Lines      Word         Chars          Payload    </span><br><span class="line">==================================================================</span><br><span class="line"></span><br><span class="line">000002:  C=301      7 L	      12 W	    184 Ch	  &quot;CVS&quot;</span><br><span class="line"> |_  Enqueued response for recursion (level=1)</span><br><span class="line">000001:  C=301      7 L	      12 W	    184 Ch	  &quot;admin&quot;</span><br><span class="line"> |_  Enqueued response for recursion (level=1)</span><br><span class="line">000003:  C=403     10 L	      29 W	    263 Ch	  &quot;cgi-bin&quot;</span><br><span class="line">000005:  C=404      7 L	      12 W	    168 Ch	  &quot;CVS - CVS&quot;</span><br><span class="line">000006:  C=404      7 L	      12 W	    168 Ch	  &quot;CVS - cgi-bin&quot;</span><br><span class="line">000004:  C=404      7 L	      12 W	    168 Ch	  &quot;CVS - admin&quot;</span><br><span class="line">000007:  C=404      7 L	      12 W	    168 Ch	  &quot;admin - admin&quot;</span><br><span class="line">000008:  C=404      7 L	      12 W	    168 Ch	  &quot;admin - CVS&quot;</span><br><span class="line">000009:  C=404      7 L	      12 W	    168 Ch	  &quot;admin - cgi-bin&quot;</span><br><span class="line"></span><br><span class="line">Total time: 1.584295</span><br><span class="line">Processed Requests: 9</span><br><span class="line">Filtered Requests: 0</span><br><span class="line">Requests/sec.: 5.680760</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="测试速度与效率"><a href="#测试速度与效率" class="headerlink" title="测试速度与效率"></a>测试速度与效率</h3><p>根据对目标的影响和自身的承受能力及带宽，wfuzz提供了一些参数可以用来调节HTTP请求引擎。</p>
+<p>使用<code>-t</code>参数可以增加或减少同时发送HTTP请求的数量。<br>使用<code>-s</code>参数可以调节每次发送HTTP的时间间隔。</p>
+<hr>
+<h3 id="输出到文件"><a href="#输出到文件" class="headerlink" title="输出到文件"></a>输出到文件</h3><p>wfuzz通过<code>printers</code>插件来将结果以不同格式保存到文档中，可用的<code>printers</code>参考上面的<code>重要关键词</code>。<br>将结果以<code>json</code>格式输出到文件的命令如下：<br><code>$ wfuzz -f /tmp/outfile,json -w /usr/share/wfuzz/wordlist/general/common.txt http://testphp.vulnweb.com/FUZZ</code></p>
+<hr>
+<h3 id="不同的输出"><a href="#不同的输出" class="headerlink" title="不同的输出"></a>不同的输出</h3><p>直接使用不同格式在命令行输出的话，可使用下面的命令：<br><code>$ wfuzz -o json -w /usr/share/wfuzz/wordlist/general/common.txt http://testphp.vulnweb.com/FUZZ</code></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94scanf().html" rel="prev" title="逆向工程——scanf()">
+                  <i class="fa fa-chevron-left"></i> 逆向工程——scanf()
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%20wfuzz%20%E5%BA%93.html" rel="next" title="史上最详[ZI]细[DUO]的wfuzz中文教程（四）—— wfuzz 库">
+                  史上最详[ZI]细[DUO]的wfuzz中文教程（四）—— wfuzz 库 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">m0nst3r</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

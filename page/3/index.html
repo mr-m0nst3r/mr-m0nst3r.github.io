@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"m0nst3r.me","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+<meta property="og:type" content="website">
+<meta property="og:title" content="m0nst3r&#39;s blog">
+<meta property="og:url" content="https://m0nst3r.me/page/3/index.html">
+<meta property="og:site_name" content="m0nst3r&#39;s blog">
+<meta property="og:description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="m0nst3r">
+<meta property="article:tag" content="Web安全,渗透测试,网络安全,代码审计,逆向,编程">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://m0nst3r.me/page/3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"page/3/index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>m0nst3r's blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">m0nst3r's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello, Bugs</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">m0nst3r</p>
+  <div class="site-description" itemprop="description">Web安全、渗透测试、网络安全、代码审计、逆向、编程</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/blaa/nginx-acme-sh-%E8%87%AA%E5%8A%A8%E7%AE%A1%E7%90%86SSL%E8%AF%81%E4%B9%A6.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blaa/nginx-acme-sh-%E8%87%AA%E5%8A%A8%E7%AE%A1%E7%90%86SSL%E8%AF%81%E4%B9%A6.html" class="post-title-link" itemprop="url">nginx + acme.sh 自动管理SSL证书</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-11-29 00:13:00" itemprop="dateCreated datePublished" datetime="2018-11-29T00:13:00+08:00">2018-11-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/blaa/" itemprop="url" rel="index"><span itemprop="name">blaa</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="准备nginx环境"><a href="#准备nginx环境" class="headerlink" title="准备nginx环境"></a>准备nginx环境</h2><p>建立目录专门用作ssl的证书申请</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /www/sites/le_root/.well-known/acme-challenge</span><br><span class="line">chown -R root:www-data /www/sites/le_root</span><br></pre></td></tr></table></figure>
+
+<p>新建一个nginx配置文档<code>/www/nginx/acme-challenge.conf</code>，用作申请证书时的认证</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /.well-known/acme-challenge/ &#123;</span><br><span class="line">    alias /www/sites/le_root/.well-known/acme-challenge/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>想让哪个网站配置ssl之前，先编辑对应的配置文件，相当于apache的vhost</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">server_name mydomain.com;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">....</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Let<span class="string">&#x27;s Encrypt webroot</span></span></span><br><span class="line">    include /www/nginx/acme-challenge.conf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重启nginx<br><code>systemctl reload nginx.service</code></p>
+<h2 id="证书申请与安装"><a href="#证书申请与安装" class="headerlink" title="证书申请与安装"></a>证书申请与安装</h2><p>acme.sh的安装很简单，不重复了。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blaa/nginx-acme-sh-%E8%87%AA%E5%8A%A8%E7%AE%A1%E7%90%86SSL%E8%AF%81%E4%B9%A6.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/uncategorized/Build-tcpdump-for-Android.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/uncategorized/Build-tcpdump-for-Android.html" class="post-title-link" itemprop="url">Build tcpdump for Android</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-11-23 15:29:31" itemprop="dateCreated datePublished" datetime="2018-11-23T15:29:31+08:00">2018-11-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>使用从网上下载的tcpdump, 遇到以下错误：</p>
+<p><code>error: only position independent executables (PIE) are supported.</code></p>
+<p>直接使用NDK在电脑上交叉编译一个。</p>
+<p>GitHub上有个脚本，[<a target="_blank" rel="noopener" href="https://github.com/imrivera/build-android-tcpdump.git]">https://github.com/imrivera/build-android-tcpdump.git]</a></p>
+<p>直接编译会产生错误因为<code>libpcap</code>版本的原因，好在上面的脚本提供了选择版本的参数。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/imrivera/build-android-tcpdump.git</span><br><span class="line">./build-android-tcpdump -a arm64 -n /Users/michael/Library/Android/android-ndk-r10e -l 1.4.0</span><br></pre></td></tr></table></figure>
+
+<p>抓包：<br><code>./tcpdump -vv -p -s 0 -w /sdcard/Mcart003.pcap</code></p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/uncategorized/Build-tcpdump-for-Android.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/blaa/%E7%BB%86%E6%80%9D%E6%9E%81%E6%81%90.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blaa/%E7%BB%86%E6%80%9D%E6%9E%81%E6%81%90.html" class="post-title-link" itemprop="url">细思极恐</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-11-22 22:29:00" itemprop="dateCreated datePublished" datetime="2018-11-22T22:29:00+08:00">2018-11-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:52" itemprop="dateModified" datetime="2022-08-08T22:27:52+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/blaa/" itemprop="url" rel="index"><span itemprop="name">blaa</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>访问我的服务器，配置好HTTPS，却怎么也访问不了。<br>让朋友测试，那边网络没问题，于是我挂上SS的VPN，结果还是不能访问。<br>挂上ExpressVPN，访问成功。</p>
+<p>断开VPN，测试网络，却发现了一件细思极恐的事情：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo traceroute www.baidu.com</span></span><br><span class="line">Password:</span><br><span class="line">traceroute to www.a.shifen.com (119.75.217.109), 64 hops max</span><br><span class="line">  1   192.168.1.1  0.891ms  0.748ms  0.711ms </span><br><span class="line">  2   117.100.128.1  2.796ms  4.092ms  2.412ms </span><br><span class="line">  3   124.205.97.48  4.353ms  4.192ms  3.938ms </span><br><span class="line">  4   124.205.98.185  4.487ms  4.192ms  4.391ms </span><br><span class="line">  5   14.197.243.61  3.509ms  4.679ms  4.105ms </span><br><span class="line">  6   14.197.149.178  4.838ms  4.168ms  3.958ms </span><br><span class="line">  7   182.61.253.119  5.056ms  5.903ms  3.998ms </span><br><span class="line">  8   182.61.253.126  4.463ms  4.007ms  4.264ms </span><br><span class="line">  9   *  *  * </span><br><span class="line"> 10   *  *  * </span><br><span class="line"> 11   *  *  * </span><br><span class="line"> 12   *  *  * </span><br><span class="line"> 13   *  *  * </span><br><span class="line"> 14   *  *  * </span><br><span class="line"> 15   *  *  * </span><br><span class="line"> 16   *  *  * </span><br><span class="line"> 17   *  *  * </span><br><span class="line"> 18   *  *  * </span><br><span class="line"> 19   *  *  * </span><br><span class="line"> 20   *  *  * </span><br><span class="line"> 21   *  *  * </span><br><span class="line"> 22   *  *  * </span><br><span class="line"> 23   *  *  * </span><br><span class="line"> 24   *  *  * </span><br><span class="line"> 25   *  *  * </span><br><span class="line"> 26   *  *  * </span><br><span class="line"> 27   *  *  * </span><br><span class="line"> 28   *  *  * </span><br><span class="line"> 29   *  *  * </span><br><span class="line"> 30   *  *  * </span><br><span class="line"> 31   *  *  * </span><br><span class="line"> 32   *  *  * </span><br><span class="line"> 33   *  *  * </span><br><span class="line"> 34   *  *  * </span><br><span class="line"> 35   *  *  * </span><br><span class="line"> 36   *  *  * </span><br><span class="line"> 37   *  *  * </span><br><span class="line"> 38   *  *  * </span><br><span class="line"> 39   *  *  * </span><br><span class="line"> 40   *  *  * </span><br><span class="line"> 41   *  *  * </span><br><span class="line"> 42   *  *  * </span><br><span class="line"> 43   *  *  * </span><br><span class="line"> 44   *  *  * </span><br><span class="line"> 45   *  *  * </span><br><span class="line"> 46   *  *  * </span><br><span class="line"> 47   *  *  * </span><br><span class="line"> 48   *  *  * </span><br><span class="line"> 49   *  *  * </span><br><span class="line"> 50   *  *  * </span><br><span class="line"> 51   *  *  * </span><br><span class="line"> 52   *  *  * </span><br><span class="line"> 53   *  *  * </span><br><span class="line"> 54   *  *  * </span><br><span class="line"> 55   *  *  * </span><br><span class="line"> 56   *  *  * </span><br><span class="line"> 57   *  *  * </span><br><span class="line"> 58   *  *  * </span><br><span class="line"> 59   *  *  * </span><br><span class="line"> 60   *  *  * </span><br><span class="line"> 61   *  *  * </span><br><span class="line"> 62   *  *  * </span><br><span class="line"> 63   *  *  * </span><br><span class="line"> 64   *  *  * </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">michael @ m0nst3r <span class="keyword">in</span> ~ [22:20:30] C:1</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"></span></span><br></pre></td></tr></table></figure>
+
+<p>喵了个咪的！</p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blaa/%E7%BB%86%E6%80%9D%E6%9E%81%E6%81%90.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/pentest/SSH-Tunnel.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/pentest/SSH-Tunnel.html" class="post-title-link" itemprop="url">SSH Tunnel</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-11-22 19:10:00" itemprop="dateCreated datePublished" datetime="2018-11-22T19:10:00+08:00">2018-11-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/pentest/" itemprop="url" rel="index"><span itemprop="name">pentest</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>至于为什么要做这个，你们都懂的。</p>
+<p>SSHD那边的设置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">/etc/ssh/sshd_config</span></span><br><span class="line">GatewayPorts yes</span><br><span class="line">AllowTcpForwarding yes</span><br><span class="line">PermitRootLogin yes</span><br><span class="line">PasswordAuthentication yes</span><br></pre></td></tr></table></figure>
+
+<p>一个ssh_tunnel有脚本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">if [ -n &quot;$1&quot; ]</span><br><span class="line">then</span><br><span class="line">echo 0.0.0.0:$1&quot;--&lt;&gt;--&quot;ssh_server:$1</span><br><span class="line">ssh -C -g -i xxx.pem root@VPS -R $1:127.0.0.1:$1</span><br><span class="line">else</span><br><span class="line">echo 0.0.0.0:53&quot;--&lt;&gt;--&quot;ssh_server:53</span><br><span class="line">ssh -C -g -i xxx.pem root@VPS -R 53:127.0.0.1:53</span><br><span class="line">fi</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/pentest/SSH-Tunnel.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/vuls/Bash%20ShellShock%20CVE-2014-6271(%E7%A0%B4%E5%A3%B3).html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/vuls/Bash%20ShellShock%20CVE-2014-6271(%E7%A0%B4%E5%A3%B3).html" class="post-title-link" itemprop="url">Bash ShellShock CVE-2014-6271(破壳)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-11-21 11:12:00" itemprop="dateCreated datePublished" datetime="2018-11-21T11:12:00+08:00">2018-11-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/vuls/" itemprop="url" rel="index"><span itemprop="name">vuls</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[TOC]</p>
+<h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>Bash使用的环境变量是通过函数名称来调用的，导致漏洞出问题的是以<code>()&#123;</code>开头定义的环境变量在命令<code>EVN</code>中解析成函数后，Bash执行并未推出，而是继续解析并执行shell命令。而其核心的原因在于输入的过滤中没有严格限制边界，也没有作出合法化的参数判断。</p>
+<p>在补丁中主要进行了参数的合法性过滤，补丁程序在<code>/builtins/evalstring.c</code>的<code>parse_and_execute</code>函数中对输入的合法性边界检测，将代码注入的可能性排除。在排除中，主要用到了<code>flag</code>的两次判断和<code>command</code>的一次类型匹配，为了能够<code>flag</code>判断准确，在补丁中预先定义了<code>SEVAL_FUNCDEF</code>、<code>SEVAL_ONECMD</code>两个标识作为判断依据。此漏洞的补丁更新有三处，主要进行输入的command进行过滤作用。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* /builtins/common.h */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEVAL_FUNCDEF 	0x080		<span class="comment">/* only allow function definitions */</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEVAL_ONECMD 	0x100		<span class="comment">/* only allow a single command */</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* /builtins/evalstring.c */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>((flags &amp; SEVAL_FUNCDEF) &amp;&amp; command-&gt;type != cmd_function_def )</span><br><span class="line">	&#123;</span><br><span class="line">	internal_warning(<span class="string">&quot;%s: ignoring function definition attempt&quot;</span>, from_file);</span><br><span class="line">	should_jump_to_top_level = <span class="number">0</span>;</span><br><span class="line">	last_result = last_command_exit_value = EX_BADUSAGE;</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* /builtins/evalstring.c */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (flags &amp; SEVAL_ONECMD)</span><br><span class="line">	<span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+
+<p>从以上阐述的漏洞原理可知，漏洞的根本原因存在于Bash的<code>ENV</code>命令实现上，因此漏洞本身是不能够直接导致远程代码执行的。如果要达到远程代码执行的目的，必须借助第三方服务程序作为媒介才能够实现，第三方服务程序也必须要满足众多条件才可以充当此媒介的角色。例如，<code>apache2</code>便可以，其<code>CGI</code>组件满足远程访问并调用Bash的ENV命令进行访问数据解析功能。漏洞实现远程代码执行原理图如下：<br><img src="/images/db3f40e9f1e1a523c0dc165a926dab85bff11b09.png" alt="14139550048538.png"></p>
+<h2 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h2><p><code>VulApps/b/bash/shellshock1_CVE-2014-6271</code></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/vuls/Bash%20ShellShock%20CVE-2014-6271(%E7%A0%B4%E5%A3%B3).html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/blaa/DNS%E8%A7%A3%E6%9E%90%E8%BF%87%E7%A8%8B.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blaa/DNS%E8%A7%A3%E6%9E%90%E8%BF%87%E7%A8%8B.html" class="post-title-link" itemprop="url">DNS解析过程</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-11-21 11:12:00" itemprop="dateCreated datePublished" datetime="2018-11-21T11:12:00+08:00">2018-11-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/blaa/" itemprop="url" rel="index"><span itemprop="name">blaa</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>如下图所示，先清空本地DNS解析缓存（windows和linux的清空方法请自行搜索），然后用dig命令查看可知：</p>
+<pre><code>本地未发现缓存，直接查询根，根返回`com.`域, 在查询`com.`，返回`baidu.com.`，在查询`baidu.com.`，返回`www.baidu.com` 主机的A记录，即IP地址。
+</code></pre>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">michael @ m0nst3r <span class="keyword">in</span> ~ [20:45:48]</span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">dscacheutil -flushcache</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">michael @ m0nst3r <span class="keyword">in</span> ~ [20:46:19]</span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">dig +trace www.baidu.com</span>    </span><br><span class="line"></span><br><span class="line">; &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; +trace www.baidu.com</span><br><span class="line">;; global options: +cmd</span><br><span class="line">.			14138	IN	NS	g.root-servers.net.</span><br><span class="line">.			14138	IN	NS	f.root-servers.net.</span><br><span class="line">.			14138	IN	NS	a.root-servers.net.</span><br><span class="line">.			14138	IN	NS	e.root-servers.net.</span><br><span class="line">.			14138	IN	NS	h.root-servers.net.</span><br><span class="line">.			14138	IN	NS	d.root-servers.net.</span><br><span class="line">.			14138	IN	NS	k.root-servers.net.</span><br><span class="line">.			14138	IN	NS	i.root-servers.net.</span><br><span class="line">.			14138	IN	NS	l.root-servers.net.</span><br><span class="line">.			14138	IN	NS	c.root-servers.net.</span><br><span class="line">.			14138	IN	NS	b.root-servers.net.</span><br><span class="line">.			14138	IN	NS	m.root-servers.net.</span><br><span class="line">.			14138	IN	NS	j.root-servers.net.</span><br><span class="line">;; Received 695 bytes from 192.168.1.1#53(192.168.1.1) in 5 ms</span><br><span class="line"></span><br><span class="line">com.			172800	IN	NS	a.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	b.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	c.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	d.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	e.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	f.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	g.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	h.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	i.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	j.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	k.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	l.gtld-servers.net.</span><br><span class="line">com.			172800	IN	NS	m.gtld-servers.net.</span><br><span class="line">com.			86400	IN	DS	30909 8 2 E2D3C916F6DEEAC73294E8268FB5885044A833FC5459588F4A9184CF C41A5766</span><br><span class="line">com.			86400	IN	RRSIG	DS 8 1 86400 20181028050000 20181015040000 2134 . HHrLrltU/Pzku1DAAlxYsgUID+DnKajqKudOxnLwQNFKh2SkkA6le5cF ++eRShsNX7Q+lq2+5E5BMLF8+cm6zGC1VKoQLzIihdts7osyYviPvJ6/ lcCjV2OnF+EvEQhOCnBDhGkF5nmq+LIoEODyu2F51kneQqgWIjHvPvPG GGzMyTXpJC8pKo+VVDxcZf1nBjk6qHnM+dHB8aF0RS9hDupFHD55ePXD 6JIL87fmZW4be/Pe0haPtTVkzDRnY5RK5oQm7d1ryQV6NJB0sQJjSG7m nNLXofugjh5B6wWb8ZX24QYcDxSZvy52BF+DuGzkClRZQfCGDcToZx4y Lj5CGg==</span><br><span class="line">;; Received 1173 bytes from 199.7.91.13#53(d.root-servers.net) in 232 ms</span><br><span class="line"></span><br><span class="line">baidu.com.		172800	IN	NS	dns.baidu.com.</span><br><span class="line">baidu.com.		172800	IN	NS	ns2.baidu.com.</span><br><span class="line">baidu.com.		172800	IN	NS	ns3.baidu.com.</span><br><span class="line">baidu.com.		172800	IN	NS	ns4.baidu.com.</span><br><span class="line">baidu.com.		172800	IN	NS	ns7.baidu.com.</span><br><span class="line">CK0POJMG874LJREF7EFN8430QVIT8BSM.com. 86400 IN NSEC3 1 1 0 - CK0Q1GIN43N1ARRC9OSM6QPQR81H5M9A  NS SOA RRSIG DNSKEY NSEC3PARAM</span><br><span class="line">CK0POJMG874LJREF7EFN8430QVIT8BSM.com. 86400 IN RRSIG NSEC3 8 2 86400 20181020121530 20181013110530 46475 com. dwbSHWsE9XgYaIlfAvddRHnM+SyareZ63CYwXOcbO3tcu7wpslbjNn37 tbqnZa89rsIKO1mzWUdxM5fQtXXj2k+haz8SV42mtiU9WvkXBx0jnUjn 18UXq+X1u/uLfwPOIIy0tDcFW8OdQB3nE18aCVIzy9YUcrFMilNQ+vP6 OSM=</span><br><span class="line">HPVV2B5N85O7HJJRB7690IB5UVF9O9UA.com. 86400 IN NSEC3 1 1 0 - HPVVP23QUO0FP9R0A04URSICJPESKO9J  NS DS RRSIG</span><br><span class="line">HPVV2B5N85O7HJJRB7690IB5UVF9O9UA.com. 86400 IN RRSIG NSEC3 8 2 86400 20181021051422 20181014040422 46475 com. OIF0G5EhzboJ66h6mM+eslGRta4aM5M77zOMwZklsSgSBCpNdHByfteP WDx6PdN6a+QyoZQfjGjc2b8mnUxT+6rypSeHShrQdnPoFa/GtrOeWZS7 LVktINNV9hP/X2qk664VY05Q8SXSK1btMv68QXIznnx6DTZV6R4X2Dk4 mwk=</span><br><span class="line">;; Received 697 bytes from 192.42.93.30#53(g.gtld-servers.net) in 277 ms</span><br><span class="line"></span><br><span class="line">www.baidu.com.		1200	IN	CNAME	www.a.shifen.com.</span><br><span class="line">a.shifen.com.		1200	IN	NS	ns1.a.shifen.com.</span><br><span class="line">a.shifen.com.		1200	IN	NS	ns4.a.shifen.com.</span><br><span class="line">a.shifen.com.		1200	IN	NS	ns5.a.shifen.com.</span><br><span class="line">a.shifen.com.		1200	IN	NS	ns3.a.shifen.com.</span><br><span class="line">a.shifen.com.		1200	IN	NS	ns2.a.shifen.com.</span><br><span class="line">;; Received 239 bytes from 61.135.165.235#53(ns2.baidu.com) in 29 ms</span><br></pre></td></tr></table></figure>
+<p>完整的流程如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1. 本机向local dns请求www.baidu.com</span><br><span class="line">2. local dns向根域请求www.baidu.com，根域返回com.域的服务器IP</span><br><span class="line">3. 向com.域请求www.baidu.com，com.域返回baidu.com域的服务器IP</span><br><span class="line">4. 向baidu.com请求www.baidu.com，返回cname www.a.shifen.com和a.shifen.com域的服务器IP</span><br><span class="line">5. 向root域请求www.a.shifen.com</span><br><span class="line">6. 向com.域请求www.a.shife.com</span><br><span class="line">7. 向shifen.com请求</span><br><span class="line">8. 向a.shifen.com域请求</span><br><span class="line">9. 拿到www.a.shifen.com的IP</span><br><span class="line">10. localdns返回本机www.baidu.com cname www.a.shifen.com 以及 www.a.shifen.com的IP</span><br></pre></td></tr></table></figure>
+<p>另外一篇文章说的比较明白，向前辈致敬：<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/liyuanhong/articles/7353974.html">https://www.cnblogs.com/liyuanhong/articles/7353974.html</a></p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blaa/DNS%E8%A7%A3%E6%9E%90%E8%BF%87%E7%A8%8B.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/sqli/SQL%20Insert%20into%20%E6%B3%A8%E5%85%A5.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/sqli/SQL%20Insert%20into%20%E6%B3%A8%E5%85%A5.html" class="post-title-link" itemprop="url">SQL Insert into 注入</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-10-20 11:12:00" itemprop="dateCreated datePublished" datetime="2018-10-20T11:12:00+08:00">2018-10-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:52" itemprop="dateModified" datetime="2022-08-08T22:27:52+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/sqli/" itemprop="url" rel="index"><span itemprop="name">sqli</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>使用sqlmap会使测试数据库中插入大量测试语句，而且产生大量日志，下面的方法利用mysql在<code>scalar subquiry</code>将<code>insert into</code>类型的注入转换为<code>Time-based blind</code>注入。</p>
+<p>先看执行效果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">mysql&gt; </span><span class="language-bash">select (select <span class="keyword">case</span> when 1=1 <span class="keyword">then</span> <span class="built_in">sleep</span>(1) <span class="keyword">else</span> <span class="string">&#x27;hello&#x27;</span> end from ((select 1 as a) union (select 2 as a)) <span class="built_in">test</span>);</span></span><br><span class="line">ERROR 1242 (21000): Subquery returns more than 1 row</span><br><span class="line"><span class="meta prompt_">mysql&gt; </span><span class="language-bash">select (select <span class="keyword">case</span> when 1=2 <span class="keyword">then</span> <span class="built_in">sleep</span>(1) <span class="keyword">else</span> <span class="string">&#x27;hello&#x27;</span> end from ((select 1 as a) union (select 2 as a)) <span class="built_in">test</span>);</span></span><br><span class="line">ERROR 1242 (21000): Subquery returns more than 1 row</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>先看语句：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> (</span><br><span class="line">	<span class="keyword">select</span> <span class="keyword">case</span></span><br><span class="line">		<span class="keyword">when</span> <span class="number">1</span><span class="operator">=</span><span class="number">1</span></span><br><span class="line">		<span class="keyword">then</span> sleep(<span class="number">3</span>)</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		<span class="string">&#x27;hello&#x27;</span></span><br><span class="line">		<span class="keyword">end</span></span><br><span class="line">	<span class="keyword">from</span></span><br><span class="line">		(</span><br><span class="line">			(<span class="keyword">select</span> <span class="number">1</span> <span class="keyword">as</span> a)</span><br><span class="line">			<span class="keyword">union</span></span><br><span class="line">			(<span class="keyword">select</span> <span class="number">2</span> <span class="keyword">as</span> a)</span><br><span class="line">		)</span><br><span class="line">test);</span><br></pre></td></tr></table></figure>
+
+<p>经过实验可得，如果<code>from</code>后面，<code>union</code>前后的两个<code>select</code>子查询使用相同的值，则会返回一列，故不会出错，从而导致<code>insert into</code>语句成功执行；当两个值不相同时，无论判断成功与否，都会导致<code>insert into</code>语句执行失败，从而转化为时间盲注。</p>
+<p>参考：<br><a target="_blank" rel="noopener" href="http://www.mathyvanhoef.com/2011/10/exploiting-insert-into-sql-injections.html">http://www.mathyvanhoef.com/2011/10/exploiting-insert-into-sql-injections.html</a><br><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.6/en/scalar-subqueries.html">https://dev.mysql.com/doc/refman/5.6/en/scalar-subqueries.html</a></p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/sqli/SQL%20Insert%20into%20%E6%B3%A8%E5%85%A5.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/web-sec/PHP-Wrappers.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/web-sec/PHP-Wrappers.html" class="post-title-link" itemprop="url">PHP Wrappers</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-10-14 13:02:00" itemprop="dateCreated datePublished" datetime="2018-10-14T13:02:00+08:00">2018-10-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/web-sec/" itemprop="url" rel="index"><span itemprop="name">web-sec</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><ul>
+<li>file:&#x2F;&#x2F; — 访问本地文件系统</li>
+<li>http:&#x2F;&#x2F; — 访问 HTTP(s) 网址</li>
+<li>ftp:&#x2F;&#x2F; — 访问 FTP(s) URLs</li>
+<li><strong>php:&#x2F;&#x2F; — 访问各个输入&#x2F;输出流（I&#x2F;O streams）</strong></li>
+<li>zlib:&#x2F;&#x2F; — 压缩流</li>
+<li>data:&#x2F;&#x2F; — 数据（RFC 2397）</li>
+<li>glob:&#x2F;&#x2F; — 查找匹配的文件路径模式</li>
+<li>phar:&#x2F;&#x2F; — PHP 归档</li>
+<li>ssh2:&#x2F;&#x2F; — Secure Shell 2</li>
+<li>rar:&#x2F;&#x2F; — RAR</li>
+<li>ogg:&#x2F;&#x2F; — 音频流</li>
+<li>expect:&#x2F;&#x2F; — 处理交互式的流</li>
+</ul>
+<h2 id="php-x2F-x2F"><a href="#php-x2F-x2F" class="headerlink" title="php:&#x2F;&#x2F;"></a>php:&#x2F;&#x2F;</h2><p>直接访问PHP进程的输入或者输出流：</p>
+<ul>
+<li><code>php://stdin</code>：只读</li>
+<li><code>php://stdout</code>：只写</li>
+<li><code>php://stderr</code>：只写</li>
+</ul>
+<h2 id="php-x2F-x2F-input"><a href="#php-x2F-x2F-input" class="headerlink" title="php:&#x2F;&#x2F;input"></a>php:&#x2F;&#x2F;input</h2><p><code>php://input</code>是可以访问请求的原始数据的只读流。</p>
+<p><code>POST</code>请求的情况下，最好使用<code>php://input</code>来替代<code>$_HTTP_RAW_POST_DATA</code>，因为它不依赖于特定的<code>php.ini</code>指令。</p>
+<p><code>enctype=&quot;multipart/form-data&quot;</code>的时候<code>php://input</code>是无效的。</p>
+<h2 id="php-x2F-x2F-output"><a href="#php-x2F-x2F-output" class="headerlink" title="php:&#x2F;&#x2F;output"></a>php:&#x2F;&#x2F;output</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/web-sec/PHP-Wrappers.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B0%8F%E6%8A%80%E5%B7%A7.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B0%8F%E6%8A%80%E5%B7%A7.html" class="post-title-link" itemprop="url">渗透测试小技巧</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-30 11:12:00" itemprop="dateCreated datePublished" datetime="2018-07-30T11:12:00+08:00">2018-07-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:52" itemprop="dateModified" datetime="2022-08-08T22:27:52+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/pentest/" itemprop="url" rel="index"><span itemprop="name">pentest</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[TOC]</p>
+<h2 id="非交互式添加用户并创建密码"><a href="#非交互式添加用户并创建密码" class="headerlink" title="非交互式添加用户并创建密码"></a>非交互式添加用户并创建密码</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">useradd <span class="built_in">test</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> <span class="string">&quot;test:123&quot;</span> | sudo chpasswd</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">useradd test2</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">echo</span> <span class="string">&quot;123&quot;</span> | passwd --stdin test2</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">passwd -d test2 <span class="comment">#（设置密码之后）删除密码，即可以空密码登录</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="获取Windows机器上保存的WIFI密码"><a href="#获取Windows机器上保存的WIFI密码" class="headerlink" title="获取Windows机器上保存的WIFI密码"></a>获取Windows机器上保存的WIFI密码</h2><h3 id="Powershell"><a href="#Powershell" class="headerlink" title="Powershell"></a>Powershell</h3><p><code>(netsh wlan show profiles) | Select-String &quot;\:(.+)$&quot; | %&#123;$name=$_.Matches.Groups[1].Value.Trim(); $_&#125; | %&#123;(netsh wlan show profile name=&quot;$name&quot; key=clear)&#125;  | Select-String &quot;Key Content\W+\:(.+)$&quot; | %&#123;$pass=$_.Matches.Groups[1].Value.Trim(); $_&#125; | %&#123;[PSCustomObject]@&#123; PROFILE_NAME=$name;PASSWORD=$pass &#125;&#125; | Format-Table -AutoSize </code></p>
+<h3 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h3><p><code>netsh wlan show profiles &quot;NETWORK-SSID&quot; key=clear</code></p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/pentest/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%B0%8F%E6%8A%80%E5%B7%A7.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/pentest/PowerShell%20%E7%AC%94%E8%AE%B0%20[%E4%B8%8D%E6%96%AD%E6%9B%B4%E6%96%B0].html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/pentest/PowerShell%20%E7%AC%94%E8%AE%B0%20%5B%E4%B8%8D%E6%96%AD%E6%9B%B4%E6%96%B0%5D.html" class="post-title-link" itemprop="url">PowerShell 笔记 [不断更新]</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-23 11:12:00" itemprop="dateCreated datePublished" datetime="2018-06-23T11:12:00+08:00">2018-06-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/pentest/" itemprop="url" rel="index"><span itemprop="name">pentest</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="日常用到的powershell命令及脚本"><a href="#日常用到的powershell命令及脚本" class="headerlink" title="日常用到的powershell命令及脚本"></a>日常用到的powershell命令及脚本</h1><h2 id="更改文件夹的“修改时间”"><a href="#更改文件夹的“修改时间”" class="headerlink" title="更改文件夹的“修改时间”"></a>更改文件夹的“修改时间”</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$a</span> = <span class="built_in">Get-Date</span> <span class="string">&quot;02/09/2013 4:59 PM&quot;</span></span><br><span class="line"><span class="variable">$d</span> = [<span class="type">system.io.directoryinfo</span>]<span class="string">&quot;C:\Users\user\Documents\CV&quot;</span></span><br><span class="line"><span class="variable">$d</span>.LastWriteTime = <span class="variable">$a</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="更改文件夹下所有文件“修改时间”"><a href="#更改文件夹下所有文件“修改时间”" class="headerlink" title="更改文件夹下所有文件“修改时间”"></a>更改文件夹下所有文件“修改时间”</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$a</span> = <span class="built_in">Get-Date</span> <span class="string">&quot;2/13/2007 8:00 AM&quot;</span></span><br><span class="line"><span class="variable">$b</span> = <span class="built_in">Get-ChildItem</span> <span class="string">&quot;C:\Scripts&quot;</span></span><br><span class="line"><span class="keyword">foreach</span> (<span class="variable">$i</span> <span class="keyword">in</span> <span class="variable">$b</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="variable">$i</span>.LastWriteTime = <span class="variable">$a</span></span><br><span class="line">    <span class="variable">$a</span> = <span class="variable">$a</span>.AddMinutes(<span class="number">1</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/pentest/PowerShell%20%E7%AC%94%E8%AE%B0%20%5B%E4%B8%8D%E6%96%AD%E6%9B%B4%E6%96%B0%5D.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">m0nst3r</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

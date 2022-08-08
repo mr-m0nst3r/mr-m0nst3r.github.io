@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"m0nst3r.me","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="新建空的android项目，没有Activity目录结构如下：  修改build.gradle文件 123456789101112131415161718192021222324252627282930313233343536apply plugin: &amp;#x27;com.android.application&amp;#x27;android &amp;#123;    compileSdkVersion 28">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xposed学习(1)_new_project">
+<meta property="og:url" content="https://m0nst3r.me/xposed/Xposed%E5%AD%A6%E4%B9%A0-1-new-project.html">
+<meta property="og:site_name" content="m0nst3r&#39;s blog">
+<meta property="og:description" content="新建空的android项目，没有Activity目录结构如下：  修改build.gradle文件 123456789101112131415161718192021222324252627282930313233343536apply plugin: &amp;#x27;com.android.application&amp;#x27;android &amp;#123;    compileSdkVersion 28">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://m0nst3r.me/images/pasted-0.png">
+<meta property="og:image" content="https://m0nst3r.me/images/pasted-1.png">
+<meta property="og:image" content="https://m0nst3r.me/images/pasted-5.png">
+<meta property="og:image" content="https://m0nst3r.me/images/pasted-2.png">
+<meta property="article:published_time" content="2018-12-04T08:59:00.000Z">
+<meta property="article:modified_time" content="2022-08-08T14:27:53.027Z">
+<meta property="article:author" content="m0nst3r">
+<meta property="article:tag" content="xposed">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://m0nst3r.me/images/pasted-0.png">
+
+
+<link rel="canonical" href="https://m0nst3r.me/xposed/Xposed%E5%AD%A6%E4%B9%A0-1-new-project.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://m0nst3r.me/xposed/Xposed%E5%AD%A6%E4%B9%A0-1-new-project.html","path":"xposed/Xposed学习-1-new-project.html","title":"Xposed学习(1)_new_project"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Xposed学习(1)_new_project | m0nst3r's blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">m0nst3r's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello, Bugs</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E7%A9%BA%E7%9A%84android%E9%A1%B9%E7%9B%AE%EF%BC%8C%E6%B2%A1%E6%9C%89Activity"><span class="nav-number">1.</span> <span class="nav-text">新建空的android项目，没有Activity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9build-gradle%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">修改build.gradle文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9AndroidManifest-xml"><span class="nav-number">3.</span> <span class="nav-text">修改AndroidManifest.xml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Build-APK"><span class="nav-number">4.</span> <span class="nav-text">Build APK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%AE%89%E8%A3%85%E7%9A%84%E6%A8%A1%E5%9D%97%E6%98%AF%E5%90%A6%E6%AD%A3%E7%A1%AE"><span class="nav-number">5.</span> <span class="nav-text">查看安装的模块是否正确</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">m0nst3r</p>
+  <div class="site-description" itemprop="description">Web安全、渗透测试、网络安全、代码审计、逆向、编程</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/xposed/Xposed%E5%AD%A6%E4%B9%A0-1-new-project.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Xposed学习(1)_new_project | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Xposed学习(1)_new_project
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-12-04 16:59:00" itemprop="dateCreated datePublished" datetime="2018-12-04T16:59:00+08:00">2018-12-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/xposed/" itemprop="url" rel="index"><span itemprop="name">xposed</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="新建空的android项目，没有Activity"><a href="#新建空的android项目，没有Activity" class="headerlink" title="新建空的android项目，没有Activity"></a>新建空的android项目，没有Activity</h3><p>目录结构如下：</p>
+<p><img src="/images/pasted-0.png" alt="upload successful"></p>
+<h3 id="修改build-gradle文件"><a href="#修改build-gradle文件" class="headerlink" title="修改build.gradle文件"></a>修改<code>build.gradle</code>文件</h3><p><img src="/images/pasted-1.png" alt="upload successful"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: &#x27;com.android.application&#x27;</span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion 28</span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        applicationId &quot;com.example.michael.xposed_1&quot;</span><br><span class="line">        minSdkVersion 15</span><br><span class="line">        targetSdkVersion 28</span><br><span class="line">        versionCode 1</span><br><span class="line">        versionName &quot;1.0&quot;</span><br><span class="line">        testInstrumentationRunner &quot;android.support.test.runner.AndroidJUnitRunner&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            minifyEnabled false</span><br><span class="line">            proguardFiles getDefaultProguardFile(&#x27;proguard-android.txt&#x27;), &#x27;proguard-rules.pro&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 下面这三行是新加的</span><br><span class="line">repositories &#123;</span><br><span class="line">    jcenter();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    implementation fileTree(dir: &#x27;libs&#x27;, include: [&#x27;*.jar&#x27;])</span><br><span class="line">    implementation &#x27;com.android.support:appcompat-v7:28.0.0&#x27;</span><br><span class="line">    testImplementation &#x27;junit:junit:4.12&#x27;</span><br><span class="line">    androidTestImplementation &#x27;com.android.support.test:runner:1.0.2&#x27;</span><br><span class="line">    androidTestImplementation &#x27;com.android.support.test.espresso:espresso-core:3.0.2&#x27;</span><br><span class="line">    # 下面这两行是新加的</span><br><span class="line">    compileOnly &#x27;de.robv.android.xposed:api:82&#x27;</span><br><span class="line">    compileOnly &#x27;de.robv.android.xposed:api:82:sources&#x27;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="修改AndroidManifest-xml"><a href="#修改AndroidManifest-xml" class="headerlink" title="修改AndroidManifest.xml"></a>修改AndroidManifest.xml</h3><p><img src="/images/pasted-5.png" alt="upload successful"></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">manifest</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">package</span>=<span class="string">&quot;com.example.michael.xposed_1&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">application</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:allowBackup</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:icon</span>=<span class="string">&quot;@mipmap/ic_launcher&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:label</span>=<span class="string">&quot;@string/app_name&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:roundIcon</span>=<span class="string">&quot;@mipmap/ic_launcher_round&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:supportsRtl</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:theme</span>=<span class="string">&quot;@style/AppTheme&quot;</span> &gt;</span>   <span class="comment">&lt;!--以前这里是application的闭合，要修改一下，在meta-data之后再闭合application--&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!--增加三个meta-data--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta-data</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">&quot;xposedmodule&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta-data</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">&quot;xposedminversion&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:value</span>=<span class="string">&quot;82&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta-data</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:name</span>=<span class="string">&quot;xposeddescription&quot;</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:value</span>=<span class="string">&quot;Xposed Hook Demo 1&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">application</span>&gt;</span>  <span class="comment">&lt;!--闭合application--&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Build-APK"><a href="#Build-APK" class="headerlink" title="Build APK"></a>Build APK</h3><p>这个时候就可以<code>build apk</code>了，但是我这出了个问题。因为之前配置了gradle的代理，所以还需要将代理删除。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">michael @ m0nst3r <span class="keyword">in</span> ~ [17:04:56]</span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> .gradle</span> </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">michael @ m0nst3r <span class="keyword">in</span> ~/.gradle [17:04:59]</span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">ll</span></span><br><span class="line">total 8</span><br><span class="line">drwxr-xr-x  11 michael  staff   352B Oct 30 11:16 caches</span><br><span class="line">drwxr-xr-x   7 michael  staff   224B Oct 30 11:16 daemon</span><br><span class="line">-rw-r--r--   1 michael  staff   863B Dec  4 16:55 gradle.properties</span><br><span class="line">drwxr-xr-x   5 michael  staff   160B Oct 30 10:55 native</span><br><span class="line">drwxr-xr-x   2 michael  staff    64B Aug 22 18:48 workers</span><br><span class="line">drwxr-xr-x   3 michael  staff    96B Aug 22 18:29 wrapper</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">michael @ m0nst3r <span class="keyword">in</span> ~/.gradle [17:05:00]</span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">pwd</span></span></span><br><span class="line">/Users/michael/.gradle</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">michael @ m0nst3r <span class="keyword">in</span> ~/.gradle [17:05:03]</span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> gradle.properties</span> </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># For more details on how to configure your build environment visit</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">http://www.gradle.org/docs/current/userguide/build_environment.html</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="comment"># Specifies the JVM arguments used for the daemon process.</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">The setting is particularly useful <span class="keyword">for</span> tweaking memory settings.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Default value: -Xmx1024m -XX:MaxPermSize=256m</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="comment"># When configured, Gradle will run in incubating parallel mode.</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">This option should only be used with decoupled projects. More details, visit</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">http://www.gradle.org/docs/current/userguide/multi_project_builds.html<span class="comment">#sec:decoupled_projects</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">org.gradle.parallel=<span class="literal">true</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Tue Dec 04 16:22:40 CST 2018</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">systemProp.http.proxyHost=127.0.0.1</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">systemProp.https.proxyPort=1080</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">systemProp.https.proxyHost=127.0.0.1</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">systemProp.http.proxyPort=1080</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="查看安装的模块是否正确"><a href="#查看安装的模块是否正确" class="headerlink" title="查看安装的模块是否正确"></a>查看安装的模块是否正确</h3><p>Build APK之后，用adb install 安装到手机</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">michael @ m0nst3r <span class="keyword">in</span> ~/study/xposed/xposed_1/app/build/outputs/apk/debug [16:56:42]</span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">adb install app-debug.apk</span> </span><br><span class="line">app-debug.apk: 1 file pushed. 2.0 MB/s (1540691 bytes in 0.722s)</span><br><span class="line">	pkg: /data/local/tmp/app-debug.apk</span><br><span class="line">Success</span><br></pre></td></tr></table></figure>
+
+<p>如果已经安装在手机中的<code>xposed installer</code>能够成功识别我们刚刚编译的这个项目，就说明没有问题。下面就可以写代码了。<br><img src="/images/pasted-2.png" alt="upload successful"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/xposed/" rel="tag"># xposed</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blaa/nginx-acme-sh-%E8%87%AA%E5%8A%A8%E7%AE%A1%E7%90%86SSL%E8%AF%81%E4%B9%A6.html" rel="prev" title="nginx + acme.sh 自动管理SSL证书">
+                  <i class="fa fa-chevron-left"></i> nginx + acme.sh 自动管理SSL证书
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/uncategorized/Xposed%E5%AD%A6%E4%B9%A0-2-hook-test.html" rel="next" title="Xposed学习(2)_hook_test">
+                  Xposed学习(2)_hook_test <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">m0nst3r</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

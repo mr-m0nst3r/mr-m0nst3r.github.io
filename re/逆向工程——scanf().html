@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"m0nst3r.me","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="[TOC] 程序局部变量12345678#include&lt;stdio.h&gt;int main()&amp;#123;	int x;	printf(&quot;Enter X:\n&quot;);	scanf(&quot;%d&quot;,&amp;x);	printf(&quot;You entered %d...\n&quot;,x);	return 0;&amp;#125; 全局变量12345678">
+<meta property="og:type" content="article">
+<meta property="og:title" content="逆向工程——scanf()">
+<meta property="og:url" content="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94scanf().html">
+<meta property="og:site_name" content="m0nst3r&#39;s blog">
+<meta property="og:description" content="[TOC] 程序局部变量12345678#include&lt;stdio.h&gt;int main()&amp;#123;	int x;	printf(&quot;Enter X:\n&quot;);	scanf(&quot;%d&quot;,&amp;x);	printf(&quot;You entered %d...\n&quot;,x);	return 0;&amp;#125; 全局变量12345678">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://m0nst3r.me/images/84d0556980cc52a7e7a167fe381c49279f0a2759.png">
+<meta property="og:image" content="https://m0nst3r.me/images/ad8d59be6d7776bb5d256d332f1273bfdab3a1a1.png">
+<meta property="og:image" content="https://m0nst3r.me/images/dc0d0444a3e20bc216d63ce9c6d844b33d5e6709.png">
+<meta property="og:image" content="https://m0nst3r.me/images/60bf0aaa51780c4105918c87c7c2e9fe0477e878.png">
+<meta property="og:image" content="https://m0nst3r.me/images/94a527af0d2bf1fce9a1238d40fc26b09effa94e.png">
+<meta property="og:image" content="https://m0nst3r.me/images/aa1d3c22b7d7692c2dc49303cf434797a56fe2ea.png">
+<meta property="article:published_time" content="2017-12-21T03:12:00.000Z">
+<meta property="article:modified_time" content="2022-08-08T14:27:53.017Z">
+<meta property="article:author" content="m0nst3r">
+<meta property="article:tag" content="Web安全,渗透测试,网络安全,代码审计,逆向,编程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://m0nst3r.me/images/84d0556980cc52a7e7a167fe381c49279f0a2759.png">
+
+
+<link rel="canonical" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94scanf().html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94scanf().html","path":"re/逆向工程——scanf().html","title":"逆向工程——scanf()"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>逆向工程——scanf() | m0nst3r's blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">m0nst3r's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello, Bugs</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.</span> <span class="nav-text">程序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F"><span class="nav-number">1.1.</span> <span class="nav-text">局部变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="nav-number">1.2.</span> <span class="nav-text">全局变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scanf-%E5%87%BD%E6%95%B0%E7%9A%84%E7%8A%B6%E6%80%81%E7%9B%91%E6%B5%8B"><span class="nav-number">1.3.</span> <span class="nav-text">scanf()函数的状态监测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#x86"><span class="nav-number">1.4.</span> <span class="nav-text">x86</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#x86%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F"><span class="nav-number">1.4.1.</span> <span class="nav-text">x86局部变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MSVC-2010"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">MSVC(2010)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x86%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="nav-number">1.4.2.</span> <span class="nav-text">x86全局变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MSVC"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">MSVC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#OllyDbg%E8%B0%83%E8%AF%95"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">OllyDbg调试</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x86scanf-%E5%87%BD%E6%95%B0%E7%9A%84%E7%8A%B6%E6%80%81%E7%9B%91%E6%B5%8B"><span class="nav-number">1.4.3.</span> <span class="nav-text">x86scanf()函数的状态监测</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MSVC-1"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">MSVC</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#x64"><span class="nav-number">1.5.</span> <span class="nav-text">x64</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#x64%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F"><span class="nav-number">1.5.1.</span> <span class="nav-text">x64局部变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#msvc-2010"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">msvc 2010</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8radare2%E8%B0%83%E8%AF%95"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">使用radare2调试</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x64%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="nav-number">1.5.2.</span> <span class="nav-text">x64全局变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x64-scanf-%E5%87%BD%E6%95%B0%E7%9A%84%E7%8A%B6%E6%80%81%E7%9B%91%E6%B5%8B"><span class="nav-number">1.5.3.</span> <span class="nav-text">x64: scanf()函数的状态监测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.5.4.</span> <span class="nav-text">其他系统</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">m0nst3r</p>
+  <div class="site-description" itemprop="description">Web安全、渗透测试、网络安全、代码审计、逆向、编程</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94scanf().html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="逆向工程——scanf() | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          逆向工程——scanf()
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-12-21 11:12:00" itemprop="dateCreated datePublished" datetime="2017-12-21T11:12:00+08:00">2017-12-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/re/" itemprop="url" rel="index"><span itemprop="name">re</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>[TOC]</p>
+<h1 id="程序"><a href="#程序" class="headerlink" title="程序"></a>程序</h1><h2 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int x;</span><br><span class="line">	printf(&quot;Enter X:\n&quot;);</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;x);</span><br><span class="line">	printf(&quot;You entered %d...\n&quot;,x);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">//now,x is global variable</span><br><span class="line">int x;</span><br><span class="line">int main()&#123;</span><br><span class="line">	printf(&quot;Enter X:\n&quot;);</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;x);</span><br><span class="line">	printf(&quot;You entered %d...\n&quot;,x);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="scanf-函数的状态监测"><a href="#scanf-函数的状态监测" class="headerlink" title="scanf()函数的状态监测"></a>scanf()函数的状态监测</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">int main()&#123;</span><br><span class="line">	int x;</span><br><span class="line">	printf (&quot;Enter X:\n&quot;);</span><br><span class="line">	if (scanf (&quot;%d&quot;, &amp;x)==1)</span><br><span class="line">		printf (&quot;You entered %d...\n&quot;, x);</span><br><span class="line">	else</span><br><span class="line">		printf (&quot;What you entered? Huh?\n&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="x86"><a href="#x86" class="headerlink" title="x86"></a>x86</h2><h3 id="x86局部变量"><a href="#x86局部变量" class="headerlink" title="x86局部变量"></a>x86局部变量</h3><h4 id="MSVC-2010"><a href="#MSVC-2010" class="headerlink" title="MSVC(2010)"></a>MSVC(2010)</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">CONST SEGMENT</span><br><span class="line">$SG3831 DB &#x27;Enter X:&#x27;,0aH,00H</span><br><span class="line">$SG3832 DB &#x27;%d&#x27;,00H</span><br><span class="line">$SG3833 DB &#x27;You entered %d...&#x27;,0aH,00H</span><br><span class="line">CONST ENDS</span><br><span class="line">PUBLIC _main</span><br><span class="line">EXTRN _scanf:PROC</span><br><span class="line">EXTRN _printf:PROC</span><br><span class="line">;Function compile flags:/Odtp</span><br><span class="line">_TEXT SEGMENT</span><br><span class="line">_x$=-4           ;size=4</span><br><span class="line">_main PROC</span><br><span class="line">	push ebp</span><br><span class="line">	mov ebp,esp</span><br><span class="line">	push ecx</span><br><span class="line">	push OFFSET $SG3831  ;&#x27;Enter X:&#x27;</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line">	lea eax,DWORD PTR _x$[ebp]</span><br><span class="line">	push eax</span><br><span class="line">	push OFFSET $SG3832  ;&#x27;%d&#x27;</span><br><span class="line">	call _scanf</span><br><span class="line">	add esp,8</span><br><span class="line">	mov ecx,DWORD PTR _x$[ebp]</span><br><span class="line">	push ecx</span><br><span class="line">	push OFFSET $SG3833    ;&#x27;You entered %d...&#x27;</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,8</span><br><span class="line"></span><br><span class="line">	;rentuen 0</span><br><span class="line">	xor eax,eax</span><br><span class="line">	mov esp,ebp</span><br><span class="line">	pop ebp</span><br><span class="line">	ret 0</span><br><span class="line">_main ENDP</span><br><span class="line">_TEXT ENDS</span><br></pre></td></tr></table></figure>
+<p>####OllyDbg调试<br>现在使用 OllyDbg 调试,加载程序之后,一直按 F8 键单步执行,等待程序退出 ntdll.dll、进入我们程序的主文件。然后向下翻滚滚轴,查找 main()主函数。在 main()里面点中第一条指令<code>PUSH EBP</code>并在此处按下 F2 键设置断点。接着按 F9 键,运行断点之前的指令。<br><img src="/images/84d0556980cc52a7e7a167fe381c49279f0a2759.png" alt="1.png"><br>在这个界面里,我们在寄存器的区域内用右键单击 EAX 寄存器,然后选择“Follow in stack”。如此一来,OllyDbg 就会在栈窗口里显示栈地址和栈内数据,以便我们清楚地观察栈里的局部变量。图中红箭头所示的就是栈里的数据。其中,在地址 0x6E494714 处的数据就是脏数据。在下一时刻,PUSH 指令会把数据存储到栈里的下一个地址。接下来,在程序执行完 scanf()函数之前,我们一直按 F8 键。在执行 scanf()函数的时候,我们要在运行程序的终端窗口里输入数据,例如 123,如下图：<br><img src="/images/ad8d59be6d7776bb5d256d332f1273bfdab3a1a1.png" alt="2.png"></p>
+<p>scanf()函数的执行之后的情形如下图所示。EAX 寄存器里存有函数的返回值 1。这表示它成功地读取了 1 个值。我们可以在栈里找到局部变量的地址,其数值为 0x7B(即数字 123)。<br><img src="/images/dc0d0444a3e20bc216d63ce9c6d844b33d5e6709.png" alt="3.png"></p>
+<p>这个值将通过栈传递给 ECX 寄存器,然后再次通过栈传递给 printf()函数,如下图<br><img src="/images/60bf0aaa51780c4105918c87c7c2e9fe0477e878.png" alt="4.png"></p>
+<h3 id="x86全局变量"><a href="#x86全局变量" class="headerlink" title="x86全局变量"></a>x86全局变量</h3><h4 id="MSVC"><a href="#MSVC" class="headerlink" title="MSVC"></a>MSVC</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">_DATA	SEGMENT</span><br><span class="line">COMM	_x:DWORD</span><br><span class="line">$SG2456	DB &#x27;Enter X: &#x27;, 0aH, 00H</span><br><span class="line">$SG2457 DB &#x27;%d&#x27;, 00H</span><br><span class="line">$SG2458 DB &#x27;You entered %d... &#x27;, 0aH, 00H</span><br><span class="line">_DATA ENDS</span><br><span class="line">PUBLIC	_main</span><br><span class="line">EXTRN	__scanf:PROC</span><br><span class="line">EXTRN	__printf:PROC</span><br><span class="line">; Function compile flags: /Odtp</span><br><span class="line">_TEXT	SEGMENT</span><br><span class="line">_main	PROC</span><br><span class="line">	push ebp</span><br><span class="line">	mov ebp,esp</span><br><span class="line">	push OFFSET $SG2456</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,4</span><br><span class="line">	push OFFSET _x</span><br><span class="line">	push OFFSET $SG2457</span><br><span class="line">	call _scanf</span><br><span class="line">	add esp,8</span><br><span class="line">	mov eax,DWORD PTR_x</span><br><span class="line">	push eax</span><br><span class="line">	push OFFSET $SG2458</span><br><span class="line">	call _printf</span><br><span class="line">	add esp,8</span><br><span class="line">	xor eax,eax</span><br><span class="line">	pop ebp</span><br><span class="line">	ret 0</span><br><span class="line">_main	ENDP</span><br><span class="line">_TEXT	ENDS</span><br></pre></td></tr></table></figure>
+<p>x 变量的存储空间是数据段(_data 域),反而没有使用数据栈。因此整个程序的所有指令都可以直接访问全局变量 x。在可执行文件中,未经初始化的变量不会占用任何存储空间</p>
+<h4 id="OllyDbg调试"><a href="#OllyDbg调试" class="headerlink" title="OllyDbg调试"></a>OllyDbg调试</h4><p>我们可以在 OllyDbg 观察程序的数据段里的变量：<br><img src="/images/94a527af0d2bf1fce9a1238d40fc26b09effa94e.png" alt="6.png"><br>全局变量 x 出现在数据段里。在调试器执行完 PUSH 指令之后,变量 x 的指针推即被推送入栈,我们就可在栈里右键单击 x 的地址并选择“Follow in dump”,并在左侧的内存窗口观察它。在控制台输入 123 之后,栈里的数据将会变成0x7B。若考虑到数权,此处应该是 00 00 00 7B。可见,这是 x86 系统低位优先的“小端字节序&#x2F;LITTLE-ENDIAN”的典型特征。小端字节序属于“字节(顺)序&#x2F;endianness”的一种,它的第一个字节是数权最低的字节,数权最高的字节会排列在最后。<br>此后,EAX 寄存器将存储这个地址里的 32 位值,并将之传递给 printf()函数。本例中,变量 x 的内存地址是011F7138.<br>在 OllyDbg 里,按下 Alt+M 组合键可查看这个进程的内存映射(process memory map)，如下图所示,这个地址位于程序 PE 段的.data 域：<br><img src="/images/aa1d3c22b7d7692c2dc49303cf434797a56fe2ea.png" alt="7.png"></p>
+<h3 id="x86scanf-函数的状态监测"><a href="#x86scanf-函数的状态监测" class="headerlink" title="x86scanf()函数的状态监测"></a>x86scanf()函数的状态监测</h3><h4 id="MSVC-1"><a href="#MSVC-1" class="headerlink" title="MSVC"></a>MSVC</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">	lea eax,DOWORD PTR_x$[ebp]</span><br><span class="line">	push eax</span><br><span class="line">	push OFFSET $SG3833     ;&#x27;%d&#x27;,00H</span><br><span class="line">	call _scanf</span><br><span class="line">	add esp, 8</span><br><span class="line">	cmp eax, 1</span><br><span class="line">	jne SHORT $LN2@main</span><br><span class="line">	mov ecx, DWORD PTR _x$[ebp]</span><br><span class="line">	push ecx</span><br><span class="line">	push OFFSET $SG3834 ; &#x27;You entered %d... &#x27;, 0aH, 00H</span><br><span class="line">	call _printf</span><br><span class="line">	add esp, 8</span><br><span class="line">	jmp SHORT $LN1@main</span><br><span class="line">$LN2@main:</span><br><span class="line">	push OFFSET $SG3836 ; &#x27;What you entered? Huh? &#x27;, 0aH, 00H</span><br><span class="line">	call _printf</span><br><span class="line">	add esp, 4</span><br><span class="line">$LN1@main:</span><br><span class="line">	eax, eax</span><br></pre></td></tr></table></figure>
+<p>不仅是 CMP<br>指令所有的“数学&#x2F;算术计算”指令都会设置标志位。如果将 1 与 1 进行比较,1−1&#x3D;0,ZF 标志位(“零”标识位,最终运算结果是 0)将被计算指令设定为 1。将两个不同的数值进行 CMP 比较时,ZF 标志位的值绝不会是 1。JNE 指令会依据 ZF 标志位的状态判断是否需要进行跳转,实际上此两者(Jump if Not Zero)的同义指令。JNE 和 JNZ 的 opcode 都相同。所以,即使使用减法运算操作指令 SUB 替换 CMP指令,Jcc 指令也可以进行正常的跳转。不过在使用 SUB 指令时,我们还需要分配一个寄存器保存运算结果,而 CMP 则不需要使用寄存器保存运算结果。</p>
+<h2 id="x64"><a href="#x64" class="headerlink" title="x64"></a>x64</h2><p>在编译面向 x64 平台的可执行程序时,由于这个程序的参数较少,编译器会直接使用寄存器传递参数。除此之外,编译过程和 x86 的编译过程没有太大的区别。</p>
+<h3 id="x64局部变量"><a href="#x64局部变量" class="headerlink" title="x64局部变量"></a>x64局部变量</h3><h4 id="msvc-2010"><a href="#msvc-2010" class="headerlink" title="msvc 2010"></a>msvc 2010</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">_DATA SEGMENT</span><br><span class="line">$SG3831 DB &#x27;Enter X:&#x27;,0aH,00H</span><br><span class="line">$SG3832 DB &#x27;%d&#x27;,00H</span><br><span class="line">$SG3833 DB &#x27;You entered %d...&#x27;,0aH,00H</span><br><span class="line">_DATA ENDS</span><br><span class="line"></span><br><span class="line">_TEXT	SEGMENT</span><br><span class="line">x$=32</span><br><span class="line">mian	PROC</span><br><span class="line">$LN3:</span><br><span class="line">	sub rsp,56</span><br><span class="line">	lea rcx, OFFSET FLAT:$SG1289 ; &#x27;Enter X: &#x27;</span><br><span class="line">	call printf</span><br><span class="line">	lea rdx, QWORD PTR x$[rsp]</span><br><span class="line">	lea rcx, OFFSET FLAT:$SG1291 ; &#x27;%d&#x27;</span><br><span class="line">	call scanf</span><br><span class="line">	lea edx, DWORD PTR x$[rsp]</span><br><span class="line">	lea rcx, OFFSET FLAT:$SG1292 ; &#x27;You entered %d... &#x27;</span><br><span class="line">	call printf</span><br><span class="line">	;return 0</span><br><span class="line">	xor eax, eax</span><br><span class="line">	add rsp, 56</span><br><span class="line">	ret 0</span><br><span class="line">main	ENDP</span><br><span class="line">_TEXT	ENDS</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="使用radare2调试"><a href="#使用radare2调试" class="headerlink" title="使用radare2调试"></a>使用radare2调试</h4><p>使用gcc编译源代码，之后使用radare2进行调试，结果如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# r2 a.out</span><br><span class="line"> -- Press &#x27;C&#x27; in visual mode to toggle colors</span><br><span class="line">[0x000005f0]&gt; aaa</span><br><span class="line">[x] Analyze all flags starting with sym. and entry0 (aa)</span><br><span class="line">[x] Analyze len bytes of instructions for references (aar)</span><br><span class="line">[x] Analyze function calls (aac)</span><br><span class="line">[x] Use -AA or aaaa to perform additional experimental analysis.</span><br><span class="line">[x] Constructing a function name for fcn.* and sym.func.* functions (aan)</span><br><span class="line">[0x000005f0]&gt; s main</span><br><span class="line">[0x000006fa]&gt; pdf</span><br><span class="line">            ;-- main:</span><br><span class="line">/ (fcn) sym.main 73</span><br><span class="line">|   sym.main ();</span><br><span class="line">|           ; var int local_4h @ rbp-0x4</span><br><span class="line">|              ; DATA XREF from 0x0000060d (entry0)</span><br><span class="line">|           0x000006fa      55             push rbp</span><br><span class="line">|           0x000006fb      4889e5         mov rbp, rsp</span><br><span class="line">|           0x000006fe      4883ec10       sub rsp, 0x10</span><br><span class="line">|           0x00000702      488d3dcb0000.  lea rdi, str.Enter_X:       ; 0x7d4 ; &quot;Enter X:&quot;</span><br><span class="line">|           0x00000709      e8a2feffff     call sym.imp.puts           ; int puts(const char *s)</span><br><span class="line">|           0x0000070e      488d45fc       lea rax, [local_4h]</span><br><span class="line">|           0x00000712      4889c6         mov rsi, rax</span><br><span class="line">|           0x00000715      488d3dc10000.  lea rdi, 0x000007dd         ; &quot;%d&quot;</span><br><span class="line">|           0x0000071c      b800000000     mov eax, 0</span><br><span class="line">|           0x00000721      e8aafeffff     call sym.imp.__isoc99_scanf</span><br><span class="line">|           0x00000726      8b45fc         mov eax, dword [local_4h]</span><br><span class="line">|           0x00000729      89c6           mov esi, eax</span><br><span class="line">|           0x0000072b      488d3dae0000.  lea rdi, str.You_entered__d..._n ; 0x7e0 ; &quot;You entered %d...\n&quot;</span><br><span class="line">|           0x00000732      b800000000     mov eax, 0</span><br><span class="line">|           0x00000737      e884feffff     call sym.imp.printf         ; int printf(const char *format)</span><br><span class="line">|           0x0000073c      b800000000     mov eax, 0</span><br><span class="line">|           0x00000741      c9             leave</span><br><span class="line">\           0x00000742      c3             ret</span><br><span class="line">[0x000006fa]&gt; </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="x64全局变量"><a href="#x64全局变量" class="headerlink" title="x64全局变量"></a>x64全局变量</h3><p>GCC编译，使用radare2调试：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">r2 b.out</span><br><span class="line"> -- Use &#x27;rabin2 -ris&#x27; to get the import/export symbols of any binary.</span><br><span class="line">[0x000005f0]&gt; aaa</span><br><span class="line">[x] Analyze all flags starting with sym. and entry0 (aa)</span><br><span class="line">[x] Analyze len bytes of instructions for references (aar)</span><br><span class="line">[x] Analyze function calls (aac)</span><br><span class="line">[x] Use -AA or aaaa to perform additional experimental analysis.</span><br><span class="line">[x] Constructing a function name for fcn.* and sym.func.* functions (aan)</span><br><span class="line">[0x000005f0]&gt; s main</span><br><span class="line">[0x000006fa]&gt; pdf</span><br><span class="line">            ;-- main:</span><br><span class="line">/ (fcn) sym.main 72</span><br><span class="line">|   sym.main ();</span><br><span class="line">|              ; DATA XREF from 0x0000060d (entry0)</span><br><span class="line">|           0x000006fa      55             push rbp</span><br><span class="line">|           0x000006fb      4889e5         mov rbp, rsp</span><br><span class="line">|           0x000006fe      488d3dcf0000.  lea rdi, str.Enter_X:       ; 0x7d4 ; &quot;Enter X:&quot;</span><br><span class="line">|           0x00000705      e8a6feffff     call sym.imp.puts           ; int puts(const char *s)</span><br><span class="line">|           0x0000070a      488d35330920.  lea rsi, obj.x              ; 0x201044</span><br><span class="line">|           0x00000711      488d3dc50000.  lea rdi, 0x000007dd         ; &quot;%d&quot;</span><br><span class="line">|           0x00000718      b800000000     mov eax, 0</span><br><span class="line">|           0x0000071d      e8aefeffff     call sym.imp.__isoc99_scanf</span><br><span class="line">|           0x00000722      8b051c092000   mov eax, dword [obj.x]      ; [0x201044:4]=0</span><br><span class="line">|           0x00000728      89c6           mov esi, eax</span><br><span class="line">|           0x0000072a      488d3daf0000.  lea rdi, str.You_entered__d..._n ; 0x7e0 ; &quot;You entered %d...\n&quot;</span><br><span class="line">|           0x00000731      b800000000     mov eax, 0</span><br><span class="line">|           0x00000736      e885feffff     call sym.imp.printf         ; int printf(const char *format)</span><br><span class="line">|           0x0000073b      b800000000     mov eax, 0</span><br><span class="line">|           0x00000740      5d             pop rbp</span><br><span class="line">\           0x00000741      c3             ret</span><br><span class="line">[0x000006fa]&gt; </span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="x64-scanf-函数的状态监测"><a href="#x64-scanf-函数的状态监测" class="headerlink" title="x64: scanf()函数的状态监测"></a>x64: scanf()函数的状态监测</h3><p>:GCC编译，使用radare2调试：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# r2 c.out</span><br><span class="line"> -- You can debug a program from the graph view (&#x27;ag&#x27;) using standard radare2 commands</span><br><span class="line">[0x000005f0]&gt; aaa</span><br><span class="line">[x] Analyze all flags starting with sym. and entry0 (aa)</span><br><span class="line">[x] Analyze len bytes of instructions for references (aar)</span><br><span class="line">[x] Analyze function calls (aac)</span><br><span class="line">[x] Use -AA or aaaa to perform additional experimental analysis.</span><br><span class="line">[x] Constructing a function name for fcn.* and sym.func.* functions (aan)</span><br><span class="line">[0x000005f0]&gt; s main</span><br><span class="line">[0x000006fa]&gt; pdf</span><br><span class="line">            ;-- main:</span><br><span class="line">/ (fcn) main 92</span><br><span class="line">|   main ();</span><br><span class="line">|           ; var int local_4h @ rbp-0x4</span><br><span class="line">|              ; DATA XREF from 0x0000060d (entry0)</span><br><span class="line">|           0x000006fa      55             push rbp</span><br><span class="line">|           0x000006fb      4889e5         mov rbp, rsp</span><br><span class="line">|           0x000006fe      4883ec10       sub rsp, 0x10</span><br><span class="line">|           0x00000702      488d3ddb0000.  lea rdi, str.Enter_X:       ; 0x7e4 ; &quot;Enter X:&quot;</span><br><span class="line">|           0x00000709      e8a2feffff     call sym.imp.puts           ; int puts(const char *s)</span><br><span class="line">|           0x0000070e      488d45fc       lea rax, [local_4h]</span><br><span class="line">|           0x00000712      4889c6         mov rsi, rax</span><br><span class="line">|           0x00000715      488d3dd10000.  lea rdi, 0x000007ed         ; &quot;%d&quot;</span><br><span class="line">|           0x0000071c      b800000000     mov eax, 0</span><br><span class="line">|           0x00000721      e8aafeffff     call sym.imp.__isoc99_scanf</span><br><span class="line">|           0x00000726      83f801         cmp eax, 1</span><br><span class="line">|       ,=&lt; 0x00000729      7518           jne 0x743</span><br><span class="line">|       |   0x0000072b      8b45fc         mov eax, dword [local_4h]</span><br><span class="line">|       |   0x0000072e      89c6           mov esi, eax</span><br><span class="line">|       |   0x00000730      488d3db90000.  lea rdi, str.You_entered__d..._n ; 0x7f0 ; &quot;You entered %d...\n&quot;</span><br><span class="line">|       |   0x00000737      b800000000     mov eax, 0</span><br><span class="line">|       |   0x0000073c      e87ffeffff     call sym.imp.printf         ; int printf(const char *format)</span><br><span class="line">|      ,==&lt; 0x00000741      eb0c           jmp 0x74f</span><br><span class="line">|      ||      ; JMP XREF from 0x00000729 (main)</span><br><span class="line">|      |`-&gt; 0x00000743      488d3db90000.  lea rdi, str.What_you_entered__Huh_ ; 0x803 ; &quot;What you entered? Huh?&quot;</span><br><span class="line">|      |    0x0000074a      e861feffff     call sym.imp.puts           ; int puts(const char *s)</span><br><span class="line">|      |       ; JMP XREF from 0x00000741 (main)</span><br><span class="line">|      `--&gt; 0x0000074f      b800000000     mov eax, 0</span><br><span class="line">|           0x00000754      c9             leave</span><br><span class="line">\           0x00000755      c3             ret</span><br><span class="line">[0x000006fa]&gt; </span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="其他系统"><a href="#其他系统" class="headerlink" title="其他系统"></a>其他系统</h3><p>关于ARM、MIPS系统对于printf()函数的处理，请各位同学参考《RE4B》一书</p>
+<p>#作业</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%9D%A1%E4%BB%B6%E8%BD%AC%E7%A7%BB%E6%8C%87%E4%BB%A4.html" rel="prev" title="逆向工程——条件转移指令">
+                  <i class="fa fa-chevron-left"></i> 逆向工程——条件转移指令
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94wfuzz%20%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95.html" rel="next" title="史上最详[ZI]细[DUO]的wfuzz中文教程（二）——wfuzz 基本用法">
+                  史上最详[ZI]细[DUO]的wfuzz中文教程（二）——wfuzz 基本用法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">m0nst3r</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"m0nst3r.me","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本文已在丁牛网安实验室FreeBuf专栏 DigApis安全 中首发！引用转发请注明 “原文来自：DigApis安全 m0nst3r”字样，谢谢！   [TOC]  wfuzz教程这个教程主要内容是来自wfuzz官方文档。之所以写这个，是因为大多数的国内文章并没有对这个工具进行详细的说明。个人英文还算可以，所以抖胆翻译一下，加上自己的一些操作，一方面加深下自己对这个工具的熟练程度，另一方面方便">
+<meta property="og:type" content="article">
+<meta property="og:title" content="史上最详[ZI]细[DUO]的wfuzz中文教程（一）——初识wfuzz">
+<meta property="og:url" content="https://m0nst3r.me/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6[ZI]%E7%BB%86[DUO]%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%88%9D%E8%AF%86wfuzz.html">
+<meta property="og:site_name" content="m0nst3r&#39;s blog">
+<meta property="og:description" content="本文已在丁牛网安实验室FreeBuf专栏 DigApis安全 中首发！引用转发请注明 “原文来自：DigApis安全 m0nst3r”字样，谢谢！   [TOC]  wfuzz教程这个教程主要内容是来自wfuzz官方文档。之所以写这个，是因为大多数的国内文章并没有对这个工具进行详细的说明。个人英文还算可以，所以抖胆翻译一下，加上自己的一些操作，一方面加深下自己对这个工具的熟练程度，另一方面方便">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-02-27T03:12:00.000Z">
+<meta property="article:modified_time" content="2022-08-08T14:27:53.001Z">
+<meta property="article:author" content="m0nst3r">
+<meta property="article:tag" content="Web安全,渗透测试,网络安全,代码审计,逆向,编程">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://m0nst3r.me/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6[ZI]%E7%BB%86[DUO]%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%88%9D%E8%AF%86wfuzz.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://m0nst3r.me/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6[ZI]%E7%BB%86[DUO]%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%88%9D%E8%AF%86wfuzz.html","path":"web-sec/史上最详[ZI]细[DUO]的wfuzz中文教程（一）——初识wfuzz.html","title":"史上最详[ZI]细[DUO]的wfuzz中文教程（一）——初识wfuzz"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>史上最详[ZI]细[DUO]的wfuzz中文教程（一）——初识wfuzz | m0nst3r's blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">m0nst3r's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello, Bugs</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#wfuzz%E6%95%99%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">wfuzz教程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E8%AF%86wfuzz"><span class="nav-number">2.1.</span> <span class="nav-text">初识wfuzz</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%80%E7%AE%80%E5%8D%95%E5%91%BD%E4%BB%A4"><span class="nav-number">2.1.1.</span> <span class="nav-text">最简单命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%B8%AE%E5%8A%A9%E4%BF%A1%E6%81%AF"><span class="nav-number">2.1.2.</span> <span class="nav-text">获取帮助信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Payloads"><span class="nav-number">2.1.3.</span> <span class="nav-text">Payloads</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E4%B8%80%E4%B8%AApayload"><span class="nav-number">2.1.4.</span> <span class="nav-text">指定一个payload</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%A4%9A%E4%B8%AApayloads"><span class="nav-number">2.1.5.</span> <span class="nav-text">使用多个payloads</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="nav-number">2.1.6.</span> <span class="nav-text">过滤器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9A%90%E8%97%8F%E5%93%8D%E5%BA%94%E7%BB%93%E6%9E%9C"><span class="nav-number">2.1.6.1.</span> <span class="nav-text">隐藏响应结果</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E5%93%8D%E5%BA%94%E7%BB%93%E6%9E%9C"><span class="nav-number">2.1.6.2.</span> <span class="nav-text">显示响应结果</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Baseline"><span class="nav-number">2.1.6.3.</span> <span class="nav-text">使用Baseline</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%BF%87%E6%BB%A4"><span class="nav-number">2.1.6.4.</span> <span class="nav-text">使用正则表达式过滤</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E8%A6%81%E5%85%B3%E9%94%AE%E8%AF%8D"><span class="nav-number">2.2.</span> <span class="nav-text">重要关键词</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#payload"><span class="nav-number">2.2.1.</span> <span class="nav-text">payload</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#encoder"><span class="nav-number">2.2.2.</span> <span class="nav-text">encoder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#iterator"><span class="nav-number">2.2.3.</span> <span class="nav-text">iterator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#printer"><span class="nav-number">2.2.4.</span> <span class="nav-text">printer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scripts"><span class="nav-number">2.2.5.</span> <span class="nav-text">scripts</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7"><span class="nav-number">2.3.</span> <span class="nav-text">内置工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#wfencode-%E5%B7%A5%E5%85%B7"><span class="nav-number">2.3.1.</span> <span class="nav-text">wfencode 工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#wfpayload%E5%B7%A5%E5%85%B7"><span class="nav-number">2.3.2.</span> <span class="nav-text">wfpayload工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#wxfuzz-%E5%B7%A5%E5%85%B7"><span class="nav-number">2.3.3.</span> <span class="nav-text">wxfuzz 工具</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wfuzz%E5%91%BD%E4%BB%A4%E4%B8%AD%E6%96%87%E5%B8%AE%E5%8A%A9"><span class="nav-number">2.4.</span> <span class="nav-text">wfuzz命令中文帮助</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">m0nst3r</p>
+  <div class="site-description" itemprop="description">Web安全、渗透测试、网络安全、代码审计、逆向、编程</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6[ZI]%E7%BB%86[DUO]%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%88%9D%E8%AF%86wfuzz.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="史上最详[ZI]细[DUO]的wfuzz中文教程（一）——初识wfuzz | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          史上最详[ZI]细[DUO]的wfuzz中文教程（一）——初识wfuzz
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-02-27 11:12:00" itemprop="dateCreated datePublished" datetime="2018-02-27T11:12:00+08:00">2018-02-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/web-sec/" itemprop="url" rel="index"><span itemprop="name">web-sec</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<blockquote>
+<p>本文已在丁牛网安实验室FreeBuf专栏 <a target="_blank" rel="noopener" href="http://www.freebuf.com/column/163553.html" title="DigApis安全">DigApis安全</a> 中首发！引用转发请注明 “原文来自：DigApis安全 m0nst3r”字样，谢谢！</p>
+</blockquote>
+</blockquote>
+<p>[TOC]</p>
+<hr>
+<h2 id="wfuzz教程"><a href="#wfuzz教程" class="headerlink" title="wfuzz教程"></a>wfuzz教程</h2><p>这个教程主要内容是来自<a target="_blank" rel="noopener" href="http://wfuzz.readthedocs.io/" title="wfuzz官方文档">wfuzz官方文档</a>。之所以写这个，是因为大多数的国内文章并没有对这个工具进行详细的说明。个人英文还算可以，所以抖胆翻译一下，加上自己的一些操作，一方面加深下自己对这个工具的熟练程度，另一方面方便广大初学者学习。<br>感觉这个工具比平时使用的御剑灵活很多（如果参数都弄明白的话），总之，作为渗透测试信息收集的一个环节，它还是有用武之地的。</p>
+<p>这个教程本来想弄一篇文章，但是实在是太多了，所以借鉴了一下官方文档的分节，把这个教程做成了一个系列，一共四个部分，分别是：</p>
+<ul>
+<li><p>初识wfuzz：看完这个，你应该可以使用比较简单的命令来做一些任务了。</p>
+</li>
+<li><p>wfuzz 基本用法：看完这个的话，你应该可以从容使用wfuzz来做一些常用扫描器做不了的活，而且觉得wfuzz是个好东西。</p>
+</li>
+<li><p>wfuzz 高级用法：看完这个，你应该就可以玩弄wfuzz于手掌之中，各种小姿势让你在别人扫不成的时候装装X。</p>
+</li>
+<li><p>wfuzz 库：看完这个，不，能去仔细学习这个的同学，我就不说了，此类人圈内统称”大婊哥“，小弟在这只是抛砖引玉了。</p>
+</li>
+</ul>
+<hr>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>wfuzz 是一款Python开发的Web安全测试工具<br>wfuzz不仅仅是一个web扫描器：</p>
+<ul>
+<li><p>wfuzz能够通过发现并利用网站弱点&#x2F;漏洞的方式帮助你使网站更加安全。wfuzz的漏洞扫描功能由插件支持。</p>
+</li>
+<li><p>wfuzz是一个完全模块化的框架，这使得即使是Python初学者也能够进行开发和贡献代码。开发一个wfuzz插件是一件非常简单的事，通常只需几分钟。</p>
+</li>
+<li><p>wfuzz提供了简洁的编程语言接口来处理wfuzz或Burpsuite获取到的HTTP请求和响应。这使得你能够在一个良好的上下文环境中进行手工测试或半自动化的测试，而不需要依赖web形式的扫描器。</p>
+</li>
+</ul>
+<hr>
+<h3 id="初识wfuzz"><a href="#初识wfuzz" class="headerlink" title="初识wfuzz"></a>初识wfuzz</h3><hr>
+<h4 id="最简单命令"><a href="#最简单命令" class="headerlink" title="最简单命令"></a>最简单命令</h4><p>一个典型的wfuzz命令只需要指定一个字典和一个要测试的URL即可，如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">┌─[michael@parrot]─[/usr/share/wfuzz/src/wfuzz]</span><br><span class="line">└──╼ $wfuzz -w /usr/share/wfuzz/wordlist/general/common.txt http://testphp.vulnweb.com/FUZZ</span><br><span class="line">********************************************************</span><br><span class="line">* Wfuzz 2.2.9 - The Web Fuzzer                         *</span><br><span class="line">********************************************************</span><br><span class="line"></span><br><span class="line">Target: http://testphp.vulnweb.com/FUZZ</span><br><span class="line">Total requests: 950</span><br><span class="line"></span><br><span class="line">==================================================================</span><br><span class="line">ID	Response   Lines      Word         Chars          Payload    </span><br><span class="line">==================================================================</span><br><span class="line"></span><br><span class="line">000223:  C=404      7 L	      12 W	    168 Ch	  &quot;constants&quot;</span><br><span class="line">000224:  C=404      7 L	      12 W	    168 Ch	  &quot;contact&quot;</span><br><span class="line">000225:  C=404      7 L	      12 W	    168 Ch	  &quot;contacts&quot;</span><br><span class="line">000230:  C=404      7 L	      12 W	    168 Ch	  &quot;controlpanel&quot;</span><br><span class="line">000226:  C=404      7 L	      12 W	    168 Ch	  &quot;content&quot;</span><br><span class="line">000227:  C=404      7 L	      12 W	    168 Ch	  &quot;contents&quot;</span><br><span class="line">000228:  C=404      7 L	      12 W	    168 Ch	  &quot;control&quot;</span><br><span class="line">...</span><br><span class="line">000008:  C=404      7 L	      12 W	    168 Ch	  &quot;100&quot;</span><br><span class="line"></span><br><span class="line">Total time: 5.193345</span><br><span class="line">Processed Requests: 950</span><br><span class="line">Filtered Requests: 0</span><br><span class="line">Requests/sec.: 182.9264</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>wfuzz的输出使我们能够分析web server的响应，还可根据获得的HTTP响应信息过滤出我们想要的结果，比如过滤响应码&#x2F;响应长度等等。</p>
+<p>每一行输出给我们提供了以下信息：</p>
+<ul>
+<li>ID：测试时的请求序号</li>
+<li>Response：HTTP响应吗</li>
+<li>Lines：响应信息中的行数</li>
+<li>Word：响应信息中的字数</li>
+<li>Chars：响应信息中的字符数</li>
+<li>Payload：当前使用的payload</li>
+</ul>
+<hr>
+<h4 id="获取帮助信息"><a href="#获取帮助信息" class="headerlink" title="获取帮助信息"></a>获取帮助信息</h4><p>使用<code>-h</code>和<code>--help</code>参数来获取基本帮助信息和详细帮助信息。<br>wfuzz是一个完全模块化的模式，你可以使用<code>-e &lt;&lt;category&gt;&gt;</code>参数查看其中可用的模块，例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">┌─[michael@parrot]─[/usr/share/wfuzz/src/wfuzz]</span><br><span class="line">└──╼ $wfuzz -e iterators</span><br><span class="line"></span><br><span class="line">Available iterators:</span><br><span class="line"></span><br><span class="line">  Name    | Summary                                                                           </span><br><span class="line">----------------------------------------------------------------------------------------------</span><br><span class="line">  product | Returns an iterator cartesian product of input iterables.                         </span><br><span class="line">  zip     | Returns an iterator that aggregates elements from each of the iterables.          </span><br><span class="line">  chain   | Returns an iterator returns elements from the first iterable until it is exhaust  </span><br><span class="line">         	 | ed, then proceeds to the next iterable, until all of the iterables are exhausted  </span><br><span class="line">          	| .                                                                                 </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>可用的categories包括：<code>payloads</code>,<code>encoders</code>,<code>iterators</code>,<code>printers</code>和<code>scripts</code>。</p>
+<hr>
+<h4 id="Payloads"><a href="#Payloads" class="headerlink" title="Payloads"></a>Payloads</h4><p>wfuzz基于一个非常简单的概念：它用一个给定的payload来替换相应的FUZZ关键词的值，我们称FUZZ这样的关键词为<code>占位符</code>，这样更容易理解。一个wfuzz中的payload就是一个输入的源。</p>
+<p>要想得到所有可用的payload列表，可以执行如下命令：<br><code>$ wfuzz -e payloads</code></p>
+<p>关于payloads的更详细的信息可以通过以下命令获取：<br><code>$ wfuzz -z help</code></p>
+<p>上面这个命令还可以使用<code>--slice</code>参数来对输出结果进行过滤：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">┌─[michael@parrot]─[/usr/share/wfuzz/src/wfuzz]</span><br><span class="line">└──╼ $wfuzz -z help --slice &quot;dirwalk&quot;</span><br><span class="line">Name: dirwalk 0.1</span><br><span class="line">Categories: default</span><br><span class="line">Summary: Returns filename&#x27;s recursively from a local directory.</span><br><span class="line">Author: Xavi Mendez (@xmendez)</span><br><span class="line">Description:</span><br><span class="line">   Returns all the file paths found in the specified directory.</span><br><span class="line">   Handy if you want to check a directory structure against a webserver,</span><br><span class="line">   for example, because you have previously downloaded a specific version</span><br><span class="line">   of what is supposed to be on-line.</span><br><span class="line">Parameters:</span><br><span class="line">   + dir: Directory path to walk and generate payload from.</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="指定一个payload"><a href="#指定一个payload" class="headerlink" title="指定一个payload"></a>指定一个payload</h4><p>每个FUZZ占位符都必须为它指定相应的payload。指定一个payload时有几种方法：</p>
+<ul>
+<li>命令比较长的方式是显式的定义payload的参数:<br>  <code>$ wfuzz -z file --zP fn=/usr/share/wfuzz/wordlist/general/common.txt http://testphp.vulnweb.com/FUZZ</code></li>
+<li>另一个不太长的方式是只提供payload所需的默认参数：<br>  <code>$ wfuzz -z file,/usr/share/wfuzz/wordlist/general/common.txt http://testphp.vulnweb.com/FUZZ</code></li>
+<li>最后，短的方式是使用别名：<br>  <code>$ wfuzz -w /usr/share/wfuzz/wordlist/general/common.txt http://testphp.vulnweb.com/FUZZ</code></li>
+</ul>
+<p><code>stdin</code>这个payload可以在使用一些外部字典生成工具时很方便：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">┌─[michael@parrot]─[/usr/share/wfuzz/src/wfuzz]</span><br><span class="line">└──╼ $crunch 2 2 ab | wfuzz -z stdin http://testphp.vulnweb.com/FUZZ</span><br><span class="line">Crunch will now generate the following amount of data: 12 bytes</span><br><span class="line">0 MB</span><br><span class="line">0 GB</span><br><span class="line">0 TB</span><br><span class="line">0 PB</span><br><span class="line">Crunch will now generate the following number of lines: 4 </span><br><span class="line">********************************************************</span><br><span class="line">* Wfuzz 2.2.9 - The Web Fuzzer                         *</span><br><span class="line">********************************************************</span><br><span class="line"></span><br><span class="line">Target: http://testphp.vulnweb.com/FUZZ</span><br><span class="line">Total requests: &lt;&lt;unknown&gt;&gt;</span><br><span class="line"></span><br><span class="line">==================================================================</span><br><span class="line">ID	Response   Lines      Word         Chars          Payload    </span><br><span class="line">==================================================================</span><br><span class="line"></span><br><span class="line">000002:  C=404      7 L	      12 W	    168 Ch	  &quot;ab&quot;</span><br><span class="line">000001:  C=404      7 L	      12 W	    168 Ch	  &quot;aa&quot;</span><br><span class="line">000003:  C=404      7 L	      12 W	    168 Ch	  &quot;ba&quot;</span><br><span class="line">000004:  C=404      7 L	      12 W	    168 Ch	  &quot;bb&quot;</span><br><span class="line"></span><br><span class="line">Total time: 3.827355</span><br><span class="line">Processed Requests: 4</span><br><span class="line">Filtered Requests: 0</span><br><span class="line">Requests/sec.: 1.045107</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="使用多个payloads"><a href="#使用多个payloads" class="headerlink" title="使用多个payloads"></a>使用多个payloads</h4><p>使用<code>-z</code> 或<code>-w</code> 参数可以同时指定多个payloads，这时相应的占位符应设置为 FUZZ, … , FUZnZ, 其中<code>n</code>代表了payload的序号。比如下面的例子，我们同时暴破文件，后缀和目录：<br><code>$ wfuzz -w /usr/share/wfuzz/wordlist/general/common.txt -w /usr/share/wfuzz/wordlist/general/common.txt -w /usr/share/wfuzz/wordlist/general/extensions_common.txt --hc 404 http://testphp.vulnweb.com/FUZZ/FUZ2ZFUZ3Z</code></p>
+<hr>
+<h4 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h4><p>对wfuzz的结果时行过滤是非常重要的：</p>
+<ul>
+<li>非常大的字典文件可以生成非常庞大的输出，并且把我们想要的结果淹没</li>
+<li>对HTTP响应的一些分类在实际攻击时是非常重要的，例如，为了查检一个SQLi的漏洞是否存在，我们必须能够将合理的响应和错误&#x2F;不同的响应区分开。</li>
+</ul>
+<p>wfuzz可根据HTTP响应码和收到的响应的长度（字数，字符数或行数）来过滤。还可以用正则表达式。<br>过滤的方法有两种：隐藏或显示符合过滤条件的结果。</p>
+<hr>
+<h5 id="隐藏响应结果"><a href="#隐藏响应结果" class="headerlink" title="隐藏响应结果"></a>隐藏响应结果</h5><p>通过<code>--hc</code>，<code>--hl</code>，<code>--hw</code>，<code>--hh</code>参数可以隐藏某些HTTP响应。<br>隐藏无法找到的页面的响应如下：<br><code>$ wfuzz -w /usr/share/wfuzz/wordlist/general/common.txt --hc 404 http://testphp.vulnweb.com/FUZZ</code></p>
+<p>可指定多个需要隐藏的条件，如，想要加上隐藏禁止访问的响应：<br><code>$ wfuzz -w /usr/share/wfuzz/wordlist/general/common.txt --hc 404,403 http://testphp.vulnweb.com/FUZZ</code></p>
+<p>用行数，字数，字符数来指定过滤规则，在当HTTP返回码相同的时候比较方便。比如，网站一般会指定一个自定义的错误页面，返回码是200，但实际上起到了一个404页面的作用，我们称之为软404。<br>下面是一个例子：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">┌─[michael@parrot]─[~]</span><br><span class="line">└──╼ $wfuzz -w /usr/share/wfuzz/wordlist/general/common.txt --hc 404 http://datalayer.io/FUZZ</span><br><span class="line">********************************************************</span><br><span class="line">* Wfuzz 2.2.9 - The Web Fuzzer                         *</span><br><span class="line">********************************************************</span><br><span class="line"></span><br><span class="line">Target: http://datalayer.io/FUZZ</span><br><span class="line">Total requests: 950</span><br><span class="line"></span><br><span class="line">==================================================================</span><br><span class="line">ID	Response   Lines      Word         Chars          Payload    </span><br><span class="line">==================================================================</span><br><span class="line"></span><br><span class="line">000083:  C=200     51 L	     138 W	    962 Ch	  &quot;apache&quot;</span><br><span class="line">000008:  C=200     51 L	     138 W	    962 Ch	  &quot;100&quot;</span><br><span class="line">000009:  C=200     51 L	     138 W	    962 Ch	  &quot;1000&quot;</span><br><span class="line">000011:  C=200     51 L	     138 W	    962 Ch	  &quot;2&quot;</span><br><span class="line">000012:  C=200     51 L	     138 W	    962 Ch	  &quot;20&quot;</span><br><span class="line">000013:  C=200     51 L	     138 W	    962 Ch	  &quot;200&quot;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>仔细观察上面的结果，我们很容易推断出所有”not found”的返回信息中都有 51个行，138个字，962个字符。因此，我们需要改进一下我们的过滤条件（增加多个过滤条件）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">┌─[michael@parrot]─[~]</span><br><span class="line">└──╼ $wfuzz -w /usr/share/wfuzz/wordlist/general/common.txt --hc 404 --hh 962 http://datalayer.io/FUZZ</span><br><span class="line">********************************************************</span><br><span class="line">* Wfuzz 2.2.9 - The Web Fuzzer                         *</span><br><span class="line">********************************************************</span><br><span class="line"></span><br><span class="line">Target: http://datalayer.io/FUZZ</span><br><span class="line">Total requests: 950</span><br><span class="line"></span><br><span class="line">==================================================================</span><br><span class="line">ID	Response   Lines      Word         Chars          Payload    </span><br><span class="line">==================================================================</span><br><span class="line"></span><br><span class="line">000430:  C=302      0 L	       0 W	      0 Ch	  &quot;img&quot;</span><br><span class="line">000689:  C=500      2 L	       1 W	      9 Ch	  &quot;register&quot;</span><br><span class="line">000135:  C=302      0 L	       0 W	      0 Ch	  &quot;blog&quot;</span><br><span class="line">000438:  C=200   1677 L	    5416 W	  90077 Ch	  &quot;index&quot;</span><br><span class="line"></span><br><span class="line">Total time: 8.323663</span><br><span class="line">Processed Requests: 950</span><br><span class="line">Filtered Requests: 946</span><br><span class="line">Requests/sec.: 114.1324</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h5 id="显示响应结果"><a href="#显示响应结果" class="headerlink" title="显示响应结果"></a>显示响应结果</h5><p>显示响应结果的使用方法跟隐藏时的原理一样，只不过参数变为了：<code>--sc</code>，<code>--sl</code>，<code>--sw</code>，<code>--sh</code>。</p>
+<hr>
+<h5 id="使用Baseline"><a href="#使用Baseline" class="headerlink" title="使用Baseline"></a>使用Baseline</h5><p>习惯上称Baseline为”基准线“。过滤器可以是某个HTTP响应的引用，这样的引用我们称为Baseline。<br>之前的使用<code>--hh</code>进行过滤的例子中，还可以使用下面的命令代替：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">┌─[michael@parrot]─[~]</span><br><span class="line">└──╼ $wfuzz -w /usr/share/wfuzz/wordlist/general/common.txt --hh BBB http://datalayer.io/FUZZ&#123;notthere&#125;</span><br><span class="line">********************************************************</span><br><span class="line">* Wfuzz 2.2.9 - The Web Fuzzer                         *</span><br><span class="line">********************************************************</span><br><span class="line"></span><br><span class="line">Target: http://datalayer.io/FUZZ</span><br><span class="line">Total requests: 951</span><br><span class="line"></span><br><span class="line">==================================================================</span><br><span class="line">ID	Response   Lines      Word         Chars          Payload    </span><br><span class="line">==================================================================</span><br><span class="line"></span><br><span class="line">000002:  C=200     51 L	     138 W	    962 Ch	  &quot;notthere&quot;</span><br><span class="line">000432:  C=302      0 L	       0 W	      0 Ch	  &quot;img&quot;</span><br><span class="line">000086:  C=404      0 L	       0 W	      0 Ch	  &quot;api&quot;</span><br><span class="line">000691:  C=500      2 L	       1 W	      9 Ch	  &quot;register&quot;</span><br><span class="line">000137:  C=302      0 L	       0 W	      0 Ch	  &quot;blog&quot;</span><br><span class="line">000045:  C=404      0 L	       0 W	      0 Ch	  &quot;WEB-INF&quot;</span><br><span class="line">000440:  C=200   1677 L	    5416 W	  90077 Ch	  &quot;index&quot;</span><br><span class="line"></span><br><span class="line">Total time: 21.76636</span><br><span class="line">Processed Requests: 951</span><br><span class="line">Filtered Requests: 944</span><br><span class="line">Requests/sec.: 43.69125</span><br></pre></td></tr></table></figure>
+<p>这里，<code>&#123; &#125;</code>来指定<code>第一次</code>HTTP请求时用来替换<code>FUZZ占位符</code>的值，其响应将被标记为<code>BBB</code>，并用于过滤条件中。</p>
+<hr>
+<h5 id="使用正则表达式过滤"><a href="#使用正则表达式过滤" class="headerlink" title="使用正则表达式过滤"></a>使用正则表达式过滤</h5><p>在命令行中，参数<code>--ss</code>和<code>--hs</code>可以接受正则表达式来对返回的结果时行过滤。<br>详细例子请参考<a target="_blank" rel="noopener" href="http://edge-security.blogspot.co.uk/2014/10/scan-for-shellshock-with-wfuzz.html">http://edge-security.blogspot.co.uk/2014/10/scan-for-shellshock-with-wfuzz.html</a><br><code>$ wfuzz -H &quot;User-Agent: () &#123; :;&#125;; echo; echo vulnerable&quot; --ss vulnerable -w cgis.txt http://localhost:8000/FUZZ</code></p>
+<hr>
+<h3 id="重要关键词"><a href="#重要关键词" class="headerlink" title="重要关键词"></a>重要关键词</h3><hr>
+<h4 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h4><p>payload为wfuzz生成的用于测试的特定字符串，一般情况下，会替代被测试URL中的FUZZ占位符。<br>当前版本中的wfuzz中可用payloads列表如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">┌─[michael@parrot]─[~]</span><br><span class="line">└──╼ $wfuzz -e payloads</span><br><span class="line"></span><br><span class="line">Available payloads:</span><br><span class="line"></span><br><span class="line">  Name            | Summary                                                                           </span><br><span class="line">------------------------------------------------------------------------------------------------------</span><br><span class="line">  guitab          | 从可视化的标签栏中读取请求                                </span><br><span class="line">  dirwalk         | 递归获得本地某个文件夹中的文件名                            </span><br><span class="line">  file            | 获取一个文件当中的每个词                                                    </span><br><span class="line">  autorize        | 获取autorize的测试结果Returns fuzz results&#x27; from autororize.                                            </span><br><span class="line">  wfuzzp          | 从之前保存的wfuzz会话中获取测试结果的URL                   </span><br><span class="line">  ipnet           | 获得一个指定网络的IP地址列表                                        </span><br><span class="line">  bing            | 获得一个使用bing API搜索的URL列表 (需要 api key).                   </span><br><span class="line">  stdin           | 获得从标准输入中的条目                                                </span><br><span class="line">  list            | 获得一个列表中的每一个元素，列表用以 - 符号分格                       </span><br><span class="line">  hexrand         | 从一个指定的范围中随机获取一个hex值                                  </span><br><span class="line">  range           | 获得指定范围内的每一个数值                                          </span><br><span class="line">  names           | 从一个以 - 分隔的列表中，获取以组合方式生成的所有usernames值</span><br><span class="line">  burplog         | 从BurpSuite的记录中获得测试结果                                             </span><br><span class="line">  permutation     | 获得一个在指定charset和length时的字符组合                             </span><br><span class="line">  buffer_overflow | 获得一个包含指定个数个A的字符串.                    </span><br><span class="line">  hexrange        | 获得指定范围内的每一个hex值                                   </span><br><span class="line">  iprange         | 获得指定IP范围内的IP地址列表                                 </span><br><span class="line">  burpstate       | 从BurpSuite的状态下获得测试结果                                           </span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="encoder"><a href="#encoder" class="headerlink" title="encoder"></a>encoder</h4><p>encoder的作用是将payload进行编码或加密。<br>wfuzz的encoder列表如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">┌─[michael@parrot]─[~]</span><br><span class="line">└──╼ $wfuzz -e encoders</span><br><span class="line"></span><br><span class="line">Available encoders:</span><br><span class="line"></span><br><span class="line">  Category      | Name              		| Summary                                                                           </span><br><span class="line">------------------------------------------------------------------------------------------------------------------------</span><br><span class="line">  url_safe, url | urlencode 			    | 用`%xx`的方式替换特殊字符， 字母/数字/下划线/半角点/减号不替换</span><br><span class="line">  url_safe, url | double urlencode 		    | 用`%25xx`的方式替换特殊字符， 字母/数字/下划线/半角点/减号不替换</span><br><span class="line">  url  		    | uri_double_hex			| 用`%25xx`的方式将所有字符进行编码</span><br><span class="line">  html  		| html_escape			    | 将`&amp;`，`&lt;`，`&gt;`转换为HTML安全的字符</span><br><span class="line">  html		    | html_hexadecimal 		    | 用 `&amp;#xx;` 的方式替换所有字符</span><br><span class="line">  hashes 		| base64			        | 将给定的字符串中的所有字符进行base64编码</span><br><span class="line">  url 		    | doble_nibble_hex 		    | 将所有字符以`%%dd%dd`格式进行编码</span><br><span class="line">  db 		    | mssql_char			    | 将所有字符转换为MsSQL语法的`char(xx)`形式</span><br><span class="line">  url 		    | utf8				        | 将所有字符以`\u00xx` 格式进行编码</span><br><span class="line">  hashes 		| md5 			            | 将给定的字符串进行md5加密</span><br><span class="line">  default 		| random_upper		        | 将字符串中随机字符变为大写</span><br><span class="line">  url 		    | first_nibble_hex  		| 将所有字符以`%%dd?` 格式进行编码</span><br><span class="line">  default 		| hexlify			        | 每个数据的单个比特转换为两个比特表示的hex表示</span><br><span class="line">  url 		    | second_nibble_hex 		| 将所有字符以`%?%dd` 格式进行编码</span><br><span class="line">  url 		    | uri_hex 			        | 将所有字符以`%xx` 格式进行编码</span><br><span class="line">  default 		| none 			            | 不进行任何编码</span><br><span class="line">  hashes 		| sha1			            | 将字符串进行sha1加密</span><br><span class="line">  url 		    | utf8_binary			    | 将字符串中的所有字符以 `\uxx` 形式进行编码</span><br><span class="line">  url 		    | uri_triple_hex 			| 将所有字符以`%25%xx%xx` 格式进行编码</span><br><span class="line">  url 		    | uri_unicode			    | 将所有字符以`%u00xx` 格式进行编码</span><br><span class="line">  html 		    | html_decimal			    | 将所有字符以 `&amp;#dd; ` 格式进行编码</span><br><span class="line">  db 		    | oracle_char			    | 将所有字符转换为Oracle语法的`chr(xx)`形式</span><br><span class="line">  db 		    | mysql_char 			    | 将所有字符转换为MySQL语法的`char(xx)`形式</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="iterator"><a href="#iterator" class="headerlink" title="iterator"></a>iterator</h4><p>wfuzz的iterator提供了针对多个payload的处理方式。<br>itorators的列表如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">┌─[michael@parrot]─[~]</span><br><span class="line">└──╼ $wfuzz -e iterators</span><br><span class="line"></span><br><span class="line">Available iterators:</span><br><span class="line"></span><br><span class="line">  Name    | Summary                                                                           </span><br><span class="line">----------------------------------------------------------------------------------------------</span><br><span class="line">  product | 返回输入条目的笛卡尔积</span><br><span class="line">  zip     | Retns an iterator that aggregates elements from each of the iterables.（翻译不好，请自行理解）</span><br><span class="line">  chain   | Returns an iterator returns elements from the first iterable until it is exhaust  </span><br><span class="line">         	 | ed, then proceeds to the next iterable, until all of the iterables are exhausted  </span><br><span class="line">         	 | （翻译不好，请自行理解）</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="printer"><a href="#printer" class="headerlink" title="printer"></a>printer</h4><p>wfuzz的printers用于控制输出打印。<br>printers列表如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">┌─[michael@parrot]─[~]</span><br><span class="line">└──╼ $wfuzz -e printers</span><br><span class="line"></span><br><span class="line">Available printers:</span><br><span class="line"></span><br><span class="line">  Name      | Summary                             </span><br><span class="line">--------------------------------------------------</span><br><span class="line">  raw       | `Raw` output format</span><br><span class="line">  json      | Results in `json` format</span><br><span class="line">  csv       | `CSV` printer ftw</span><br><span class="line">  magictree | Prints results in `magictree` format</span><br><span class="line">  html      | Prints results in `html` format</span><br><span class="line">（比较好懂，不再翻译）</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="scripts"><a href="#scripts" class="headerlink" title="scripts"></a>scripts</h4><p>暂时不知道怎么使用<br>scripts列表如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">┌─[michael@parrot]─[~]</span><br><span class="line">└──╼ $wfuzz -e scripts</span><br><span class="line"></span><br><span class="line">Available scripts:</span><br><span class="line"></span><br><span class="line">  Category                   | Name          | Summary</span><br><span class="line">----------------------------------------------------------------------------------------------------</span><br><span class="line">  default, passive           | cookies       | 查找新的cookies</span><br><span class="line">  default, passive           | errors        | 查找错误信息</span><br><span class="line">  passive                    | grep          | HTTP response grep</span><br><span class="line">  active                     | screenshot    | 用linux cutycapt tool 进行屏幕抓取 </span><br><span class="line">  default, active, discovery | links         | 解析HTML并查找新的内容</span><br><span class="line">  default, active, discovery | wc_extractor  | 解析subversion的wc.db文件</span><br><span class="line">  default, passive           | listing       | 查找列目录漏洞</span><br><span class="line">  default, passive           | title         | 解析HTML页面的title</span><br><span class="line">  default, active, discovery | robots        | 解析robots.txt文件来查找新内容</span><br><span class="line">  default, passive           | headers       | 查找服务器的返回头</span><br><span class="line">  default, active, discovery | cvs_extractor | 解析 CVS/Entries 文件</span><br><span class="line">  default, active, discovery | svn_extractor | 解析 .svn/entries 文件</span><br><span class="line">  active, discovery          | backups       | 查找已知的备份文件名</span><br><span class="line">  default, active, discovery | sitemap       | 解析 sitemap.xml 文件</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="内置工具"><a href="#内置工具" class="headerlink" title="内置工具"></a>内置工具</h3><hr>
+<h4 id="wfencode-工具"><a href="#wfencode-工具" class="headerlink" title="wfencode 工具"></a>wfencode 工具</h4><p>这是wfuzz自带的一个加密&#x2F;解密（编码&#x2F;反编码）工具，目前支持内建的encoders的加&#x2F;解密。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">┌─[michael@parrot]─[~/.wfuzz]</span><br><span class="line">└──╼ $wfencode -e base64 123456</span><br><span class="line">MTIzNDU2</span><br><span class="line">┌─[michael@parrot]─[~/.wfuzz]</span><br><span class="line">└──╼ $wfencode -d base64 MTIzNDU2</span><br><span class="line">123456</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="wfpayload工具"><a href="#wfpayload工具" class="headerlink" title="wfpayload工具"></a>wfpayload工具</h4><p>wfpayload是payload生成工具</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">┌─[michael@parrot]─[~/.wfuzz]</span><br><span class="line">└──╼ $wfpayload -z range,0-10</span><br><span class="line">0</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="wxfuzz-工具"><a href="#wxfuzz-工具" class="headerlink" title="wxfuzz 工具"></a>wxfuzz 工具</h4><p>这个看源码是一个wxPython化的wfuzz，也就是GUI图形界面的wfuzz。目前需要wxPython最新版本才能使用，但是在ParrotOS和Kali上都无法正常安装成功，问题已在GitHub提交Issue，期待开发者的回复中…</p>
+<hr>
+<h3 id="wfuzz命令中文帮助"><a href="#wfuzz命令中文帮助" class="headerlink" title="wfuzz命令中文帮助"></a>wfuzz命令中文帮助</h3><p>这是wfuzz的主工具，我们平时使用的时候就是用这个。<br>先来看看帮助文档：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">┌─[✗]─[michael@parrot]─[~]</span><br><span class="line">└──╼ $wfuzz --help</span><br><span class="line">********************************************************</span><br><span class="line">* Wfuzz 2.2.9 - The Web Fuzzer                         *</span><br><span class="line">*                                                      *</span><br><span class="line">* Version up to 1.4c coded by:                         *</span><br><span class="line">* Christian Martorella (cmartorella@edge-security.com) *</span><br><span class="line">* Carlos del ojo (deepbit@gmail.com)                   *</span><br><span class="line">*                                                      *</span><br><span class="line">* Version 1.4d to 2.2.9 coded by:                      *</span><br><span class="line">* Xavier Mendez (xmendez@edge-security.com)            *</span><br><span class="line">********************************************************</span><br><span class="line">	</span><br><span class="line">	Usage:	wfuzz [options] -z payload,params &lt;url&gt;</span><br><span class="line">	</span><br><span class="line">		FUZZ, ..., FUZnZ  			payload占位符，wfuzz会用指定的payload代替相应的占位符，n代表数字. </span><br><span class="line">		FUZZ&#123;baseline_value&#125; 	FUZZ 会被 baseline_value替换，并将此作为测试过程中第一个请求来测试，可用来作为过滤的一个基础。</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	Options:</span><br><span class="line">		-h/--help		    : 帮助文档</span><br><span class="line">		--help			    : 高级帮助文档</span><br><span class="line">		--version		    : Wfuzz详细版本信息</span><br><span class="line">		-e &lt;type&gt;		    :  显示可用的encoders/payloads/iterators/printers/scripts列表</span><br><span class="line">	</span><br><span class="line">		--recipe &lt;filename&gt;	    : 从文件中读取参数</span><br><span class="line">		--dump-recipe &lt;filename&gt;    : 打印当前的参数并保存成文档</span><br><span class="line">		--oF &lt;filename&gt;   		    : 将测试结果保存到文件，这些结果可被wfuzz payload 处理</span><br><span class="line">		</span><br><span class="line">		-c			    : 彩色化输出</span><br><span class="line">		-v			    : 详细输出</span><br><span class="line">		-f filename,printer         : 将结果以printer的方式保存到filename (默认为raw printer).</span><br><span class="line">		-o printer                  : 输出特定printer的输出结果</span><br><span class="line">		--interact		    : (测试功能) 如果启用，所有的按键将会被捕获，这使得你能够与程序交互</span><br><span class="line">		--dry-run		    : 打印测试结果，而并不发送HTTP请求</span><br><span class="line">		--prev    		    : 打印之前的HTTP请求（仅当使用payloads来生成测试结果时使用）</span><br><span class="line">		</span><br><span class="line">		-p addr			    : 使用代理，格式 ip:port:type. 可设置多个代理，type可取的值为SOCKS4,SOCKS5 or HTTP（默认）</span><br><span class="line">		</span><br><span class="line">		-t N			    : 指定连接的并发数，默认为10</span><br><span class="line">		-s N			    : 指定请求的间隔时间，默认为0</span><br><span class="line">		-R depth		    : 递归路径探测，depth指定最大递归数量</span><br><span class="line">		-L,--follow		    : 跟随HTTP重定向</span><br><span class="line">		-Z			    : 扫描模式 (连接错误将被忽视).</span><br><span class="line">		--req-delay N		    : 设置发送请求允许的最大时间，默认为 90，单位为秒.</span><br><span class="line">		--conn-delay N              : 设置连接等待的最大时间，默认为 90，单位为秒.</span><br><span class="line">		</span><br><span class="line">		-A			    : 是 --script=default -v -c 的简写</span><br><span class="line">		--script=		    : 与 --script=default 等价</span><br><span class="line">		--script=&lt;plugins&gt;	    : 进行脚本扫描， &lt;plugins&gt; 是一个以逗号分开的插件或插件分类列表</span><br><span class="line">		--script-help=&lt;plugins&gt;	    : 显示脚本的帮助</span><br><span class="line">		--script-args n1=v1,...     : 给脚本传递参数. ie. --script-args grep.regex=&quot;&lt;A href=\&quot;(.*?)\&quot;&gt;&quot;</span><br><span class="line">		</span><br><span class="line">		-u url                      : 指定请求的URL</span><br><span class="line">		-m iterator		    : 指定一个处理payloads的迭代器 (默认为product)</span><br><span class="line">		-z payload		    : 为每一个占位符指定一个payload，格式为 name[,parameter][,encoder].</span><br><span class="line">					      编码可以是一个列表, 如 md5-sha1. 还可以串联起来, 如. md5@sha1.</span><br><span class="line">					      还可使用编码各类名，如 url</span><br><span class="line">			                              使用help作为payload来显示payload的详细帮助信息，还可使用--slice进行过滤</span><br><span class="line">		--zP &lt;params&gt;		    : 给指定的payload设置参数。必须跟在 -z 或-w 参数后面</span><br><span class="line">		--slice &lt;filter&gt;	    : 以指定的表达式过滤payload的信息，必须跟在-z 参数后面</span><br><span class="line">		-w wordlist		    : 指定一个wordlist文件，等同于 -z file,wordlist</span><br><span class="line">		-V alltype		    : 暴力测试所有GET/POST参数，无需指定占位符</span><br><span class="line">		-X method		    : 指定一个发送请求的HTTP方法，如HEAD或FUZZ</span><br><span class="line">		</span><br><span class="line">		-b cookie		    : 指定请求的cookie参数，可指定多个cookie</span><br><span class="line">		-d postdata 		    : 设置用于测试的POST data (ex: &quot;id=FUZZ&amp;catalogue=1&quot;)</span><br><span class="line">		-H header  		    : 设置用于测试请求的HEADER (ex:&quot;Cookie:id=1312321&amp;user=FUZZ&quot;). 可指定多个HEADER.</span><br><span class="line">		--basic/ntlm/digest auth    : 格式为 &quot;user:pass&quot; or &quot;FUZZ:FUZZ&quot; or &quot;domain\FUZ2Z:FUZZ&quot;</span><br><span class="line">		</span><br><span class="line">		--hc/hl/hw/hh N[,N]+	    : 以指定的返回码/行数/字数/字符数作为判断条件隐藏返回结果 (用 BBB 来接收 baseline)</span><br><span class="line">		--sc/sl/sw/sh N[,N]+	    : 以指定的返回码/行数/字数/字符数作为判断条件显示返回结果 (用 BBB 来接收 baseline)</span><br><span class="line">		--ss/hs regex		    : 显示或隐藏返回结果中符合指定正则表达式的返回结果</span><br><span class="line">		--filter &lt;filter&gt;	    : 显示或隐藏符合指定filter表达式的返回结果 (用 BBB 来接收 baseline)</span><br><span class="line">		--prefilter &lt;filter&gt;	    : 用指定的filter表达式在测试之前过滤某些测试条目</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94%20wfuzz%20%E5%BA%93.html" rel="prev" title="史上最详[ZI]细[DUO]的wfuzz中文教程（四）—— wfuzz 库">
+                  <i class="fa fa-chevron-left"></i> 史上最详[ZI]细[DUO]的wfuzz中文教程（四）—— wfuzz 库
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/web-sec/%E5%8F%B2%E4%B8%8A%E6%9C%80%E8%AF%A6%5BZI%5D%E7%BB%86%5BDUO%5D%E7%9A%84wfuzz%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94wfuzz%20%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95.html" rel="next" title="史上最详[ZI]细[DUO]的wfuzz中文教程（三）——wfuzz 高级用法">
+                  史上最详[ZI]细[DUO]的wfuzz中文教程（三）——wfuzz 高级用法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">m0nst3r</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

